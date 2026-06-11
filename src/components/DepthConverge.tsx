@@ -47,18 +47,18 @@ export default function DepthConverge() {
   const rafRef = useRef<number>(0);
   const laneYRef = useRef<number[]>([]);
   const startXRef = useRef<number>(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width:820px),(prefers-reduced-motion:reduce)");
-    const upd = () => setIsMobile(mq.matches);
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const upd = () => setPrefersReducedMotion(mq.matches);
     upd(); mq.addEventListener("change", upd);
     return () => mq.removeEventListener("change", upd);
   }, []);
 
   /* ----------------------- canvas signal field ------------------------- */
   useEffect(() => {
-    if (isMobile) return;
+    if (prefersReducedMotion) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -181,12 +181,12 @@ export default function DepthConverge() {
         grad.addColorStop(0.55, w.color);
         grad.addColorStop(1, "#7C3AED");
         ctx.strokeStyle = grad;
+        ctx.shadowColor = w.color;
+        ctx.shadowBlur = 12;
         ctx.globalAlpha = 1 * reveal;
         ctx.lineWidth = lerp(2.1, 3, conv);
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
-        ctx.shadowColor = w.color;
-        ctx.shadowBlur = 12;
         ctx.stroke();
         ctx.shadowBlur = 0;
       });
@@ -214,11 +214,11 @@ export default function DepthConverge() {
     rafRef.current = requestAnimationFrame(draw);
 
     return () => { cancelAnimationFrame(rafRef.current); ro.disconnect(); };
-  }, [isMobile]);
+  }, [prefersReducedMotion]);
 
   /* ----------------------- scroll timeline ------------------------------ */
   useEffect(() => {
-    if (isMobile) return;
+    if (prefersReducedMotion) return;
     if (!sectionRef.current || !cardRef.current || !stageRef.current) return;
 
     const card = cardRef.current;
@@ -236,7 +236,6 @@ export default function DepthConverge() {
           trigger: sectionRef.current,
           start: "top top",
           end: "+=400%",
-          // FIX: pin the stageRef (the 100vh wrapper), pinSpacing adds scroll travel
           pin: stageRef.current,
           pinSpacing: true,
           scrub: 1,
@@ -262,10 +261,10 @@ export default function DepthConverge() {
     }, sectionRef);
 
     return () => { ctxGsap.revert(); };
-  }, [isMobile]);
+  }, [prefersReducedMotion]);
 
-  /* ----------------------- mobile fallback ------------------------------ */
-  if (isMobile) {
+  /* ----------------------- mobile/reduced-motion fallback ------------------------------ */
+  if (prefersReducedMotion) {
     return (
       <section className="dc-section is-mobile" aria-label="Depth reads every signal">
         <div className="dc-m-text">
@@ -305,8 +304,6 @@ export default function DepthConverge() {
 
   /* ----------------------- desktop markup ------------------------------- */
   return (
-    // FIX: sectionRef is the outer scroll container (no height set — pinSpacing handles it)
-    // stageRef is the 100vh visible panel that GSAP pins
     <section ref={sectionRef} className="dc-section" aria-label="Predict reads every signal">
       <div ref={stageRef} className="dc-stage">
         <div className="dc-text">
@@ -387,7 +384,6 @@ const desktopCSS = `
   position:relative; background:var(--bg); color:var(--ink); font-family:var(--font);
   -webkit-font-smoothing:antialiased;
 }
-/* FIX: dc-stage is the 100vh pin target — no height on dc-section itself */
 .dc-stage{ position:relative; height:100vh; width:100%; overflow:hidden; }
 
 .dc-text{
@@ -446,6 +442,86 @@ const desktopCSS = `
 .dc-read-cta .dim{ color:#9a9a9c; }
 .dc-read-cta .strong{ color:#fff; }
 .dc-read-cta .red{ color:#7C3AED; }
+
+@media (max-width: 820px) {
+  .dc-text {
+    left: 5% !important;
+    right: 5% !important;
+    top: 15% !important;
+    transform: translateY(-50%) !important;
+    width: 90% !important;
+    text-align: center;
+  }
+  .dc-headline {
+    font-size: clamp(32px, 7vw, 46px) !important;
+  }
+  .dc-sub {
+    margin-top: 16px !important;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+  .dc-sub p {
+    margin: 0 !important;
+    font-size: clamp(14px, 3.5vw, 18px) !important;
+  }
+  .dc-card {
+    right: 5% !important;
+    left: 5% !important;
+    top: 45% !important;
+    transform: translateY(-50%) !important;
+    width: 90% !important;
+    height: 40vh !important;
+    max-height: 380px !important;
+  }
+  .dc-card-multi {
+    padding: 40px 16px 16px !important;
+    gap: 16px !important;
+  }
+  .dc-msig {
+    grid-template-columns: 18px 74px 1fr !important;
+    gap: 8px !important;
+  }
+  .dc-msig-label {
+    font-size: 10px !important;
+  }
+  .dc-msig-wave {
+    height: 24px !important;
+  }
+  .dc-labels {
+    left: 8% !important;
+    right: 8% !important;
+    top: 25% !important;
+    transform: translateY(-50%) !important;
+    gap: 16px !important;
+  }
+  .dc-lab {
+    grid-template-columns: 16px auto 1fr !important;
+    gap: 8px !important;
+  }
+  .dc-lab-txt {
+    font-size: 11px !important;
+  }
+  .dc-readout {
+    right: 8% !important;
+    left: 8% !important;
+    top: 65% !important;
+    transform: translateY(-50%) !important;
+    width: 84% !important;
+  }
+  .dc-read-block h3 {
+    font-size: clamp(24px, 6vw, 30px) !important;
+  }
+  .dc-read-block p {
+    font-size: 13px !important;
+  }
+  .dc-read-cta {
+    margin-top: 24px !important;
+  }
+  .dc-read-cta p {
+    font-size: clamp(16px, 4vw, 20px) !important;
+  }
+}
 `;
 
 const mobileCSS = `

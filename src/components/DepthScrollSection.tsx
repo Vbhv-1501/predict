@@ -110,20 +110,18 @@ export default function DepthScrollSection() {
   const threadRef = useRef<HTMLDivElement>(null);
   const stepRefs = useRef<(HTMLElement | null)[]>([]);
   const chatRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [isMobile, setIsMobile] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia(
-      "(max-width: 820px), (prefers-reduced-motion: reduce)"
-    );
-    const upd = () => setIsMobile(mq.matches);
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const upd = () => setPrefersReducedMotion(mq.matches);
     upd();
     mq.addEventListener("change", upd);
     return () => mq.removeEventListener("change", upd);
   }, []);
 
   useEffect(() => {
-    if (isMobile) return;
+    if (prefersReducedMotion) return;
     if (!sectionRef.current || !panelRef.current) return;
 
     const steps = stepRefs.current.filter(Boolean);
@@ -213,34 +211,18 @@ export default function DepthScrollSection() {
         }
       });
 
-      /* exit animation commented out to prevent empty white space and directly show next section */
-      /*
-      gsap.to(panelRef.current, {
-        autoAlpha: 0,
-        y: -64,
-        ease: "power1.in",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: () => "top+=" + (steps.length * 120 - 55) + "% top",
-          end: () => "+=45%",
-          scrub: 1,
-          invalidateOnRefresh: true,
-        },
-      });
-      */
-
       ScrollTrigger.sort();
     }, sectionRef);
 
     return () => {
       ctx.revert();
     };
-  }, [isMobile]);
+  }, [prefersReducedMotion]);
 
   return (
     <section
       ref={sectionRef}
-      className={`dx-section${isMobile ? " is-mobile" : ""}`}
+      className={`dx-section${prefersReducedMotion ? " is-mobile" : ""}`}
       aria-label="What Predict does"
     >
       <div ref={panelRef} className="dx-panel">
@@ -407,7 +389,7 @@ export default function DepthScrollSection() {
         .dx-typing span:nth-child(3){ animation-delay:.4s; }
         @keyframes dxBlink{ 0%,80%,100%{opacity:.3} 40%{opacity:1} }
 
-        /* ---------- MOBILE FALLBACK ---------- */
+        /* ---------- MOBILE FALLBACK & RESPONSIVE LAYOUT ---------- */
         .dx-section.is-mobile .dx-panel{ height:auto; display:block; padding:64px 0; }
         .dx-section.is-mobile .dx-inner{
           grid-template-columns:1fr; gap:40px; padding:0 24px;
@@ -426,6 +408,47 @@ export default function DepthScrollSection() {
         @keyframes dxFade{ to{opacity:1; transform:translateY(0);} }
         @media (prefers-reduced-motion:reduce){
           .dx-step{ animation:none!important; opacity:1!important; transform:none!important; }
+        }
+
+        @media (max-width: 820px) {
+          .dx-panel {
+            height: 100vh !important;
+            display: flex !important;
+            align-items: center !important;
+          }
+          .dx-inner {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+            padding: 0 16px !important;
+            align-content: center !important;
+            height: 100% !important;
+          }
+          .dx-left {
+            height: 38% !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+          }
+          .dx-stage {
+            min-height: 180px !important;
+          }
+          .dx-headline {
+            font-size: clamp(28px, 6.5vw, 40px) !important;
+            margin: 0 0 12px !important;
+          }
+          .dx-body {
+            font-size: clamp(14px, 3.2vw, 16px) !important;
+            max-width: 100% !important;
+          }
+          .dx-right {
+            height: 48% !important;
+            align-self: stretch !important;
+          }
+          .dx-bubble {
+            font-size: 13px !important;
+            max-width: 85% !important;
+            padding: 10px 14px !important;
+          }
         }
       `}</style>
     </section>

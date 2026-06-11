@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import LoadingScreen from "@/components/LoadingScreen";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
@@ -24,10 +24,10 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [preloadedImages, setPreloadedImages] = useState<HTMLImageElement[]>([]);
 
-  const handleLoaded = (images: HTMLImageElement[]) => {
+  const handleLoaded = useCallback((images: HTMLImageElement[]) => {
     setPreloadedImages(images);
     setIsLoading(false);
-  };
+  }, []);
 
   useEffect(() => {
     if (isLoading) return;
@@ -43,11 +43,9 @@ export default function Home() {
 
   return (
     <>
-      {/* 1. Loading Screen preloads all frames */}
-      <LoadingScreen onLoaded={handleLoaded} />
-
-      {/* 2. Main Page Layout */}
-      {!isLoading && (
+      {isLoading ? (
+        <LoadingScreen onLoaded={handleLoaded} />
+      ) : (
         <SmoothScroll>
           {/* Global Lenis→ScrollTrigger sync (must be inside SmoothScroll) */}
           <LenisScrollTriggerSync />
