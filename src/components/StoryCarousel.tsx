@@ -127,14 +127,14 @@ export default function StoryCarousel() {
             }}
           >
             <div className="flex flex-col items-center gap-8 w-full text-center">
-              {/* Card copy heading at the top */}
-              <h3 className="font-neue font-bold text-2xl md:text-3xl lg:text-4.5xl text-neutral-900 leading-tight">
-                {card.heading}
-              </h3>
               {/* Visualizer Showcase Panel (no padding around it, no background box) */}
               <div className="w-full aspect-video flex items-center justify-center bg-[#0B0B0C] border border-black/10 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.22)] relative">
                 {card.visual}
               </div>
+              {/* Card copy heading below the image */}
+              <h3 className="font-neue font-bold text-2xl md:text-3xl lg:text-4.5xl text-neutral-900 leading-tight">
+                {card.heading}
+              </h3>
             </div>
           </div>
         ))}
@@ -285,7 +285,7 @@ function MuscleAgeVisual() {
 const CARDS: CarouselCard[] = [
   {
     id: 1,
-    heading: "Your blood carried it every single day.",
+    heading: "The data was always there. Your blood carried it every single day.",
     visual: <PurpleBiomarkerVisual />,
   },
   {

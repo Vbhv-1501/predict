@@ -1123,8 +1123,10 @@ export default function Sections() {
 
       {/* FOOTER */}
       <footer className="pt-24 pb-16 px-6 bg-[#0B0B0C] text-white border-t border-white/[0.05] relative overflow-hidden font-neue">
-        {/* Deep purple radial glow from the bottom */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(124,58,237,0.12),transparent_70%)] pointer-events-none" />
+        {/* Enhanced multi-layered premium purple gradient glows */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(124,58,237,0.32),transparent_75%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(124,58,237,0.18),transparent_50%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(124,58,237,0.18),transparent_50%)] pointer-events-none" />
         
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Stretched Out Wordmark Logo */}
