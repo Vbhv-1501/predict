@@ -115,6 +115,13 @@ export default function StoryCarousel() {
         ref={panelRef}
         className="h-screen w-full relative overflow-hidden flex items-center justify-center bg-[#F8F8F6]"
       >
+        {/* Main section heading pinned at the top */}
+        <div className="absolute top-12 md:top-16 lg:top-20 left-0 right-0 text-center px-6 pointer-events-none z-20">
+          <h2 className="font-neue font-bold text-3xl md:text-4.5xl lg:text-5.5xl text-neutral-900 uppercase tracking-tight leading-none">
+            The data was always there.
+          </h2>
+        </div>
+
         {CARDS.map((card, i) => (
           <div
             key={card.id}
@@ -285,7 +292,7 @@ function MuscleAgeVisual() {
 const CARDS: CarouselCard[] = [
   {
     id: 1,
-    heading: "The data was always there. Your blood carried it every single day.",
+    heading: "Your blood carried it every single day.",
     visual: <PurpleBiomarkerVisual />,
   },
   {
