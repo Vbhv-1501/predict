@@ -208,8 +208,8 @@ export default function VideoShowcase() {
         </div>
 
         {/* Supporting statement below */}
-        <div className="text-center mt-16 max-w-2xl">
-          <p className="font-neue text-xs md:text-sm tracking-widest text-[#7C3AED] uppercase font-bold">
+        <div className="text-center mt-16 max-w-4xl">
+          <p className="font-neue text-base md:text-lg lg:text-xl xl:text-2.5xl tracking-wider text-[#7C3AED] uppercase font-bold leading-relaxed">
             Combining muscle-first diagnostics, specialist protocols, and continuous blood intelligence.
           </p>
         </div>

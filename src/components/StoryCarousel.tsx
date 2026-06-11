@@ -42,11 +42,12 @@ export default function StoryCarousel() {
     const state = { progress: 0 };
 
     // GSAP ScrollTrigger pin animation
+    // Ends pinning when the 5th card becomes active (totalSteps - 1 = 4 transitions)
     const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
         start: "top top",
-        end: `+=${totalSteps * 110}%`,
+        end: `+=${(totalSteps - 1) * 110}%`,
         pin: panelRef.current,
         pinSpacing: true,
         scrub: 0.5,
@@ -54,11 +55,11 @@ export default function StoryCarousel() {
       },
     });
 
-    // Animate custom progress variable from 0 to totalSteps (5)
+    // Animate custom progress variable from 0 to 4
     timeline.to(state, {
-      progress: totalSteps,
+      progress: totalSteps - 1,
       ease: "none",
-      duration: totalSteps,
+      duration: totalSteps - 1,
       onUpdate: () => {
         const p = state.progress;
 
@@ -114,32 +115,29 @@ export default function StoryCarousel() {
         ref={panelRef}
         className="h-screen w-full relative overflow-hidden flex items-center justify-center"
       >
-        {/* Carousel overlay wrappers */}
-        <div className="relative w-full max-w-4xl h-[650px] md:h-[750px] px-6">
-          {CARDS.map((card, i) => (
-            <div
-              key={card.id}
-              ref={(el) => {
-                cardRefs.current[i] = el;
-              }}
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md md:max-w-lg pointer-events-none will-change-transform opacity-0"
-              style={{
-                transform: "translate3d(-50%, -50%, 0) scale(0.68)",
-              }}
-            >
-              <div className="flex flex-col items-center gap-6 w-full text-center">
-                {/* Visualizer Showcase Panel - Transparent Outer Box */}
-                <div className="w-full aspect-video flex items-center justify-center bg-[#0B0B0C] border border-black/10 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.22)] relative">
-                  {card.visual}
-                </div>
-                {/* Card copy heading */}
-                <h3 className="font-neue font-bold text-xl md:text-2xl lg:text-3.5xl text-neutral-900 leading-tight">
-                  {card.heading}
-                </h3>
+        {CARDS.map((card, i) => (
+          <div
+            key={card.id}
+            ref={(el) => {
+              cardRefs.current[i] = el;
+            }}
+            className="absolute left-1/2 top-1/2 w-full max-w-md md:max-w-lg pointer-events-none will-change-transform opacity-0 px-6"
+            style={{
+              transform: "translate3d(-50%, -50%, 0) scale(0.68)",
+            }}
+          >
+            <div className="flex flex-col items-center gap-6 w-full text-center">
+              {/* Visualizer Showcase Panel */}
+              <div className="w-full aspect-video flex items-center justify-center bg-[#0B0B0C] border border-black/10 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.22)] relative">
+                {card.visual}
               </div>
+              {/* Card copy heading */}
+              <h3 className="font-neue font-bold text-xl md:text-2xl lg:text-3.5xl text-neutral-900 leading-tight">
+                {card.heading}
+              </h3>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </section>
   );
