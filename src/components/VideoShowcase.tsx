@@ -39,34 +39,39 @@ export default function VideoShowcase() {
     gsap.set(wrapper, { opacity: 0, scale: 0.92, y: 40 });
 
     const ctx = gsap.context(() => {
-      // Entry Reveal Animation
-      gsap.to(wrapper, {
-        opacity: 1,
-        scale: 1,
-        y: 0,
-        ease: "power2.out",
+      // Single timeline maps scroll progress from entry to exit cleanly
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top 75%",
-          end: "top 35%",
+          start: "top 85%",
+          end: "bottom 15%",
           scrub: 1,
           invalidateOnRefresh: true,
         },
       });
 
-      // Exit Fade-out & Translate Animation
-      gsap.to(wrapper, {
+      // 1. Entry Phase (0% to 25% scroll progress)
+      tl.to(wrapper, {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        ease: "power2.out",
+        duration: 1,
+      });
+
+      // 2. Hold Phase (25% to 75% scroll progress)
+      tl.to(wrapper, {
+        y: 0,
+        duration: 2, // Holds the element fully active
+      });
+
+      // 3. Exit Phase (75% to 100% scroll progress)
+      tl.to(wrapper, {
         opacity: 0,
         scale: 0.95,
         y: -40,
         ease: "power1.inOut",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "bottom 55%",
-          end: "bottom 15%",
-          scrub: 1,
-          invalidateOnRefresh: true,
-        },
+        duration: 1,
       });
     }, containerRef);
 

@@ -18,14 +18,14 @@ export default function StoryCarousel() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [yOffset, setYOffset] = useState(380);
+  const [yOffset, setYOffset] = useState(540);
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        setYOffset(310);
+        setYOffset(360);
       } else {
-        setYOffset(380);
+        setYOffset(540);
       }
     };
     window.addEventListener("resize", handleResize);
@@ -42,7 +42,7 @@ export default function StoryCarousel() {
     const state = { progress: 0 };
 
     // GSAP ScrollTrigger pin animation
-    // Ends pinning when the 5th card becomes active (totalSteps - 1 = 4 transitions)
+    // Pinning ends when Card 5 becomes active (totalSteps - 1 = 4 transitions)
     const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
@@ -110,10 +110,10 @@ export default function StoryCarousel() {
   }, [yOffset]);
 
   return (
-    <section ref={sectionRef} className="relative w-full bg-[#F8F8F6]">
+    <section ref={sectionRef} className="relative z-10 w-full bg-[#F8F8F6]">
       <div
         ref={panelRef}
-        className="h-screen w-full relative overflow-hidden flex items-center justify-center"
+        className="h-screen w-full relative overflow-hidden flex items-center justify-center bg-[#F8F8F6]"
       >
         {CARDS.map((card, i) => (
           <div
@@ -121,20 +121,20 @@ export default function StoryCarousel() {
             ref={(el) => {
               cardRefs.current[i] = el;
             }}
-            className="absolute left-1/2 top-1/2 w-full max-w-md md:max-w-lg pointer-events-none will-change-transform opacity-0 px-6"
+            className="absolute left-1/2 top-1/2 w-full max-w-lg md:max-w-2xl lg:max-w-4xl pointer-events-none will-change-transform opacity-0 px-6"
             style={{
               transform: "translate3d(-50%, -50%, 0) scale(0.68)",
             }}
           >
-            <div className="flex flex-col items-center gap-6 w-full text-center">
-              {/* Visualizer Showcase Panel */}
+            <div className="flex flex-col items-center gap-8 w-full text-center">
+              {/* Card copy heading at the top */}
+              <h3 className="font-neue font-bold text-2xl md:text-3xl lg:text-4.5xl text-neutral-900 leading-tight">
+                {card.heading}
+              </h3>
+              {/* Visualizer Showcase Panel (no padding around it, no background box) */}
               <div className="w-full aspect-video flex items-center justify-center bg-[#0B0B0C] border border-black/10 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.22)] relative">
                 {card.visual}
               </div>
-              {/* Card copy heading */}
-              <h3 className="font-neue font-bold text-xl md:text-2xl lg:text-3.5xl text-neutral-900 leading-tight">
-                {card.heading}
-              </h3>
             </div>
           </div>
         ))}
