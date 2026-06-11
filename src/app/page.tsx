@@ -6,6 +6,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
 import StoryCanvas from "@/components/StoryCanvas";
 import VideoShowcase from "@/components/VideoShowcase";
+import StoryCarousel from "@/components/StoryCarousel";
 import DepthConverge from "@/components/DepthConverge";
 import HappyClients from "@/components/HappyClients";
 import DepthScrollSection from "@/components/DepthScrollSection";
@@ -61,9 +62,12 @@ export default function Home() {
             {/* Section 1: Cinematic frame-by-frame canvas (Hero) */}
             <StoryCanvas preloadedImages={preloadedImages} />
 
-            {/* Section 2: Video Showcase — flows after StoryCanvas spacer */}
+            {/* Section 2: Video Showcase (Interactive Dashboard) — flows after StoryCanvas spacer */}
             <div className="post-hero-flow">
               <VideoShowcase />
+
+            {/* Section 2.5: Storytelling Carousel (Interactive Cards) */}
+              <StoryCarousel />
 
             {/* Section 3: DepthConverge — signal convergence animation */}
               <DepthConverge />
