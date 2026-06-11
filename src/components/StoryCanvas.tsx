@@ -28,7 +28,7 @@ const STORY_TEXTS: StoryText[] = [
     className: "text-step-1",
     align: "center",
     content: (
-      <h1 className="font-serif italic font-bold text-3xl md:text-5xl lg:text-6xl text-white max-w-3xl leading-tight select-none">
+      <h1 className="font-neue font-medium text-3xl md:text-5xl lg:text-6xl text-white max-w-3xl leading-tight select-none">
         There is an organ that predicts everything.
       </h1>
     ),
@@ -39,10 +39,10 @@ const STORY_TEXTS: StoryText[] = [
     align: "left",
     content: (
       <div className="flex flex-col gap-2">
-        <span className="font-sans text-[11px] md:text-xs tracking-widest text-[#7C3AED] uppercase font-extrabold">
+        <span className="font-neue text-[11px] md:text-xs tracking-widest text-[#7C3AED] uppercase font-bold">
           The Organ
         </span>
-        <h2 className="font-serif italic font-bold text-6xl md:text-7xl lg:text-8xl text-white leading-none">
+        <h2 className="font-neue font-bold text-6xl md:text-7xl lg:text-8xl text-white leading-none">
           Muscle.
         </h2>
       </div>
@@ -53,9 +53,9 @@ const STORY_TEXTS: StoryText[] = [
     className: "text-step-3",
     align: "right",
     content: (
-      <h2 className="font-serif italic font-bold text-3xl md:text-4xl lg:text-5xl text-white leading-snug">
+      <h2 className="font-neue font-medium text-3xl md:text-4xl lg:text-5xl text-white leading-snug">
         When muscle declines — <br />
-        <span className="text-[#7C3AED] font-extrabold">everything follows.</span>
+        <span className="text-[#7C3AED] font-bold">everything follows.</span>
       </h2>
     ),
   },
@@ -65,13 +65,13 @@ const STORY_TEXTS: StoryText[] = [
     align: "left",
     content: (
       <div className="flex flex-col gap-4">
-        <h2 className="font-serif italic font-bold text-2xl md:text-3.5xl lg:text-4xl text-white leading-tight">
-          Most chronic disease <span className="text-[#7C3AED] font-extrabold">doesn&apos;t start</span> in the organ that fails.
+        <h2 className="font-neue font-medium text-2xl md:text-3.5xl lg:text-4xl text-white leading-tight">
+          Most chronic disease <span className="text-[#7C3AED] font-bold">doesn&apos;t start</span> in the organ that fails.
         </h2>
-        <p className="font-sans text-sm md:text-base text-neutral-200 font-bold leading-relaxed">
-          It starts in the <span className="text-[#7C3AED] font-extrabold">muscle</span> that stopped protecting it.
+        <p className="font-neue text-sm md:text-base text-neutral-200 font-normal leading-relaxed">
+          It starts in the <span className="text-[#7C3AED] font-bold">muscle</span> that stopped protecting it.
         </p>
-        <span className="font-sans text-[10px] md:text-xs text-neutral-300 uppercase tracking-widest font-extrabold mt-2">
+        <span className="font-neue text-[10px] md:text-xs text-neutral-300 uppercase tracking-widest font-bold mt-2">
           Years earlier.
         </span>
       </div>
@@ -83,10 +83,10 @@ const STORY_TEXTS: StoryText[] = [
     align: "right",
     content: (
       <div className="flex flex-col gap-2">
-        <span className="font-sans text-[10px] md:text-xs tracking-widest text-neutral-300 uppercase font-extrabold">
+        <span className="font-neue text-[10px] md:text-xs tracking-widest text-neutral-300 uppercase font-bold">
           The Signal
         </span>
-        <h2 className="font-serif italic font-bold text-6xl md:text-7xl lg:text-8xl text-[#7C3AED] leading-none">
+        <h2 className="font-neue font-bold text-6xl md:text-7xl lg:text-8xl text-[#7C3AED] leading-none">
           Blood.
         </h2>
       </div>
@@ -99,7 +99,7 @@ const STORY_TEXTS: StoryText[] = [
     content: (
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-3 justify-center md:justify-start">
-          <h2 className="font-serif italic font-bold text-5xl md:text-6xl text-[#7C3AED] leading-none">
+          <h2 className="font-neue font-bold text-5xl md:text-6xl text-[#7C3AED] leading-none">
             Blood
           </h2>
           <span className="relative flex h-3.5 w-3.5">
@@ -107,7 +107,7 @@ const STORY_TEXTS: StoryText[] = [
             <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-[#7C3AED]"></span>
           </span>
         </div>
-        <p className="font-sans text-sm md:text-base text-neutral-200 font-bold leading-relaxed">
+        <p className="font-neue text-sm md:text-base text-neutral-200 font-normal leading-relaxed">
           A live data stream. Flowing through you. Right now.
         </p>
       </div>
@@ -119,14 +119,14 @@ const STORY_TEXTS: StoryText[] = [
     align: "right",
     content: (
       <div className="flex flex-col gap-4 max-w-sm md:max-w-md">
-        <h2 className="font-serif italic font-bold text-3xl md:text-4xl text-white leading-tight">
+        <h2 className="font-neue font-bold text-3xl md:text-4xl text-white leading-tight">
           Your blood carries <br />
-          <span className="text-[#7C3AED] font-extrabold">your true age.</span>
+          <span className="text-[#7C3AED] font-bold">your true age.</span>
         </h2>
-        <p className="font-sans text-sm md:text-base text-neutral-200 font-bold leading-relaxed">
+        <p className="font-neue text-sm md:text-base text-neutral-200 font-normal leading-relaxed">
           Every second, it circulates signals:
         </p>
-        <div className="flex flex-col gap-2 text-xs md:text-sm font-sans font-bold text-neutral-300 border-l border-[#7C3AED]/50 pl-3 text-left md:text-right md:border-l-0 md:border-r md:pr-3">
+        <div className="flex flex-col gap-2 text-xs md:text-sm font-neue font-medium text-neutral-300 border-l border-[#7C3AED]/50 pl-3 text-left md:text-right md:border-l-0 md:border-r md:pr-3">
           <span>• The rate of breakdown</span>
           <span>• The capacity to regenerate</span>
           <span>• The metabolic efficiency</span>

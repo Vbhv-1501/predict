@@ -27,6 +27,7 @@
   
   --font-sans: 'Inter', var(--font-primary);
   --font-serif: 'DM Serif Display', Georgia, serif;
+  --font-neue: 'Neue Montreal', var(--font-primary);
   
   --animate-float: float 6s ease-in-out infinite;
   --animate-pulse-glow: pulseGlow 4s ease-in-out infinite;
