@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLenis } from "lenis/react";
@@ -66,7 +66,7 @@ const STORY_TEXTS: StoryText[] = [
     content: (
       <div className="flex flex-col gap-4">
         <h2 className="font-serif italic font-bold text-2xl md:text-3.5xl lg:text-4xl text-white leading-tight">
-          Most chronic disease <span className="text-[#7C3AED] font-extrabold">doesn't start</span> in the organ that fails.
+          Most chronic disease <span className="text-[#7C3AED] font-extrabold">doesn&apos;t start</span> in the organ that fails.
         </h2>
         <p className="font-sans text-sm md:text-base text-neutral-200 font-bold leading-relaxed">
           It starts in the <span className="text-[#7C3AED] font-extrabold">muscle</span> that stopped protecting it.
@@ -145,9 +145,8 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
   const containerRef  = useRef<HTMLDivElement>(null);
   const stageRef      = useRef<HTMLDivElement>(null);
   const canvasRef     = useRef<HTMLCanvasElement>(null);
-
-  const [currentFrame, setCurrentFrame] = useState(0);
-  const [showHint, setShowHint]         = useState(true);
+  const hintRef       = useRef<HTMLDivElement>(null);
+  const readoutRef    = useRef<HTMLDivElement>(null);
 
   const currentIndexRef = useRef(0);
 
@@ -235,9 +234,23 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
         const idx = Math.round(scrollState.frameIndex);
         if (idx === currentIndexRef.current) return;
         currentIndexRef.current = idx;
-        setCurrentFrame(idx);
         drawFrame(idx);
-        setShowHint(scrollState.frameIndex <= 10);
+
+        // Update frame readout directly in DOM for 60fps performance
+        if (readoutRef.current) {
+          readoutRef.current.textContent = `FRAME: ${String(idx + 1).padStart(4, "0")} / ${TOTAL_FRAMES}`;
+        }
+
+        // Toggle hint opacity directly in DOM for 60fps performance
+        if (hintRef.current) {
+          if (idx <= 10) {
+            hintRef.current.classList.add("opacity-100");
+            hintRef.current.classList.remove("opacity-0");
+          } else {
+            hintRef.current.classList.add("opacity-0");
+            hintRef.current.classList.remove("opacity-100");
+          }
+        }
       },
     }, 0);
 
@@ -334,9 +347,8 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
 
         {/* Scroll hint */}
         <div
-          className={`absolute bottom-[40px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-[10px] pointer-events-none z-30 transition-opacity duration-600 ${
-            showHint ? "opacity-100" : "opacity-0"
-          }`}
+          ref={hintRef}
+          className="absolute bottom-[40px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-[10px] pointer-events-none z-30 transition-opacity duration-600 opacity-100"
         >
           <span className="font-sans text-[10px] font-medium tracking-[0.2em] uppercase text-white/40">
             Scroll
@@ -345,8 +357,11 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
         </div>
 
         {/* Frame readout */}
-        <div className="absolute bottom-[20px] right-[24px] font-mono text-[10px] tracking-[0.06em] text-white/15 pointer-events-none tabular-nums z-30">
-          FRAME: {String(currentFrame + 1).padStart(4, "0")} / {TOTAL_FRAMES}
+        <div
+          ref={readoutRef}
+          className="absolute bottom-[20px] right-[24px] font-mono text-[10px] tracking-[0.06em] text-white/15 pointer-events-none tabular-nums z-30"
+        >
+          FRAME: 0001 / {TOTAL_FRAMES}
         </div>
       </div>
     </div>
