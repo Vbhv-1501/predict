@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PREDICT — The Muscle Age Clock</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#080A09;--off-white:#F0EDE6;--teal:#0F6E56;--teal-dim:#0a4a3a;
+  --blood:#8B1A1A;--gray:#6B7270;--gray-light:#A8B0AD;--white:#ffffff;
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--off-white);font-family:'Inter',sans-serif;overflow-x:hidden}
+#progress{position:fixed;top:0;left:0;height:2px;background:var(--teal);z-index:1000;transition:width 0.1s linear;width:0%}
+
+.beat{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;padding:6rem 2rem;overflow:hidden}
+.beat-inner{max-width:720px;width:100%;text-align:center}
+.beat-wide{max-width:1100px;width:100%}
+
+/* Reveals */
+.word-reveal{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(4rem,12vw,9rem);color:var(--off-white);line-height:1;letter-spacing:-0.02em;opacity:0;transform:translateY(20px);transition:opacity 1.2s ease,transform 1.2s ease}
+.word-reveal.visible{opacity:1;transform:translateY(0)}
+.line-reveal{opacity:0;transform:translateY(16px);transition:opacity 0.9s ease,transform 0.9s ease}
+.line-reveal.visible{opacity:1;transform:translateY(0)}
+
+/* Type */
+.beat-headline{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(2.2rem,6vw,4.8rem);color:var(--off-white);line-height:1.12;letter-spacing:-0.02em;margin-bottom:0.5rem}
+.beat-sub{font-size:clamp(1rem,2.5vw,1.4rem);color:var(--gray-light);font-weight:300;line-height:1.65;margin-top:1.5rem}
+.beat-body{font-size:clamp(0.95rem,2vw,1.1rem);color:var(--gray-light);font-weight:300;line-height:1.85;max-width:560px;margin:1.5rem auto 0}
+.beat-body em{color:var(--off-white);font-style:normal;font-weight:500}
+
+/* Beat 1 */
+#beat-1{background:var(--black)}
+#beat-1 .beat-headline{font-size:clamp(1.1rem,2.5vw,1.4rem);font-family:'Inter',sans-serif;font-style:normal;font-weight:300;letter-spacing:0.15em;text-transform:uppercase;color:var(--gray)}
+
+/* Beat 2 */
+#beat-2{background:var(--black)}
+
+/* Beat 3 */
+#beat-3{background:#0A0C0B}
+#beat-3 .everything{color:var(--teal)}
+
+/* Beat 4 */
+#beat-4{background:#090B0A}
+#beat-4 .years-earlier{font-size:clamp(0.85rem,1.8vw,1rem);color:var(--gray);font-style:italic;display:block;margin-top:1.2rem}
+
+/* Beat 5 */
+#beat-5{background:var(--black)}
+#beat-5 .beat-headline{letter-spacing:0.3em;font-size:clamp(0.9rem,2vw,1.1rem);font-style:normal;font-family:'Inter',sans-serif;font-weight:300;text-transform:uppercase;color:var(--gray)}
+#beat-5 .signal-word{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(3.5rem,10vw,8rem);color:var(--off-white);display:block;margin-top:0.5rem}
+
+/* Beat 6 — blood */
+#beat-6{background:#0C0808}
+.blood-word{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(5rem,15vw,11rem);color:var(--blood);line-height:1;letter-spacing:-0.03em}
+.blood-pulse{width:8px;height:8px;background:var(--blood);border-radius:50%;display:inline-block;margin-left:4px;animation:pulse 2s ease infinite;opacity:0;transition:opacity 1s ease}
+.blood-pulse.visible{opacity:1}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:0.6}50%{transform:scale(1.8);opacity:1}}
+
+/* Beat 7 — your blood carries your true */
+#beat-7{background:#080A09}
+.data-stream{display:flex;flex-direction:column;gap:0.3rem;align-items:center}
+.data-line{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.8rem,5vw,3.5rem);color:var(--off-white);line-height:1.15}
+.data-line span{color:var(--teal)}
+
+/* Beat 8 — domains split layout */
+#beat-8{background:#09100E;padding:5rem 2rem}
+.split-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;max-width:1100px;margin:0 auto;text-align:left}
+.split-left{}
+.split-right{}
+.domains-accordion{display:flex;flex-direction:column;gap:0.5rem;margin-top:2rem}
+.domain-item{border:1px solid rgba(15,110,86,0.2);border-radius:12px;overflow:hidden;cursor:pointer;transition:border-color 0.3s}
+.domain-item.open{border-color:var(--teal)}
+.domain-header{display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1.1rem;background:rgba(15,110,86,0.04)}
+.domain-header:hover{background:rgba(15,110,86,0.08)}
+.domain-num{font-size:0.7rem;color:var(--teal);font-weight:600;letter-spacing:0.1em;margin-right:0.8rem;font-family:'Inter',sans-serif}
+.domain-name{font-size:0.95rem;font-weight:500;color:var(--off-white);flex:1}
+.domain-arrow{font-size:0.75rem;color:var(--gray);transition:transform 0.3s}
+.domain-item.open .domain-arrow{transform:rotate(180deg)}
+.domain-body{max-height:0;overflow:hidden;transition:max-height 0.4s ease,padding 0.3s}
+.domain-item.open .domain-body{max-height:120px;padding:0.7rem 1.1rem 1rem}
+.domain-body p{font-size:0.82rem;color:var(--gray-light);line-height:1.6;font-weight:300}
+/* Creative placeholder right side */
+.creative-placeholder{background:rgba(15,110,86,0.05);border:1px dashed rgba(15,110,86,0.25);border-radius:20px;aspect-ratio:4/5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.8rem;padding:2rem}
+.creative-placeholder .cp-icon{font-size:2.5rem;opacity:0.4}
+.creative-placeholder .cp-text{font-size:0.75rem;color:var(--gray);letter-spacing:0.1em;text-transform:uppercase;text-align:center;line-height:1.6}
+
+/* Beat 9 — data + creative split */
+#beat-9{background:var(--black);padding:5rem 2rem}
+.accusation-list{list-style:none;text-align:left}
+.accusation-list li{font-size:clamp(1rem,2.5vw,1.25rem);font-weight:300;color:var(--gray-light);padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.06);opacity:0;transform:translateX(-12px);transition:opacity 0.7s ease,transform 0.7s ease}
+.accusation-list li.visible{opacity:1;transform:translateX(0)}
+.accusation-list li:last-child{border-bottom:none}
+.accusation-list li em{color:var(--off-white);font-style:normal}
+
+/* Beat 10 — until now */
+#beat-10{background:var(--black)}
+.until-now{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(3rem,9vw,7rem);color:var(--teal);letter-spacing:-0.02em}
+
+/* Beat 10b — product cards after until now */
+#beat-10b{background:#09100E;padding:5rem 2rem}
+.products-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:900px;margin:0 auto;margin-top:3rem}
+.product-card{background:rgba(15,110,86,0.06);border:1px solid rgba(15,110,86,0.2);border-radius:20px;padding:2rem 1.8rem;text-align:left;opacity:0;transform:translateY(16px);transition:opacity 0.8s ease,transform 0.8s ease}
+.product-card.visible{opacity:1;transform:translateY(0)}
+.product-card:hover{border-color:var(--teal);background:rgba(15,110,86,0.1)}
+.pc-tag{font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal);font-weight:600;margin-bottom:1rem;display:block}
+.pc-name{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.6rem,3.5vw,2.5rem);color:var(--off-white);line-height:1.1;margin-bottom:0.8rem}
+.pc-desc{font-size:0.85rem;color:var(--gray-light);line-height:1.65;font-weight:300}
+.pc-stat{display:inline-block;margin-top:1.2rem;font-size:0.78rem;color:var(--teal);background:rgba(15,110,86,0.12);padding:0.3rem 0.8rem;border-radius:100px}
+
+/* Beat 11 — product reveal */
+#beat-11{background:linear-gradient(160deg,#0a1410 0%,#0c1a15 50%,#080A09 100%)}
+.product-logo{font-family:'DM Serif Display',serif;font-style:normal;font-size:clamp(0.75rem,1.5vw,0.9rem);letter-spacing:0.35em;text-transform:uppercase;color:var(--teal);margin-bottom:1.5rem;display:block}
+.product-headline{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(2rem,5.5vw,4rem);color:var(--off-white);line-height:1.1}
+.product-sub{font-size:clamp(0.9rem,1.8vw,1.05rem);color:var(--gray-light);font-weight:300;margin-top:1.5rem;line-height:1.7}
+.dashboard-card{background:rgba(15,110,86,0.06);border:1px solid rgba(15,110,86,0.2);border-radius:16px;padding:1.5rem;margin-top:2rem;text-align:left}
+.dash-label{font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:0.5rem;font-weight:500}
+.dash-score{font-family:'DM Serif Display',serif;font-size:3.5rem;color:var(--off-white);line-height:1}
+.dash-sub{font-size:0.8rem;color:var(--gray);margin-top:0.3rem}
+.dash-domains{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-top:1rem}
+.dash-domain{background:rgba(255,255,255,0.03);border-radius:8px;padding:0.6rem 0.8rem}
+.dd-name{font-size:0.72rem;color:var(--gray);margin-bottom:0.2rem}
+.dd-bar{height:3px;background:rgba(255,255,255,0.08);border-radius:2px}
+.dd-fill{height:100%;border-radius:2px;background:var(--teal)}
+
+/* Beat 12 — stats + journal */
+#beat-12{background:var(--black)}
+.trial-banner{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
+.trial-pill{font-size:0.8rem;color:var(--gray-light);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:0.45rem 1.1rem;font-weight:300}
+.journal-badges{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem}
+.j-badge{font-size:0.75rem;letter-spacing:0.08em;color:var(--teal);border:1px solid rgba(15,110,86,0.3);border-radius:8px;padding:0.4rem 0.9rem;font-style:italic}
+.stats-reveal{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:500px;margin:2rem auto 0}
+.stat-item{text-align:left;opacity:0;transform:translateY(12px);transition:opacity 0.8s ease,transform 0.8s ease}
+.stat-item.visible{opacity:1;transform:translateY(0)}
+.stat-num{font-family:'DM Serif Display',serif;font-size:clamp(2rem,6vw,3.5rem);color:var(--off-white);line-height:1}
+.stat-num.teal{color:var(--teal)}
+.stat-label{font-size:0.78rem;color:var(--gray);margin-top:0.3rem;line-height:1.4}
+.trial-note{font-size:0.82rem;color:var(--gray);margin-top:2rem;font-style:italic;opacity:0;transition:opacity 1s ease 1.5s}
+.trial-note.visible{opacity:1}
+
+/* Beat 13 — founder */
+#beat-13{background:#09100E}
+.founder-name{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem}
+.founder-quote{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.4rem,3.5vw,2.2rem);color:var(--off-white);line-height:1.35}
+.founder-creds{font-size:0.85rem;color:var(--gray);margin-top:1.5rem;line-height:1.8;font-weight:300}
+.founder-creds span{color:var(--off-white)}
+
+/* Beat 14 — mission BOXES */
+#beat-14{background:#080A09;padding:5rem 2rem}
+.mission-boxes{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;max-width:1000px;margin:2.5rem auto 0}
+.m-box{border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:1.8rem 1.5rem;text-align:left;opacity:0;transform:translateY(16px);transition:opacity 0.8s ease,transform 0.8s ease}
+.m-box.visible{opacity:1;transform:translateY(0)}
+.m-box.accent{border-color:rgba(15,110,86,0.4);background:rgba(15,110,86,0.06)}
+.m-box.final-box{border-color:var(--teal);background:rgba(15,110,86,0.1);grid-column:1/-1}
+.mb-label{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gray);margin-bottom:0.8rem;font-weight:500}
+.mb-num{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(2rem,4vw,3rem);color:var(--off-white);line-height:1.1;margin-bottom:0.5rem}
+.mb-text{font-size:0.88rem;color:var(--gray-light);line-height:1.6;font-weight:300}
+.mb-text strong{color:var(--off-white)}
+.mb-building{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.5rem,3.5vw,2.5rem);color:var(--teal);text-align:center}
+
+/* Beat 15 — CTA */
+#beat-15{background:#09100E}
+.cta-headline{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.8rem,5vw,3.5rem);color:var(--off-white);line-height:1.2;margin-bottom:2rem}
+.cta-btn{display:inline-flex;align-items:center;gap:0.6rem;background:var(--teal);color:var(--white);padding:1rem 2.2rem;border-radius:100px;font-size:0.95rem;font-weight:500;letter-spacing:0.02em;text-decoration:none;transition:background 0.2s,transform 0.2s;cursor:pointer;border:none}
+.cta-btn:hover{background:#0d5e48;transform:translateY(-1px)}
+.cta-note{font-size:0.78rem;color:var(--gray);margin-top:1.2rem;font-weight:300}
+.journal-line{font-size:0.72rem;color:var(--gray);letter-spacing:0.08em;margin-top:2.5rem;font-weight:300}
+.journal-line span{color:var(--teal)}
+
+/* Glows */
+.glow-teal::after{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(15,110,86,0.08) 0%,transparent 70%);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.glow-blood::after{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(139,26,26,0.12) 0%,transparent 70%);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+
+/* Superpower SVG bg */
+.superpower-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.superpower-bg svg{width:100%;height:100%;opacity:0.04}
+.beat-inner{position:relative;z-index:1}
+
+.scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.4rem;opacity:0;animation:fadeInHint 1s ease 3s forwards}
+@keyframes fadeInHint{to{opacity:0.35}}
+.scroll-hint span{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gray)}
+.scroll-arrow{width:1px;height:30px;background:linear-gradient(to bottom,transparent,var(--gray));animation:arrowBob 2s ease infinite}
+@keyframes arrowBob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+/* ── ECOSYSTEM SECTION ── */
+#beat-eco{min-height:100vh;position:relative;overflow:hidden;background:#06100D;display:flex;align-items:center;justify-content:center}
+.eco-centre{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:10;width:340px}
+.eco-eyebrow{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;font-weight:500}
+.eco-headline{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--off-white);line-height:1.15;margin-bottom:0.75rem}
+.eco-sub{font-size:0.88rem;color:var(--gray-light);font-weight:300;line-height:1.65}
+.eco-card{position:absolute;display:flex;flex-direction:column;align-items:center;gap:0.6rem;cursor:default;transition:transform 0.4s ease,box-shadow 0.4s}
+.eco-card:hover{transform:rotate(0deg) scale(1.07) !important}
+.eco-card-img{width:130px;height:130px;border-radius:18px;overflow:hidden;border:1px solid rgba(15,110,86,0.25);background:#0a1a14}
+.eco-card-img svg{width:100%;height:100%;display:block}
+.eco-label{font-size:0.73rem;color:var(--gray-light);letter-spacing:0.04em;font-weight:400}
+.eco-card--tl{top:8%;left:4%;transform:rotate(-6deg)}
+.eco-card--tr{top:6%;right:5%;transform:rotate(5deg)}
+.eco-card--ml{top:40%;left:2%;transform:rotate(-3deg)}
+.eco-card--mr{top:38%;right:2%;transform:rotate(4deg)}
+.eco-card--bl{bottom:9%;left:7%;transform:rotate(4deg)}
+.eco-card--br{bottom:7%;right:6%;transform:rotate(-5deg)}
+
+@media(max-width:768px){
+  .split-layout{grid-template-columns:1fr;gap:2rem}
+  .products-grid{grid-template-columns:1fr}
+  .mission-boxes{grid-template-columns:1fr}
+  .m-box.final-box{grid-column:1}
+  .creative-placeholder{display:none}
+  .eco-card{display:none}
+  .eco-centre{position:relative;top:auto;left:auto;transform:none;width:100%;padding:4rem 2rem}
+  #beat-eco{display:flex;align-items:flex-start;justify-content:flex-start;padding:4rem 0}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .line-reveal,.word-reveal,.accusation-list li,.stat-item,.mission-line,.m-box,.product-card{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<!-- BEAT 1 -->
+<section class="beat" id="beat-1">
+  <div class="beat-inner">
+    <p class="beat-headline line-reveal">There is an organ that predicts everything.</p>
+  </div>
+  <div class="scroll-hint"><span>Scroll</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- BEAT 2 — MUSCLE -->
+<section class="beat" id="beat-2">
+  <div class="beat-inner"><div class="word-reveal">Muscle.</div></div>
+</section>
+
+<!-- BEAT 3 — everything follows -->
+<section class="beat" id="beat-3">
+  <div class="beat-inner">
+    <h2 class="beat-headline line-reveal">When muscle declines —<br><span class="everything">everything follows.</span></h2>
+  </div>
+</section>
+
+<!-- BEAT 4 — reframe -->
+<section class="beat" id="beat-4">
+  <div class="beat-inner">
+    <h2 class="beat-headline line-reveal">Most chronic disease doesn't start<br>in the organ that fails.</h2>
+    <p class="beat-sub line-reveal" style="transition-delay:0.4s">It starts in the muscle<br>that stopped protecting it.</p>
+    <span class="years-earlier line-reveal" style="transition-delay:0.9s">Years earlier.</span>
+  </div>
+</section>
+
+<!-- BEAT 5 — the signal -->
+<section class="beat" id="beat-5">
+  <div class="beat-inner">
+    <p class="beat-headline line-reveal">The signal</p>
+    <span class="signal-word line-reveal" style="transition-delay:0.5s">Blood.</span>
+  </div>
+</section>
+
+<!-- BEAT 6 — blood -->
+<section class="beat glow-blood" id="beat-6">
+  <div class="beat-inner">
+    <div class="word-reveal blood-word">Blood<div class="blood-pulse"></div></div>
+    <p class="beat-body line-reveal" style="transition-delay:0.8s">A live data stream. Flowing through you. Right now.</p>
+  </div>
+</section>
+
+<!-- BEAT 7 — your blood carries your true -->
+<section class="beat" id="beat-7">
+  <div class="beat-inner">
+    <div class="data-stream">
+      <div class="data-line line-reveal">Your blood carries</div>
+      <div class="data-line line-reveal" style="transition-delay:0.3s">your <span>true</span> age.</div>
+    </div>
+    <p class="beat-body line-reveal" style="transition-delay:0.8s;margin-top:2rem">
+      Every second, it circulates signals. The rate of breakdown. The capacity to regenerate.
+      The metabolic efficiency. The inflammatory burden. The vascular integrity.
+    </p>
+  </div>
+</section>
+
+<!-- BEAT 8 — domains + creative split -->
+<section class="beat" id="beat-8" style="padding:5rem 3rem">
+  <div class="split-layout beat-wide line-reveal">
+    <div class="split-left">
+      <h2 class="beat-headline" style="font-size:clamp(1.8rem,4vw,3rem);text-align:left">These signals have been there<br>your entire life.</h2>
+      <p style="font-size:0.95rem;color:var(--gray-light);font-weight:300;line-height:1.7;margin-top:1rem;margin-bottom:1.5rem">
+        Carrying the answer. Carrying the warning.<br>Everything medicine never stopped to read.
+      </p>
+      <div class="domains-accordion" id="domainAccordion">
+        <div class="domain-item open" data-desc="Chronic low-grade inflammation is the earliest measurable signal of biological ageing. It predates every major chronic disease by years.">
+          <div class="domain-header" onclick="toggleDomain(this)">
+            <span class="domain-num">01</span><span class="domain-name">Inflammation</span><span class="domain-arrow">▾</span>
+          </div>
+          <div class="domain-body"><p>Chronic low-grade inflammation is the earliest measurable signal of biological ageing. It predates every major chronic disease by years.</p></div>
+        </div>
+        <div class="domain-item" data-desc="Poor circulation and vascular tone reduce oxygen delivery to muscle, accelerating decline and raising cardiovascular risk silently.">
+          <div class="domain-header" onclick="toggleDomain(this)">
+            <span class="domain-num">02</span><span class="domain-name">Vascular Health</span><span class="domain-arrow">▾</span>
+          </div>
+          <div class="domain-body"><p>Poor circulation and vascular tone reduce oxygen delivery to muscle, accelerating decline and raising cardiovascular risk silently.</p></div>
+        </div>
+        <div class="domain-item" data-desc="Muscle fibre loss and bone density decline are interconnected — the musculoskeletal system ages as one unit, not in isolation.">
+          <div class="domain-header" onclick="toggleDomain(this)">
+            <span class="domain-num">03</span><span class="domain-name">Muscle & Bone</span><span class="domain-arrow">▾</span>
+          </div>
+          <div class="domain-body"><p>Muscle fibre loss and bone density decline are interconnected — the musculoskeletal system ages as one unit, not in isolation.</p></div>
+        </div>
+        <div class="domain-item" data-desc="Peripheral nerve dysfunction reduces coordination, balance, and muscle activation — often the first sign of diabetic or metabolic nerve damage.">
+          <div class="domain-header" onclick="toggleDomain(this)">
+            <span class="domain-num">04</span><span class="domain-name">Nerve Health</span><span class="domain-arrow">▾</span>
+          </div>
+          <div class="domain-body"><p>Peripheral nerve dysfunction reduces coordination, balance, and muscle activation — often the first sign of diabetic or metabolic nerve damage.</p></div>
+        </div>
+        <div class="domain-item" data-desc="Kidney filtration capacity directly reflects systemic metabolic load. eGFR decline is both a consequence and an early warning of muscle-linked disease.">
+          <div class="domain-header" onclick="toggleDomain(this)">
+            <span class="domain-num">05</span><span class="domain-name">Renal Function</span><span class="domain-arrow">▾</span>
+          </div>
+          <div class="domain-body"><p>Kidney filtration capacity directly reflects systemic metabolic load. eGFR decline is both a consequence and an early warning of muscle-linked disease.</p></div>
+        </div>
+        <div class="domain-item" data-desc="Insulin resistance, HbA1c trajectory, and lipid dysregulation are downstream consequences of muscle losing its role as the body's primary glucose sink.">
+          <div class="domain-header" onclick="toggleDomain(this)">
+            <span class="domain-num">06</span><span class="domain-name">Metabolic Health</span><span class="domain-arrow">▾</span>
+          </div>
+          <div class="domain-body"><p>Insulin resistance, HbA1c trajectory, and lipid dysregulation are downstream consequences of muscle losing its role as the body's primary glucose sink.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="split-right">
+      <div class="creative-placeholder">
+        <div class="cp-icon">🩸</div>
+        <div class="cp-text">Creative image / illustration<br>goes here<br><br>Suggested: Abstract blood cell<br>visualisation showing 6 domain signals</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEAT 9 — data was always there + creative -->
+<section class="beat" id="beat-9" style="padding:5rem 3rem">
+  <div class="split-layout beat-wide">
+    <div class="split-left">
+      <h2 class="beat-headline line-reveal" style="font-size:clamp(1.4rem,3.5vw,2.5rem);text-align:left;margin-bottom:1.5rem">The data was always there.</h2>
+      <ul class="accusation-list">
+        <li>Your blood carried it <em>every single day.</em></li>
+        <li>Every disease was signalled <em>years in advance.</em></li>
+        <li>Nobody built a test to read it.</li>
+        <li>Nobody trained a model on <em>30,000 patients.</em></li>
+        <li>Nobody connected the signals to <em>muscle age.</em></li>
+      </ul>
+    </div>
+    <div class="split-right line-reveal" style="transition-delay:0.4s">
+      <div class="creative-placeholder">
+        <div class="cp-icon">📊</div>
+        <div class="cp-text">Creative goes here<br><br>Suggested: Timeline showing<br>disease signals appearing years<br>before diagnosis — uncaptured</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEAT 10 — until now -->
+<section class="beat" id="beat-10">
+  <div class="beat-inner"><div class="word-reveal until-now">Until now.</div></div>
+</section>
+
+<!-- BEAT 10b — Muscle Age + Leg Age cards -->
+<section class="beat glow-teal" id="beat-10b" style="padding:5rem 2rem">
+  <div class="beat-inner" style="max-width:900px">
+    <p class="line-reveal" style="font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem">Introducing</p>
+    <div class="products-grid">
+      <div class="product-card">
+        <span class="pc-tag">Blood-based · 45 Biomarkers</span>
+        <div class="pc-name">Muscle Age<br>Clock</div>
+        <p class="pc-desc">The world's first multi-domain blood biomarker test that measures your biological muscle age across 6 physiological systems — years before symptoms appear.</p>
+        <span class="pc-stat">PREDICT+</span>
+      </div>
+      <div class="product-card" style="transition-delay:0.2s">
+        <span class="pc-tag">Blood-based · 24 Biomarkers</span>
+        <div class="pc-name">Leg Age<br>Clock</div>
+        <p class="pc-desc">The world's first blood test for leg health. 7 domains including muscle, nerve, bone, vein, cartilage, and cardiometabolic function. Your LegAGE™ Score in 48 hours.</p>
+        <span class="pc-stat">LegAGE™</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEAT ECOSYSTEM — floating cards -->
+<section class="beat" id="beat-eco" style="background:#06100D;min-height:100vh;padding:5rem 2rem;overflow:hidden;position:relative">
+
+  <!-- Floating cards -->
+  <div class="eco-card eco-card--tl line-reveal">
+    <div class="eco-card-img eco-img-training">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" fill="#0a1a14"/><circle cx="40" cy="32" r="14" stroke="#0F6E56" stroke-width="1.5" fill="none"/><line x1="40" y1="46" x2="40" y2="62" stroke="#0F6E56" stroke-width="1.5"/><line x1="28" y1="54" x2="52" y2="54" stroke="#0F6E56" stroke-width="1.5"/><line x1="28" y1="54" x2="22" y2="66" stroke="#0F6E56" stroke-width="1.5"/><line x1="52" y1="54" x2="58" y2="66" stroke="#0F6E56" stroke-width="1.5"/><circle cx="40" cy="32" r="5" fill="#0F6E56" opacity="0.4"/></svg>
+    </div>
+    <span class="eco-label">Training</span>
+  </div>
+
+  <div class="eco-card eco-card--tr line-reveal" style="transition-delay:0.15s">
+    <div class="eco-card-img">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" fill="#0a1a14"/><rect x="15" y="35" width="50" height="10" rx="5" stroke="#0F6E56" stroke-width="1.5" fill="none"/><rect x="8" y="30" width="12" height="20" rx="3" stroke="#0F6E56" stroke-width="1.5" fill="none"/><rect x="60" y="30" width="12" height="20" rx="3" stroke="#0F6E56" stroke-width="1.5" fill="none"/><circle cx="28" cy="40" r="6" fill="#0F6E56" opacity="0.3"/><circle cx="52" cy="40" r="6" fill="#0F6E56" opacity="0.3"/></svg>
+    </div>
+    <span class="eco-label">Hyrox</span>
+  </div>
+
+  <div class="eco-card eco-card--ml line-reveal" style="transition-delay:0.25s">
+    <div class="eco-card-img">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" fill="#0a1a14"/><rect x="22" y="18" width="36" height="44" rx="6" stroke="#0F6E56" stroke-width="1.5" fill="none"/><line x1="30" y1="32" x2="50" y2="32" stroke="#0F6E56" stroke-width="1" opacity="0.5"/><line x1="30" y1="40" x2="50" y2="40" stroke="#0F6E56" stroke-width="1" opacity="0.5"/><line x1="30" y1="48" x2="42" y2="48" stroke="#0F6E56" stroke-width="1" opacity="0.5"/><circle cx="40" cy="14" r="4" fill="#0F6E56" opacity="0.5"/><rect x="34" y="12" width="12" height="6" rx="3" fill="#0a1a14" stroke="#0F6E56" stroke-width="1"/></svg>
+    </div>
+    <span class="eco-label">Supplements</span>
+  </div>
+
+  <div class="eco-card eco-card--mr line-reveal" style="transition-delay:0.1s">
+    <div class="eco-card-img">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" fill="#0a1a14"/><path d="M20 55 Q40 20 60 55" stroke="#0F6E56" stroke-width="1.5" fill="none"/><path d="M15 55 Q40 10 65 55" stroke="#0F6E56" stroke-width="0.5" opacity="0.3" fill="none"/><circle cx="40" cy="38" r="8" fill="none" stroke="#0F6E56" stroke-width="1.5"/><path d="M20 60 h40" stroke="#0F6E56" stroke-width="0.5" opacity="0.3"/><circle cx="40" cy="60" r="2" fill="#0F6E56"/></svg>
+    </div>
+    <span class="eco-label">Retreat</span>
+  </div>
+
+  <div class="eco-card eco-card--bl line-reveal" style="transition-delay:0.35s">
+    <div class="eco-card-img">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" fill="#0a1a14"/><path d="M30 20 C28 30 24 35 24 45 C24 55 32 62 40 62 C48 62 56 55 56 45 C56 35 52 30 50 20" stroke="#0F6E56" stroke-width="1.5" fill="none"/><line x1="35" y1="18" x2="45" y2="18" stroke="#0F6E56" stroke-width="2" stroke-linecap="round"/><line x1="40" y1="35" x2="40" y2="52" stroke="#0F6E56" stroke-width="1" opacity="0.5"/><line x1="33" y1="42" x2="47" y2="42" stroke="#0F6E56" stroke-width="1" opacity="0.5"/></svg>
+    </div>
+    <span class="eco-label">Prescription</span>
+  </div>
+
+  <div class="eco-card eco-card--br line-reveal" style="transition-delay:0.2s">
+    <div class="eco-card-img">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" fill="#0a1a14"/><rect x="18" y="22" width="44" height="36" rx="4" stroke="#0F6E56" stroke-width="1.5" fill="none"/><line x1="18" y1="34" x2="62" y2="34" stroke="#0F6E56" stroke-width="0.8" opacity="0.4"/><rect x="26" y="40" width="8" height="10" rx="1" fill="#0F6E56" opacity="0.2" stroke="#0F6E56" stroke-width="0.8"/><rect x="36" y="36" width="8" height="14" rx="1" fill="#0F6E56" opacity="0.4" stroke="#0F6E56" stroke-width="0.8"/><rect x="46" y="38" width="8" height="12" rx="1" fill="#0F6E56" opacity="0.3" stroke="#0F6E56" stroke-width="0.8"/></svg>
+    </div>
+    <span class="eco-label">DEXA Scan</span>
+  </div>
+
+  <!-- Centre copy -->
+  <div class="eco-centre line-reveal" style="transition-delay:0.05s">
+    <p class="eco-eyebrow">The PREDICT Ecosystem</p>
+    <h2 class="eco-headline">Get exclusive access<br>to our ecosystem</h2>
+    <p class="eco-sub">Everything your biology needs.<br>One platform. Personalised to you.</p>
+    <button class="cta-btn" style="margin-top:1.5rem;font-size:0.875rem">Join the waitlist →</button>
+  </div>
+
+</section>
+
+<!-- BEAT 11 — product reveal detail -->
+<section class="beat glow-teal" id="beat-11">
+  <div class="beat-inner">
+    <span class="product-logo line-reveal">PREDICT+</span>
+    <h2 class="product-headline line-reveal" style="transition-delay:0.3s">The world's first<br>Muscle Age Clock.</h2>
+    <p class="product-sub line-reveal" style="transition-delay:0.6s">One blood draw. Seven domains. The number that changes how you see your future.</p>
+    <div class="dashboard-card line-reveal" style="transition-delay:0.9s">
+      <div class="dash-label">Your Muscle Age</div>
+      <div class="dash-score">42.0 <span style="font-size:1.2rem;color:var(--gray)">yrs</span></div>
+      <div class="dash-sub">Chronological age: 40 · <span style="color:var(--blood)">↑ 2.0 years older than you think</span></div>
+      <div class="dash-domains">
+        <div class="dash-domain"><div class="dd-name">Inflammation</div><div class="dd-bar"><div class="dd-fill" style="width:78%"></div></div></div>
+        <div class="dash-domain"><div class="dd-name">Vascular</div><div class="dd-bar"><div class="dd-fill" style="width:62%"></div></div></div>
+        <div class="dash-domain"><div class="dd-name">Muscle & Bone</div><div class="dd-bar"><div class="dd-fill" style="width:55%"></div></div></div>
+        <div class="dash-domain"><div class="dd-name">Nerve</div><div class="dd-bar"><div class="dd-fill" style="width:44%"></div></div></div>
+        <div class="dash-domain"><div class="dd-name">Renal</div><div class="dd-bar"><div class="dd-fill" style="width:71%"></div></div></div>
+        <div class="dash-domain"><div class="dd-name">Metabolic</div><div class="dd-bar"><div class="dd-fill" style="width:66%"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEAT 12 — numbers + study published -->
+<section class="beat" id="beat-12">
+  <div class="beat-inner">
+    <h2 class="beat-headline line-reveal" style="font-size:clamp(1.2rem,3vw,1.8rem);font-style:normal;font-family:'Inter',sans-serif;font-weight:300;letter-spacing:0.05em;color:var(--gray)">Clinically Validated</h2>
+    <div class="trial-banner line-reveal" style="transition-delay:0.2s">
+      <span class="trial-pill">24 Weeks</span>
+      <span class="trial-pill">30,000 Patients</span>
+      <span class="trial-pill">Clinically Validated</span>
+    </div>
+    <div class="stats-reveal">
+      <div class="stat-item"><div class="stat-num">−30%</div><div class="stat-label">HbA1c reduction</div></div>
+      <div class="stat-item" style="transition-delay:0.2s"><div class="stat-num">−77%</div><div class="stat-label">Insulin resistance</div></div>
+      <div class="stat-item" style="transition-delay:0.4s"><div class="stat-num">−64%</div><div class="stat-label">Inflammation</div></div>
+      <div class="stat-item" style="transition-delay:0.6s"><div class="stat-num teal">+103%</div><div class="stat-label">Kidney function</div></div>
+    </div>
+    <p class="trial-note">No synthetic drugs. No injections. No muscle loss.</p>
+    <div class="line-reveal" style="margin-top:2.5rem;transition-delay:1.2s">
+      <p style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);margin-bottom:0.8rem">Study published in</p>
+      <div class="journal-badges">
+        <span class="j-badge">Ageing</span>
+        <span class="j-badge">Nature</span>
+        <span class="j-badge">Wiley</span>
+        <span class="j-badge">Clinical Phytoscience · Springer</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEAT 13 — founder -->
+<section class="beat glow-teal" id="beat-13">
+  <div class="beat-inner">
+    <p class="founder-name line-reveal">Dr. Apurba Ganguly · Chief Scientific Officer</p>
+    <blockquote class="founder-quote line-reveal" style="transition-delay:0.3s">"One question never left me. Why do some people age faster than others? The answer was always muscle."</blockquote>
+    <p class="founder-creds line-reveal" style="transition-delay:0.7s">
+      <span>34 years</span> researching muscle biology and phytopharmaceuticals ·
+      <span>9 patents filed</span> · <span>70+ published studies</span> ·
+      First blood diagnostic for venous disease and muscle health
+    </p>
+  </div>
+</section>
+
+<!-- BEAT 14 — mission BOXES -->
+<section class="beat" id="beat-14" style="padding:5rem 2rem">
+  <div class="beat-inner" style="max-width:1000px">
+    <h2 class="beat-headline line-reveal" style="font-size:clamp(1.4rem,3.5vw,2.5rem)">The gap is enormous.<br>And it is ours to close.</h2>
+    <div class="mission-boxes">
+      <div class="m-box">
+        <div class="mb-label">The scale</div>
+        <div class="mb-num">360M</div>
+        <div class="mb-text">People across <strong>India and the US</strong> living with chronic disease rooted in muscle decline. The largest unaddressed metabolic epidemic in the world.</div>
+      </div>
+      <div class="m-box accent">
+        <div class="mb-label">What exists today</div>
+        <div class="mb-num" style="font-size:clamp(1rem,2.5vw,1.4rem);margin-bottom:0.8rem;font-style:normal;font-family:'Inter',sans-serif;font-weight:300">Healthcare has <strong style="color:var(--off-white)">cholesterol</strong> for heart disease.<br>Healthcare has <strong style="color:var(--off-white)">HbA1c</strong> for diabetes.</div>
+        <div class="mb-text">Two numbers that transformed preventive care. Both created within the last 60 years.</div>
+      </div>
+      <div class="m-box" style="border-color:rgba(139,26,26,0.3);background:rgba(139,26,26,0.04)">
+        <div class="mb-label">The gap</div>
+        <div class="mb-num" style="font-size:clamp(1rem,2.5vw,1.5rem);font-style:normal;font-family:'Inter',sans-serif;font-weight:300;color:var(--gray-light)">Muscle health has <strong style="color:var(--off-white);font-size:1.1em">no standard<br>of care.</strong></div>
+        <div class="mb-text">No test. No protocol. No specialty. 1 in 3 adults over 40 has clinically low muscle mass. Most don't know it.</div>
+      </div>
+      <div class="m-box final-box">
+        <div class="mb-building">We are building it.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEAT 15 — CTA -->
+<section class="beat glow-teal" id="beat-15">
+  <div class="beat-inner">
+    <h2 class="cta-headline line-reveal">Your muscle age is a number.<br><span style="color:var(--teal)">It is a number you can change.</span></h2>
+    <div class="line-reveal" style="transition-delay:0.4s">
+      <button class="cta-btn">Get your Muscle Age →</button>
+      <p class="cta-note">One blood draw · Results in 48 hours · Starting from ₹4,000</p>
+    </div>
+    <p class="journal-line line-reveal" style="transition-delay:0.9s">
+      Published in <span>Clinical Phytoscience, Springer Nature · 2026</span> · DOI: 10.1186/s40816-026-00428-2
+    </p>
+  </div>
+</section>
+
+<script>
+// Progress bar
+window.addEventListener('scroll',()=>{
+  const pct=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;
+  document.getElementById('progress').style.width=pct+'%';
+});
+
+// General reveal observer
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.15,rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.word-reveal,.line-reveal,.blood-pulse').forEach(el=>observer.observe(el));
+
+// Accusation list stagger
+const accusations=document.querySelectorAll('.accusation-list li');
+const accObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      accusations.forEach((li,i)=>setTimeout(()=>li.classList.add('visible'),i*180));
+      accObs.disconnect();
+    }
+  });
+},{threshold:0.2});
+if(accusations.length)accObs.observe(accusations[0].closest('ul'));
+
+// Stats stagger
+const statsObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      document.querySelectorAll('.stat-item').forEach((el,i)=>setTimeout(()=>el.classList.add('visible'),i*200));
+      const tn=document.querySelector('.trial-note');
+      if(tn)tn.classList.add('visible');
+      statsObs.disconnect();
+    }
+  });
+},{threshold:0.3});
+const statsSection=document.getElementById('beat-12');
+if(statsSection)statsObs.observe(statsSection);
+
+// Mission boxes stagger
+const mboxObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      document.querySelectorAll('.m-box').forEach((el,i)=>setTimeout(()=>el.classList.add('visible'),i*150));
+      mboxObs.disconnect();
+    }
+  });
+},{threshold:0.2});
+const missionSection=document.getElementById('beat-14');
+if(missionSection)mboxObs.observe(missionSection);
+
+// Product cards stagger
+const pcObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      document.querySelectorAll('.product-card').forEach((el,i)=>setTimeout(()=>el.classList.add('visible'),i*200));
+      pcObs.disconnect();
+    }
+  });
+},{threshold:0.2});
+const pcSection=document.getElementById('beat-10b');
+if(pcSection)pcObs.observe(pcSection);
+
+// Domain accordion
+function toggleDomain(header){
+  const item=header.parentElement;
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.domain-item').forEach(d=>d.classList.remove('open'));
+  if(!isOpen)item.classList.add('open');
+}
+</script>
+</body>
+</html>
