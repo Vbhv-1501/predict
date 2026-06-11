@@ -1122,13 +1122,67 @@ export default function Sections() {
       </section>
 
       {/* FOOTER */}
-      <footer className="py-12 border-t border-white/[0.05] bg-[#09090A] text-center text-white/30 text-xs font-light">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-          <span>&copy; {new Date().getFullYear()} PREDICT Movement Intelligence. All rights reserved.</span>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-white transition-colors">Clinical Protocols</a>
+      <footer className="pt-24 pb-16 px-6 bg-[#F8F8F6] text-neutral-900 border-t border-black/[0.06] font-neue">
+        <div className="max-w-7xl mx-auto">
+          {/* Stretched Out Wordmark Logo */}
+          <div className="w-full flex justify-center mb-16 select-none pointer-events-none">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/assets/Predict-Logo.png"
+              alt="PREDICT"
+              className="w-full h-auto max-h-[120px] md:max-h-[180px] lg:max-h-[240px] object-contain invert hue-rotate-180 brightness-90 contrast-200"
+            />
+          </div>
+
+          {/* Bottom Grid: Info on left, Links on right */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-end pt-8 border-t border-black/[0.06]">
+            {/* Copyright block */}
+            <div className="flex flex-col gap-1 font-mono text-[10px] tracking-wider text-neutral-400 font-bold leading-normal">
+              <div>2026 PREDICT MOVEMENT INTELLIGENCE, INC.</div>
+              <div>ALL RIGHTS RESERVED</div>
+            </div>
+
+            {/* Link columns */}
+            <div className="grid grid-cols-3 gap-6 font-neue text-xs md:text-sm font-medium text-neutral-600">
+              {/* Column 1 */}
+              <div className="flex flex-col gap-3">
+                <a href="#" className="hover:text-neutral-950 flex items-center gap-1.5 transition-colors group">
+                  <span className="text-accent font-bold group-hover:translate-x-0.5 transition-transform">&gt;</span> Twitter
+                </a>
+                <a href="#" className="hover:text-neutral-950 flex items-center gap-1.5 transition-colors group">
+                  <span className="text-accent font-bold group-hover:translate-x-0.5 transition-transform">&gt;</span> Join the Team
+                </a>
+                <a href="#" className="hover:text-neutral-950 flex items-center gap-1.5 transition-colors group">
+                  <span className="text-accent font-bold group-hover:translate-x-0.5 transition-transform">&gt;</span> Clinical Policy
+                </a>
+              </div>
+
+              {/* Column 2 */}
+              <div className="flex flex-col gap-3">
+                <a href="#" className="hover:text-neutral-950 flex items-center gap-1.5 transition-colors group">
+                  <span className="text-accent font-bold group-hover:translate-x-0.5 transition-transform">&gt;</span> Instagram
+                </a>
+                <a href="#" className="hover:text-neutral-950 flex items-center gap-1.5 transition-colors group">
+                  <span className="text-accent font-bold group-hover:translate-x-0.5 transition-transform">&gt;</span> Manifesto
+                </a>
+                <a href="#" className="hover:text-neutral-950 flex items-center gap-1.5 transition-colors group">
+                  <span className="text-accent font-bold group-hover:translate-x-0.5 transition-transform">&gt;</span> Terms of Service
+                </a>
+              </div>
+
+              {/* Column 3 */}
+              <div className="flex flex-col gap-3">
+                <a href="#" className="hover:text-neutral-950 flex items-center gap-1.5 transition-colors group">
+                  <span className="text-accent font-bold group-hover:translate-x-0.5 transition-transform">&gt;</span> LinkedIn
+                </a>
+                <a href="#" className="hover:text-neutral-950 flex items-center gap-1.5 transition-colors group">
+                  <span className="text-accent font-bold group-hover:translate-x-0.5 transition-transform">&gt;</span> Log in
+                </a>
+                <a href="#" className="hover:text-neutral-950 flex items-center gap-1.5 transition-colors group">
+                  <span className="text-accent font-bold group-hover:translate-x-0.5 transition-transform">&gt;</span> Privacy Policy
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
