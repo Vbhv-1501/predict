@@ -903,11 +903,11 @@ export default function Sections() {
       <WaitlistSection id="contact" />
 
       {/* FOOTER */}
-      <footer className="pt-24 pb-16 px-6 bg-[#0B0B0C] text-white border-t border-white/[0.05] relative overflow-hidden font-neue">
+      <footer className="pt-24 pb-16 px-6 text-[#EFEFEF] border-t border-[#EFEFEF]/[0.05] relative overflow-hidden font-neue" style={{ background: 'linear-gradient(180deg, #47307D 0%, #352166 50%, #000000 100%)' }}>
         {/* Enhanced multi-layered premium purple gradient glows */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(124,58,237,0.32),transparent_75%)] pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(124,58,237,0.18),transparent_50%)] pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(124,58,237,0.18),transparent_50%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(71,48,125,0.32),transparent_75%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(71,48,125,0.18),transparent_50%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(71,48,125,0.18),transparent_50%)] pointer-events-none" />
         
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Stretched Out Wordmark Logo */}
@@ -921,23 +921,23 @@ export default function Sections() {
           </div>
 
           {/* Bottom Grid: Info on left, Links on right */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-end pt-8 border-t border-white/[0.08]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-end pt-8 border-t border-[#EFEFEF]/[0.08]">
             {/* Copyright & Developer block */}
-            <div className="flex flex-col gap-1 font-mono text-[10px] tracking-wider text-white/30 font-bold leading-normal">
+            <div className="flex flex-col gap-1 font-mono text-[10px] tracking-wider text-[#EFEFEF]/30 font-bold leading-normal">
               <div>2026 PREDICT MOVEMENT INTELLIGENCE, INC.</div>
               <div>ALL RIGHTS RESERVED</div>
-              <div className="mt-3 text-white/15">DEVELOPED BY URBAN BEAR AGENCY</div>
+              <div className="mt-3 text-[#EFEFEF]/15">DEVELOPED BY URBAN BEAR AGENCY</div>
             </div>
 
             {/* Social links */}
-            <div className="grid grid-cols-3 gap-6 font-neue text-xs md:text-sm font-medium text-white/60 md:justify-items-end">
-              <a href="#" className="hover:text-white flex items-center gap-1.5 transition-colors group">
+            <div className="grid grid-cols-3 gap-6 font-neue text-xs md:text-sm font-medium text-[#EFEFEF]/60 md:justify-items-end">
+              <a href="#" className="hover:text-[#EFEFEF] flex items-center gap-1.5 transition-colors group">
                 <span className="text-accent font-bold group-hover:translate-x-0.5 transition-transform">&gt;</span> Twitter
               </a>
-              <a href="#" className="hover:text-white flex items-center gap-1.5 transition-colors group">
+              <a href="#" className="hover:text-[#EFEFEF] flex items-center gap-1.5 transition-colors group">
                 <span className="text-accent font-bold group-hover:translate-x-0.5 transition-transform">&gt;</span> Instagram
               </a>
-              <a href="#" className="hover:text-white flex items-center gap-1.5 transition-colors group">
+              <a href="#" className="hover:text-[#EFEFEF] flex items-center gap-1.5 transition-colors group">
                 <span className="text-accent font-bold group-hover:translate-x-0.5 transition-transform">&gt;</span> LinkedIn
               </a>
             </div>

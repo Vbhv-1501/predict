@@ -2,14 +2,14 @@
 .eco {
   position: relative;
   width: 100%;
-  height: 180vh; /* scrollable distance for dispersion animation */
+  height: 100vh; /* Single screen height, no scrolling needed */
   background: #0D0D0F; /* Sleek dark background matching dark theme sections */
-  color: #fff;
-  overflow: visible;
+  color: #EFEFEF;
+  overflow: hidden;
 }
 
 .eco__stage {
-  position: sticky;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
@@ -62,8 +62,8 @@
   height: auto;
   display: block;
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(239, 239, 239, 0.08);
+  background: rgba(239, 239, 239, 0.02);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -78,7 +78,7 @@
   font-family: 'Inter', sans-serif;
   font-size: 12px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(239, 239, 239, 0.6);
   text-align: center;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -86,13 +86,17 @@
 }
 
 .eco__card:hover .eco__caption {
-  color: #fff;
+  color: #EFEFEF;
 }
 
 .eco__center {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 10;
   text-align: center;
+  width: 100%;
   max-width: 600px;
   padding: 0 24px;
   pointer-events: auto;
@@ -115,7 +119,7 @@
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.02em;
-  color: #fff;
+  color: #EFEFEF;
   margin-bottom: 20px;
 }
 
@@ -124,7 +128,7 @@
   font-size: clamp(14px, 1.8vw, 16px);
   font-weight: 300;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(239, 239, 239, 0.6);
 }
 
 /* Screen Reader list (visually hidden) */
@@ -177,5 +181,10 @@
   }
   .eco__center {
     order: -1;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-bottom: 30px;
   }
 }

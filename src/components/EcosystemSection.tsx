@@ -119,15 +119,14 @@ export default function EcosystemSection() {
   const cardRefs  = useRef<(HTMLElement | null)[]>([]);
 
   useEffect(() => {
-    const wrap   = wrapRef.current;
     const stage  = stageRef.current;
     const center = centerRef.current;
-    if (!wrap || !stage) return;
+    if (!stage) return;
 
     const prefersReduced =
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    let raf = 0, running = false, scrollProgress = 0;
+    let raf = 0, running = false;
     const start = performance.now();
 
     const L = {
@@ -146,11 +145,12 @@ export default function EcosystemSection() {
       L.stageW = sw; L.stageH = sh;
       L.mobile = mobile;
       const base = Math.min(sw, sh);
-      L.orbitRX = base * (mobile ? 0.36 : tablet ? 0.39 : 0.40);
-      L.orbitRY = base * (mobile ? 0.30 : tablet ? 0.33 : 0.34);
+      // Reduce radius multiplier slightly to ensure nothing goes outside of screen window
+      L.orbitRX = base * (mobile ? 0.28 : tablet ? 0.32 : 0.35);
+      L.orbitRY = base * (mobile ? 0.22 : tablet ? 0.26 : 0.28);
       L.zNear   = mobile ? 0.45 : tablet ? 0.72 : 1.0;
       L.zFar    = mobile ? 0.30 : tablet ? 0.60 : 1.0;
-      L.ampMul  = mobile ? 0.40 : 0.75;
+      L.ampMul  = mobile ? 0.30 : 0.50;
       cardRefs.current.forEach((el, i) => {
         L.cardHW[i] = el ? el.offsetWidth  / 2 : 0;
         L.cardHH[i] = el ? el.offsetHeight / 2 : 0;
@@ -175,16 +175,10 @@ export default function EcosystemSection() {
         bx *= s; by *= s;
       }
 
-      // clamp to stage
+      // clamp to stage to make sure it NEVER goes out of screen window!
       bx = clamp(bx, -(L.stageW / 2 - L.cardHW[i] - 14), L.stageW / 2 - L.cardHW[i] - 14);
       by = clamp(by, -(L.stageH / 2 - L.cardHH[i] - 14), L.stageH / 2 - L.cardHH[i] - 14);
       return { x: bx, y: by };
-    };
-
-    const computeProgress = () => {
-      const rect   = wrap.getBoundingClientRect();
-      const travel = rect.height - window.innerHeight;
-      scrollProgress = travel <= 0 ? 0 : clamp(-rect.top / travel, 0, 1);
     };
 
     const applyTransform = (
@@ -203,8 +197,8 @@ export default function EcosystemSection() {
 
     const render = (now: number) => {
       const t          = (now - start) / 1000;
-      const dispersion = easeOutCubic(clamp(scrollProgress / 0.88, 0, 1));
-      const theta      = DRIFT_RATE * t * dispersion;
+      const dispersion = 1.0;
+      const theta      = DRIFT_RATE * t;
       const cosT = Math.cos(theta), sinT = Math.sin(theta);
 
       for (let i = 0; i < CARDS.length; i++) {
@@ -227,11 +221,10 @@ export default function EcosystemSection() {
         const y    = (py + fy) * dispersion;
         const z    = (c.z * zMul + fz) * dispersion;
 
-        const baseSc = c.tier === "near" ? 0.55 : 0.45;
-        const sc     = baseSc + (1 - baseSc) * dispersion;
+        const sc   = 1.0;
 
         applyTransform(c, el, x, y, z, rdX, rdZ, sc);
-        el.style.opacity = (0.20 + 0.80 * clamp(dispersion * 1.5, 0, 1)).toFixed(3);
+        el.style.opacity = "1.000";
       }
 
       if (running) raf = requestAnimationFrame(render);
@@ -249,13 +242,12 @@ export default function EcosystemSection() {
       }
     };
 
-    const onScroll = () => computeProgress();
     const onResize = () => {
-      measure(); computeProgress();
+      measure();
       if (prefersReduced) renderStatic();
     };
 
-    measure(); computeProgress();
+    measure();
 
     let io: IntersectionObserver | null = null;
     if (prefersReduced) {
@@ -274,14 +266,12 @@ export default function EcosystemSection() {
       io.observe(stage);
     }
 
-    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
 
     return () => {
       running = false;
       cancelAnimationFrame(raf);
       io?.disconnect();
-      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
     };
   }, []);

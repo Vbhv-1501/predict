@@ -25,11 +25,11 @@ export default function HeroSection({ id }: { id?: string }) {
           align-items: center;
           justify-content: center;
           overflow: hidden;
-          background: #000;
+          background: linear-gradient(180deg, #000000 0%, #352166 60%, #47307D 100%);
           padding: 60px 24px 80px;
           text-align: center;
           font-family: 'DM Sans', sans-serif;
-          color: #fff;
+          color: #EFEFEF;
         }
 
         /* Subtle top vignette only — bars carry the purple */
@@ -60,13 +60,12 @@ export default function HeroSection({ id }: { id?: string }) {
         .predict-pillar {
           flex: 1;
           background: linear-gradient(to top,
-            #2e0a5e 0%,
-            #5b21b6 30%,
-            #7c3aed 60%,
-            rgba(139,92,246,0.25) 85%,
+            #47307D 0%,
+            #352166 50%,
             transparent 100%
           );
           border-radius: 2px 2px 0 0;
+          opacity: 0.6;
         }
         .predict-pillar:nth-child(1)  { height: 32vh; }
         .predict-pillar:nth-child(2)  { height: 42vh; }
@@ -97,14 +96,14 @@ export default function HeroSection({ id }: { id?: string }) {
           display: inline-flex;
           align-items: center;
           gap: 7px;
-          border: 1px solid rgba(255,255,255,0.18);
-          background: rgba(255,255,255,0.06);
+          border: 1px solid rgba(239,239,239,0.18);
+          background: rgba(239,239,239,0.06);
           backdrop-filter: blur(6px);
           border-radius: 9999px;
           padding: 5px 16px;
           font-size: 12.5px;
           letter-spacing: 0.04em;
-          color: rgba(255,255,255,0.75);
+          color: rgba(239,239,239,0.75);
           margin-bottom: 28px;
         }
         .predict-badge-dot {
@@ -123,7 +122,7 @@ export default function HeroSection({ id }: { id?: string }) {
           font-weight: 500;
           letter-spacing: -0.02em;
           line-height: 1.1;
-          color: #fff;
+          color: #EFEFEF;
           margin: 0;
         }
         .predict-h1-italic {
@@ -132,7 +131,7 @@ export default function HeroSection({ id }: { id?: string }) {
           font-size: clamp(34px, 5.6vw, 60px);
           font-weight: 500;
           line-height: 1.15;
-          color: #fff;
+          color: #EFEFEF;
           margin: 4px 0 24px;
         }
 
@@ -140,7 +139,7 @@ export default function HeroSection({ id }: { id?: string }) {
         .predict-sub {
           font-size: clamp(13.5px, 1.5vw, 15.5px);
           line-height: 1.7;
-          color: rgba(255,255,255,0.52);
+          color: rgba(239,239,239,0.52);
           max-width: 480px;
           margin-bottom: 36px;
         }
@@ -149,8 +148,8 @@ export default function HeroSection({ id }: { id?: string }) {
         .predict-input-row {
           display: flex;
           align-items: center;
-          background: rgba(255,255,255,0.06);
-          border: 1px solid rgba(255,255,255,0.14);
+          background: rgba(239,239,239,0.06);
+          border: 1px solid rgba(239,239,239,0.14);
           border-radius: 9999px;
           padding: 5px 5px 5px 22px;
           gap: 8px;
@@ -163,15 +162,15 @@ export default function HeroSection({ id }: { id?: string }) {
           background: transparent;
           border: none;
           outline: none;
-          color: rgba(255,255,255,0.7);
+          color: rgba(239,239,239,0.7);
           font-family: 'DM Sans', sans-serif;
           font-size: 14px;
           min-width: 0;
         }
-        .predict-email::placeholder { color: rgba(255,255,255,0.35); }
+        .predict-email::placeholder { color: rgba(239,239,239,0.35); }
 
         .predict-cta {
-          background: #fff;
+          background: #EFEFEF;
           color: #000;
           border: none;
           border-radius: 9999px;
@@ -189,7 +188,7 @@ export default function HeroSection({ id }: { id?: string }) {
         .predict-hint {
           margin-top: 16px;
           font-size: 12px;
-          color: rgba(255,255,255,0.3);
+          color: rgba(239,239,239,0.3);
           letter-spacing: 0.03em;
         }
 
