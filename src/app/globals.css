@@ -24,6 +24,7 @@
   --color-primary-600: var(--primary-600);
   --color-primary-500: var(--primary-500);
   --color-accent: var(--accent);
+  --color-white: #EFEFEF;
   
   --font-sans: 'Inter', var(--font-primary);
   --font-serif: 'DM Serif Display', Georgia, serif;
@@ -130,7 +131,7 @@ body {
 
 /* Glassmorphism Classes (Light Theme Redesign) */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.45);
+  background: rgba(239, 239, 239, 0.45);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(124, 58, 237, 0.08);
@@ -138,7 +139,7 @@ body {
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(239, 239, 239, 0.6);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(124, 58, 237, 0.06);
@@ -253,8 +254,8 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.82);
-  background: radial-gradient(circle at 30% 25%, rgba(124, 58, 237, 0.36), rgba(124, 58, 237, 0.08) 58%, rgba(255, 255, 255, 0.04));
+  color: rgba(239, 239, 239, 0.82);
+  background: radial-gradient(circle at 30% 25%, rgba(124, 58, 237, 0.36), rgba(124, 58, 237, 0.08) 58%, rgba(239, 239, 239, 0.04));
   border: 1px solid rgba(124, 58, 237, 0.28);
   box-shadow: 0 10px 24px rgba(124, 58, 237, 0.12);
 }
@@ -345,7 +346,7 @@ html.lenis, html.lenis body {
 
 /* Premium Input Styling for Form (Light Glass Theme) */
 .premium-input {
-  background: rgba(255, 255, 255, 0.6) !important;
+  background: rgba(239, 239, 239, 0.6) !important;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(124, 58, 237, 0.1) !important;
@@ -357,10 +358,10 @@ html.lenis, html.lenis body {
 }
 .premium-input:hover {
   border-color: rgba(124, 58, 237, 0.35) !important;
-  background: rgba(255, 255, 255, 0.8) !important;
+  background: rgba(239, 239, 239, 0.8) !important;
 }
 .premium-input:focus {
   border-color: #7C3AED !important;
-  background: #ffffff !important;
+  background: #EFEFEF !important;
   box-shadow: 0 0 20px rgba(124, 58, 237, 0.15) !important;
 }

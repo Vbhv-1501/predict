@@ -119,14 +119,15 @@ export default function EcosystemSection() {
   const cardRefs  = useRef<(HTMLElement | null)[]>([]);
 
   useEffect(() => {
+    const wrap   = wrapRef.current;
     const stage  = stageRef.current;
     const center = centerRef.current;
-    if (!stage) return;
+    if (!wrap || !stage) return;
 
     const prefersReduced =
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    let raf = 0, running = false;
+    let raf = 0, running = false, scrollProgress = 0;
     const start = performance.now();
 
     const L = {
@@ -144,10 +145,9 @@ export default function EcosystemSection() {
       const mobile = sw < 768, tablet = sw >= 768 && sw < 1100;
       L.stageW = sw; L.stageH = sh;
       L.mobile = mobile;
-      const base = Math.min(sw, sh);
-      // Reduce radius multiplier slightly to ensure nothing goes outside of screen window
-      L.orbitRX = base * (mobile ? 0.28 : tablet ? 0.32 : 0.35);
-      L.orbitRY = base * (mobile ? 0.22 : tablet ? 0.26 : 0.28);
+      // Calculate responsive orbit radii relative to sw and sh to prevent cropping!
+      L.orbitRX = sw * (mobile ? 0.22 : tablet ? 0.24 : 0.26);
+      L.orbitRY = sh * (mobile ? 0.20 : tablet ? 0.22 : 0.24);
       L.zNear   = mobile ? 0.45 : tablet ? 0.72 : 1.0;
       L.zFar    = mobile ? 0.30 : tablet ? 0.60 : 1.0;
       L.ampMul  = mobile ? 0.30 : 0.50;
@@ -181,6 +181,12 @@ export default function EcosystemSection() {
       return { x: bx, y: by };
     };
 
+    const computeProgress = () => {
+      const rect   = wrap.getBoundingClientRect();
+      const travel = rect.height - window.innerHeight;
+      scrollProgress = travel <= 0 ? 0 : clamp(-rect.top / travel, 0, 1);
+    };
+
     const applyTransform = (
       c: EcosystemCard, el: HTMLElement,
       x: number, y: number, z: number,
@@ -196,9 +202,21 @@ export default function EcosystemSection() {
     };
 
     const render = (now: number) => {
+      if (L.mobile) {
+        for (let i = 0; i < CARDS.length; i++) {
+          const el = cardRefs.current[i];
+          if (el) {
+            el.style.transform = "";
+            el.style.opacity = "1";
+          }
+        }
+        if (running) raf = requestAnimationFrame(render);
+        return;
+      }
+
       const t          = (now - start) / 1000;
-      const dispersion = 1.0;
-      const theta      = DRIFT_RATE * t;
+      const dispersion = 0.15 + 0.85 * easeOutCubic(clamp(scrollProgress / 0.85, 0, 1));
+      const theta      = DRIFT_RATE * t * dispersion;
       const cosT = Math.cos(theta), sinT = Math.sin(theta);
 
       for (let i = 0; i < CARDS.length; i++) {
@@ -221,16 +239,27 @@ export default function EcosystemSection() {
         const y    = (py + fy) * dispersion;
         const z    = (c.z * zMul + fz) * dispersion;
 
-        const sc   = 1.0;
+        const baseSc = c.tier === "near" ? 0.55 : 0.45;
+        const sc     = baseSc + (1 - baseSc) * dispersion;
 
         applyTransform(c, el, x, y, z, rdX, rdZ, sc);
-        el.style.opacity = "1.000";
+        el.style.opacity = (0.20 + 0.80 * clamp(dispersion * 1.5, 0, 1)).toFixed(3);
       }
 
       if (running) raf = requestAnimationFrame(render);
     };
 
     const renderStatic = () => {
+      if (L.mobile) {
+        for (let i = 0; i < CARDS.length; i++) {
+          const el = cardRefs.current[i];
+          if (el) {
+            el.style.transform = "";
+            el.style.opacity = "1";
+          }
+        }
+        return;
+      }
       for (let i = 0; i < CARDS.length; i++) {
         const c   = CARDS[i];
         const el  = cardRefs.current[i];
@@ -242,12 +271,15 @@ export default function EcosystemSection() {
       }
     };
 
+    const onScroll = () => computeProgress();
     const onResize = () => {
       measure();
+      computeProgress();
       if (prefersReduced) renderStatic();
     };
 
     measure();
+    computeProgress();
 
     let io: IntersectionObserver | null = null;
     if (prefersReduced) {
@@ -266,12 +298,14 @@ export default function EcosystemSection() {
       io.observe(stage);
     }
 
+    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
 
     return () => {
       running = false;
       cancelAnimationFrame(raf);
       io?.disconnect();
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
     };
   }, []);

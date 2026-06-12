@@ -2,14 +2,14 @@
 .eco {
   position: relative;
   width: 100%;
-  height: 100vh; /* Single screen height, no scrolling needed */
+  height: 150vh; /* Scrollable space for animation to trigger */
   background: #0D0D0F; /* Sleek dark background matching dark theme sections */
   color: #EFEFEF;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .eco__stage {
-  position: relative;
+  position: sticky;
   top: 0;
   left: 0;
   width: 100%;
@@ -178,6 +178,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  .eco__card--sm {
+    width: 100px;
+  }
+  .eco__card--md {
+    width: 120px;
+  }
+  .eco__card--lg {
+    width: 140px;
   }
   .eco__center {
     order: -1;

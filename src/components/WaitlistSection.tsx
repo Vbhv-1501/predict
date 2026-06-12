@@ -25,7 +25,7 @@ export default function HeroSection({ id }: { id?: string }) {
           align-items: center;
           justify-content: center;
           overflow: hidden;
-          background: linear-gradient(180deg, #000000 0%, #352166 60%, #47307D 100%);
+          background: #000;
           padding: 60px 24px 80px;
           text-align: center;
           font-family: 'DM Sans', sans-serif;
@@ -60,12 +60,12 @@ export default function HeroSection({ id }: { id?: string }) {
         .predict-pillar {
           flex: 1;
           background: linear-gradient(to top,
-            #47307D 0%,
-            #352166 50%,
+            #352166 0%,
+            #47307D 50%,
             transparent 100%
           );
           border-radius: 2px 2px 0 0;
-          opacity: 0.6;
+          opacity: 0.8;
         }
         .predict-pillar:nth-child(1)  { height: 32vh; }
         .predict-pillar:nth-child(2)  { height: 42vh; }
