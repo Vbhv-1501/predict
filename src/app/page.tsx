@@ -8,7 +8,7 @@ import StoryCanvas from "@/components/StoryCanvas";
 import VideoShowcase from "@/components/VideoShowcase";
 import StoryCarousel from "@/components/StoryCarousel";
 import DepthConverge from "@/components/DepthConverge";
-import HappyClients from "@/components/HappyClients";
+import EcosystemSection from "@/components/EcosystemSection";
 import DepthScrollSection from "@/components/DepthScrollSection";
 import Sections from "@/components/Sections";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -72,8 +72,8 @@ export default function Home() {
             {/* Section 3: DepthConverge — signal convergence animation */}
               <DepthConverge />
 
-            {/* Section 4: Happy Clients */}
-              <HappyClients />
+            {/* Section 4: Ecosystem Section */}
+              <EcosystemSection />
 
             {/* Section 5: Chat storytelling */}
               <DepthScrollSection />
