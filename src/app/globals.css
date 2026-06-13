@@ -13,6 +13,15 @@
   --accent: #7C3AED; /* Premium Electric Purple */
   
   --font-primary: 'Neue Montreal', 'Plus Jakarta Sans', 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Brand palette provided by user */
+  --brand-900: #352166;
+  --brand-800: #47307D;
+  --brand-700: #5E3D94;
+  --brand-600: #8151B6;
+  --brand-500: #9259C7;
+  --brand-white: #EFEFEF;
+  --brand-black: #000000;
+  --brand-accent: #8504FE;
 }
 
 @theme {
@@ -29,6 +38,8 @@
   --font-sans: 'Inter', var(--font-primary);
   --font-serif: 'DM Serif Display', Georgia, serif;
   --font-neue: 'Neue Montreal', var(--font-primary);
+  /* Force default to Neue Montreal weight mapping */
+  --font-stack: 'Neue Montreal', 'Plus Jakarta Sans', 'Inter', sans-serif;
   
   --animate-float: float 6s ease-in-out infinite;
   --animate-pulse-glow: pulseGlow 4s ease-in-out infinite;
@@ -54,8 +65,8 @@
 html, body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-primary);
-  overflow-x: hidden;
+  font-family: var(--font-neue);
+  overflow-x: clip;
   overflow-anchor: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -66,12 +77,40 @@ body {
   max-width: 100vw;
 }
 
+em, i {
+  font-style: italic;
+}
+
+.heading-opaque {
+  display: inline-flex;
+  background: var(--brand-white);
+  color: var(--brand-900);
+  padding: 8px 14px;
+  border-radius: 10px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+.gsap-float {
+  animation: float 6.2s ease-in-out infinite;
+}
+
+@media (max-width: 767px) {
+  .gsap-float {
+    animation: none !important;
+  }
+}
+
+img,
+svg,
+canvas {
+  max-width: 100%;
+}
+
 .post-hero-flow {
   position: relative;
   z-index: 0;
   width: 100%;
   max-width: 100vw;
-  overflow-x: hidden;
   overflow-x: clip;
   overflow-anchor: none;
 }
@@ -173,7 +212,7 @@ body {
 }
 
 .text-gradient-purple {
-  background: linear-gradient(135deg, #8151B6 0%, #7C3AED 100%);
+  background: linear-gradient(135deg, var(--brand-600) 0%, var(--brand-500) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -313,7 +352,26 @@ html.lenis, html.lenis body {
 /* Disable floating animations on mobile for rendering performance */
 @media (max-width: 767px) {
   .animate-float-logo {
-    animation: none !important;
+    animation-duration: 10s !important;
+  }
+
+  .hero-title {
+    font-size: clamp(46px, 16vw, 72px);
+  }
+
+  .section-title {
+    font-size: clamp(32px, 10vw, 44px);
+  }
+
+  .testimonial-card {
+    width: min(82vw, 340px) !important;
+    padding: 24px !important;
+  }
+
+  .pipeline-card:hover,
+  .glass-card:hover,
+  .testimonial-card:hover {
+    transform: none !important;
   }
 }
 

@@ -57,7 +57,7 @@ export default function Navbar() {
       }`}
     >
       <div className="absolute inset-0 bg-white/75 backdrop-blur-md -z-10" />
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-3">
         {/* Left: Predict Inverted/Dark Logo */}
         <div className="flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
           <Image
@@ -65,7 +65,7 @@ export default function Navbar() {
             alt="PREDICT"
             width={120}
             height={32}
-            className="h-8 w-auto object-contain invert hue-rotate-180 brightness-90 transition-all duration-300"
+            className="h-6 sm:h-8 w-auto object-contain invert hue-rotate-180 brightness-90 transition-all duration-300"
             priority
           />
         </div>
@@ -89,7 +89,7 @@ export default function Navbar() {
         {/* Mobile Call to Action Button */}
         <button
           onClick={() => scrollToSection("contact")}
-          className="px-5 py-2.5 bg-accent hover:bg-accent/90 text-white font-medium rounded-full text-sm transition-all duration-300 shadow-md shadow-accent/10 hover:shadow-accent/25 cursor-pointer"
+          className="px-4 sm:px-5 py-2 sm:py-2.5 bg-accent hover:bg-accent/90 text-white font-medium rounded-full text-xs sm:text-sm whitespace-nowrap transition-all duration-300 shadow-md shadow-accent/10 hover:shadow-accent/25 cursor-pointer"
         >
           Book Assessment
         </button>

@@ -336,7 +336,7 @@ export default function Sections() {
   const row3 = [...testimonials.slice(2), ...testimonials.slice(0, 2), ...testimonials.slice(2), ...testimonials.slice(0, 2)];
 
   return (
-    <div className="relative w-full bg-[#F8F8F6] text-foreground">
+    <div className="relative w-full bg-[#F8F8F6] text-foreground z-[5]">
       
       {/* SECTION 4: 9000+ DATA POINTS */}
       <section className="py-24 bg-[#0B0B0C] relative overflow-hidden border-y border-white/[0.05]">
@@ -348,7 +348,7 @@ export default function Sections() {
             viewport={{ once: true }}
             transition={{ duration: 1 }}
           >
-            <div className="text-8xl md:text-9xl font-bold font-mono text-gradient-purple mb-4 select-none drop-shadow-[0_0_25px_rgba(124,58,237,0.25)]">
+            <div className="text-6xl sm:text-8xl md:text-9xl font-bold font-mono text-gradient-purple mb-4 select-none drop-shadow-[0_0_25px_rgba(124,58,237,0.25)]">
               <Counter from={0} to={9000} suffix="+" />
             </div>
             <h3 className="text-xl md:text-2xl font-bold text-white tracking-wide mb-2">
@@ -446,7 +446,7 @@ export default function Sections() {
                 Create a permanent biomechanical baseline for your future health. Access premium tracking protocols to map physical velocity, adjust vector loads, and preempt structural deterioration.
               </p>
 
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 {[
                   "Create a baseline for health",
                   "Track movement improvement",
@@ -494,7 +494,7 @@ export default function Sections() {
               </div>
 
               {/* Simulated status cards */}
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                 {[
                   { label: "Gait Symmetry", val: "98.2%", color: "text-accent" },
                   { label: "Joint Stress", val: "Optimal", color: "text-green-400" },
@@ -633,7 +633,7 @@ export default function Sections() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.9 }}
-                className="relative w-80 h-[640px] rounded-[48px] border-[10px] border-neutral-800 bg-neutral-950 shadow-[0_25px_60px_rgba(124,58,237,0.06)] overflow-hidden"
+                className="relative w-full max-w-80 h-[640px] rounded-[40px] sm:rounded-[48px] border-[8px] sm:border-[10px] border-neutral-800 bg-neutral-950 shadow-[0_25px_60px_rgba(124,58,237,0.06)] overflow-hidden"
               >
                 {/* Phone Notch */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-6 bg-white/10 rounded-b-2xl z-30 flex items-center justify-center">
@@ -930,7 +930,7 @@ export default function Sections() {
             </div>
 
             {/* Social links */}
-            <div className="grid grid-cols-3 gap-6 font-neue text-xs md:text-sm font-medium text-[#EFEFEF]/60 md:justify-items-end">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 font-neue text-xs md:text-sm font-medium text-[#EFEFEF]/60 md:justify-items-end">
               <a href="#" className="hover:text-[#EFEFEF] flex items-center gap-1.5 transition-colors group">
                 <span className="text-accent font-bold group-hover:translate-x-0.5 transition-transform">&gt;</span> Twitter
               </a>

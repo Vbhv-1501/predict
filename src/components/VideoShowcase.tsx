@@ -160,12 +160,12 @@ export default function VideoShowcase() {
   return (
     <section
       ref={containerRef}
-      className="py-32 w-full bg-[#F8F8F6] relative overflow-hidden flex flex-col items-center border-t border-black/[0.04] font-neue select-none"
+      className="py-20 md:py-32 w-full bg-[#F8F8F6] relative overflow-hidden flex flex-col items-center border-t border-black/[0.04] font-neue select-none"
     >
       <div className="max-w-7xl mx-auto px-6 w-full flex flex-col items-center relative z-10">
         
         {/* Top heading / Story copy */}
-        <div className="text-center mb-16 max-w-4xl">
+        <div className="text-center mb-10 md:mb-16 max-w-4xl">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 leading-[1.08] tracking-tight uppercase mb-6 font-neue">
             Your blood carries <br className="hidden md:inline" />
             your true age.
@@ -185,7 +185,7 @@ export default function VideoShowcase() {
             {/* Floating iPad visual with interactive specular glare and tilt */}
             <div
               ref={cardRef}
-              className="relative w-full rounded-[32px] overflow-hidden bg-black shadow-[0_45px_100px_rgba(0,0,0,0.12)] border border-black/10 flex items-center justify-center will-change-transform"
+              className="relative w-full rounded-2xl md:rounded-[32px] overflow-hidden bg-black shadow-[0_45px_100px_rgba(0,0,0,0.12)] border border-black/10 flex items-center justify-center will-change-transform"
               style={{ transformStyle: "preserve-3d", backfaceVisibility: "hidden" }}
             >
               {/* Glass reflection layer */}
@@ -213,7 +213,7 @@ export default function VideoShowcase() {
         </div>
 
         {/* Supporting statement below */}
-        <div className="text-center mt-16 max-w-4xl">
+        <div className="text-center mt-10 md:mt-16 max-w-4xl">
           <p className="font-neue text-base md:text-lg lg:text-xl xl:text-2.5xl tracking-wider text-[#7C3AED] uppercase font-bold leading-relaxed">
             Combining muscle-first diagnostics, specialist protocols, and continuous blood intelligence.
           </p>

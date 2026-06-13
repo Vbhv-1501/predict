@@ -43,6 +43,7 @@ export default function DepthConverge() {
   const cardRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const labelsRef = useRef<HTMLDivElement>(null);
+  const muscleRef = useRef<HTMLDivElement>(null);
   const phaseRef = useRef<number>(0);
   const rafRef = useRef<number>(0);
   const laneYRef = useRef<number[]>([]);
@@ -125,7 +126,9 @@ export default function DepthConverge() {
       ctx.clearRect(0, 0, W, H);
 
       const reveal = 1;
-      const conv = easeInOut(norm(p, 0.45, 0.92));
+      const convergeIn = easeInOut(norm(p, 0.38, 0.62));
+      const convergeOut = 1 - easeInOut(norm(p, 0.72, 0.98));
+      const conv = convergeIn * convergeOut;
       const t_stretch = easeInOut(norm(p, 0.20, 0.40));
 
       const ys_labels = laneYRef.current;
@@ -191,22 +194,24 @@ export default function DepthConverge() {
         ctx.shadowBlur = 0;
       });
 
-      ctx.globalAlpha = reveal;
-      const beam = ctx.createLinearGradient(braidCx, 0, orbX + 80, 0);
-      beam.addColorStop(0, "rgba(124,58,237,0)");
-      beam.addColorStop(1, "rgba(124,58,237,0.9)");
-      ctx.strokeStyle = beam; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(braidCx, orbY); ctx.lineTo(orbX, orbY); ctx.stroke();
+      if (conv > 0.01) {
+        ctx.globalAlpha = conv;
+        const beam = ctx.createLinearGradient(braidCx, 0, orbX + 80, 0);
+        beam.addColorStop(0, "rgba(124,58,237,0)");
+        beam.addColorStop(1, "rgba(124,58,237,0.9)");
+        ctx.strokeStyle = beam; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(braidCx, orbY); ctx.lineTo(orbX, orbY); ctx.stroke();
 
-      const pulse = 0.5 + Math.sin(t * 3) * 0.12;
-      const og = ctx.createRadialGradient(orbX, orbY, 0, orbX, orbY, 46 * conv + 8);
-      og.addColorStop(0, `rgba(124,58,237,${0.95 * conv})`);
-      og.addColorStop(0.4, `rgba(146,89,199,${0.5 * conv})`);
-      og.addColorStop(1, "rgba(146,89,199,0)");
-      ctx.fillStyle = og;
-      ctx.beginPath(); ctx.arc(orbX, orbY, (46 * conv + 8) * pulse + 14, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = `rgba(194,171,234,${conv})`;
-      ctx.beginPath(); ctx.arc(orbX, orbY, 5 * conv + 2, 0, Math.PI * 2); ctx.fill();
+        const pulse = 0.5 + Math.sin(t * 3) * 0.12;
+        const og = ctx.createRadialGradient(orbX, orbY, 0, orbX, orbY, 46 * conv + 8);
+        og.addColorStop(0, `rgba(124,58,237,${0.95 * conv})`);
+        og.addColorStop(0.4, `rgba(146,89,199,${0.5 * conv})`);
+        og.addColorStop(1, "rgba(146,89,199,0)");
+        ctx.fillStyle = og;
+        ctx.beginPath(); ctx.arc(orbX, orbY, (46 * conv + 8) * pulse + 14, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = `rgba(194,171,234,${conv})`;
+        ctx.beginPath(); ctx.arc(orbX, orbY, 5 * conv + 2, 0, Math.PI * 2); ctx.fill();
+      }
 
       ctx.globalAlpha = 1;
       rafRef.current = requestAnimationFrame(draw);
@@ -225,9 +230,10 @@ export default function DepthConverge() {
     const text = sectionRef.current.querySelector(".dc-text");
     const multi = card.querySelector(".dc-card-multi");
     const labels = card.querySelector(".dc-labels");
-    const readout = card.querySelector(".dc-readout");
+    const muscle = muscleRef.current;
 
-    gsap.set([labels, readout], { autoAlpha: 0 });
+    gsap.set(labels, { autoAlpha: 0 });
+    gsap.set(muscle, { autoAlpha: 0, scale: 0.88, x: 28 });
     gsap.set(card, { yPercent: -50 });
 
     const ctxGsap = gsap.context(() => {
@@ -254,8 +260,17 @@ export default function DepthConverge() {
 
       tl.to(text, { autoAlpha: 0, duration: 0.10, ease: "power1.in" }, 0.22);
       tl.to(multi, { autoAlpha: 0, duration: 0.06 }, 0.34);
-      tl.to(labels,  { autoAlpha: 1, duration: 0.08 }, 0.34)
-        .to(readout, { autoAlpha: 1, x: 0, duration: 0.10 }, 0.62);
+      tl.to(labels, { autoAlpha: 1, duration: 0.08 }, 0.34);
+      tl.to(muscle, {
+        autoAlpha: 1,
+        scale: 1,
+        x: 0,
+        duration: 0.14,
+        ease: "power2.out",
+      }, 0.78);
+
+        // add a floating class so CSS animation applies
+        tl.call(() => { muscle?.classList.add('floating'); }, null, 0.78 + 0.08);
 
       ScrollTrigger.sort();
     }, sectionRef);
@@ -292,10 +307,9 @@ export default function DepthConverge() {
             </div>
           ))}
         </div>
-        <div className="dc-m-read">
-          <span className="dc-kicker red">Predict reads</span>
-          <h3>Recovery&apos;s back.</h3>
-          <p>Sleep + HRV up three days. Glucose steady. A good day to push.</p>
+        <div className="dc-m-muscle">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/assets/muscle-fiber.webp" alt="Detailed muscle fiber" />
         </div>
         <style>{mobileCSS}</style>
       </section>
@@ -356,17 +370,9 @@ export default function DepthConverge() {
             ))}
           </div>
 
-          <div className="dc-readout">
-            <div className="dc-read-block">
-              <span className="dc-kicker red">Predict reads</span>
-              <h3>Recovery&apos;s back.</h3>
-              <p>Sleep + HRV up three days. Glucose steady. A good day to push.</p>
-            </div>
-            <div className="dc-read-cta">
-              <p className="dim">Bring your devices.</p>
-              <p className="strong">We bring the intelligence.</p>
-              <p className="red">Continuously.</p>
-            </div>
+          <div ref={muscleRef} className="dc-muscle" aria-label="Muscle fiber visualization">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/assets/muscle-fiber.webp" alt="Detailed muscle fiber" />
           </div>
         </div>
       </div>
@@ -381,10 +387,10 @@ const desktopCSS = `
 .dc-section{
   --bg:#F8F8F6; --ink:#111115; --muted:#4A475A; --red:#9259C7;
   --font: inherit;
-  position:relative; background:var(--bg); color:var(--ink); font-family:var(--font);
+  position:relative; z-index:2; background:var(--bg); color:var(--ink); font-family:var(--font);
   -webkit-font-smoothing:antialiased;
 }
-.dc-stage{ position:relative; height:100vh; width:100%; overflow:hidden; }
+.dc-stage{ position:relative; height:100vh; height:100svh; width:100%; overflow:hidden; }
 
 .dc-text{
   position:absolute; left:clamp(24px,6vw,110px); top:50%; transform:translateY(-50%);
@@ -432,16 +438,31 @@ const desktopCSS = `
 .dc-lab-txt{ font-size:13px; letter-spacing:.14em; color:#9a9a9c; }
 .dc-lab-line{ height:1px; background:linear-gradient(90deg,#555,transparent); }
 
-.dc-readout{ position:absolute; right:clamp(24px,5vw,90px); top:50%; transform:translateY(-50%);
-  width:min(28vw,360px); z-index:4; }
-.dc-read-block{ border-left:2px solid #7C3AED; padding-left:18px; }
-.dc-read-block h3{ margin:6px 0 10px; font-size:34px; font-weight:800; color:#fff; letter-spacing:-0.02em; }
-.dc-read-block p{ margin:0; color:#9a9a9c; font-size:16px; line-height:1.45; }
-.dc-read-cta{ margin-top:56px; }
-.dc-read-cta p{ margin:0; font-size:clamp(20px,1.8vw,28px); font-weight:700; letter-spacing:-0.01em; }
-.dc-read-cta .dim{ color:#9a9a9c; }
-.dc-read-cta .strong{ color:#fff; }
-.dc-read-cta .red{ color:#7C3AED; }
+.dc-muscle{
+  position:absolute; right:clamp(14px,3.5vw,54px); top:50%; transform:translateY(-50%);
+  width:min(22vw,380px); height:min(66vh,620px); z-index:5;
+  display:flex; align-items:center; justify-content:center; pointer-events:none;
+  perspective:1200px; /* allow 3D feel when we tilt/scale */
+}
+.dc-muscle::before{
+  content:""; position:absolute; inset:8% 2%;
+  background:radial-gradient(circle,rgba(133,4,254,0.18),transparent 70%);
+  filter:blur(36px);
+  transition:opacity .45s ease;
+}
+.dc-muscle img{
+  position:relative; width:100%; height:100%; object-fit:contain;
+  filter:drop-shadow(0 22px 42px rgba(0,0,0,.55));
+  transform-origin:50% 48%;
+  transition:transform .7s cubic-bezier(.2,1,.3,1), filter .45s ease;
+  will-change:transform;
+}
+
+/* Floating effect and slight z-axis pop when active */
+.dc-muscle.floating img{
+  transform: translateZ(0px) translateY(-6px) scale(1.02) rotateX(1.2deg);
+}
+.dc-muscle.floating::before{ opacity:1; }
 
 @media (max-width: 820px) {
   .dc-text {
@@ -466,60 +487,52 @@ const desktopCSS = `
     font-size: clamp(14px, 3.5vw, 18px) !important;
   }
   .dc-card {
-    right: 5% !important;
-    left: 5% !important;
-    top: 45% !important;
-    transform: translateY(-50%) !important;
-    width: 90% !important;
-    height: 40vh !important;
-    max-height: 380px !important;
+    right: 5%;
+    left: 5%;
+    top: 45%;
+    transform: translateY(-50%);
+    width: 90%;
+    height: min(40svh, 380px);
   }
   .dc-card-multi {
-    padding: 40px 16px 16px !important;
+    position: absolute !important;
+    left: 8% !important;
+    right: 8% !important;
+    top: 25% !important;
+    transform: translateY(-50%) !important;
+    height: auto !important;
+    padding: 0 !important;
     gap: 16px !important;
   }
   .dc-msig {
-    grid-template-columns: 18px 74px 1fr !important;
+    grid-template-columns: 18px 80px 1fr !important;
     gap: 8px !important;
   }
   .dc-msig-label {
-    font-size: 10px !important;
+    font-size: 11px !important;
   }
   .dc-msig-wave {
     height: 24px !important;
   }
   .dc-labels {
-    left: 8% !important;
-    right: 8% !important;
-    top: 25% !important;
+    left: 5% !important;
+    right: 5% !important;
+    top: 42% !important;
     transform: translateY(-50%) !important;
-    gap: 16px !important;
+    gap: clamp(18px, 4.5svh, 34px) !important;
   }
   .dc-lab {
-    grid-template-columns: 16px auto 1fr !important;
+    grid-template-columns: 18px 80px 1fr !important;
     gap: 8px !important;
   }
   .dc-lab-txt {
     font-size: 11px !important;
   }
-  .dc-readout {
-    right: 8% !important;
-    left: 8% !important;
-    top: 65% !important;
-    transform: translateY(-50%) !important;
-    width: 84% !important;
-  }
-  .dc-read-block h3 {
-    font-size: clamp(24px, 6vw, 30px) !important;
-  }
-  .dc-read-block p {
-    font-size: 13px !important;
-  }
-  .dc-read-cta {
-    margin-top: 24px !important;
-  }
-  .dc-read-cta p {
-    font-size: clamp(16px, 4vw, 20px) !important;
+  .dc-muscle {
+    right: 3% !important;
+    top: 72% !important;
+    width: 44vw !important;
+    height: 35svh !important;
   }
 }
 `;
@@ -539,9 +552,8 @@ const mobileCSS = `
 .dc-m-row{ display:grid; grid-template-columns:20px 84px 1fr; align-items:center; gap:12px; }
 .dc-m-label{ font-size:11px; letter-spacing:.12em; color:#bdbdbf; }
 .dc-m-wave{ width:100%; height:30px; }
-.dc-m-read .dc-kicker.red{ color:#9259C7; }
-.dc-m-read h3{ font-size:30px; font-weight:800; margin:6px 0 8px; }
-.dc-m-read p{ color:#4A475A; font-size:16px; margin:0; }
+.dc-m-muscle{ height:min(54svh,520px); display:flex; justify-content:center; }
+.dc-m-muscle img{ width:100%; height:100%; object-fit:contain; }
 @keyframes dcWaveFlow {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-80px, 0, 0); }

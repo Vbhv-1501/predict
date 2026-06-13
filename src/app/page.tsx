@@ -9,6 +9,7 @@ import VideoShowcase from "@/components/VideoShowcase";
 import StoryCarousel from "@/components/StoryCarousel";
 import DepthConverge from "@/components/DepthConverge";
 import EcosystemSection from "@/components/EcosystemSection";
+import ProtocolSection from "@/components/ProtocolSection";
 import DepthScrollSection from "@/components/DepthScrollSection";
 import Sections from "@/components/Sections";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -77,6 +78,7 @@ export default function Home() {
 
             {/* Section 5: Chat storytelling */}
               <DepthScrollSection />
+              <ProtocolSection />
 
             {/* Sections 6–12 */}
               <Sections />

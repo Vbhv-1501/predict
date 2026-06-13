@@ -23,9 +23,9 @@ export default function StoryCarousel() {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        setYOffset(360);
+        setYOffset(Math.max(300, window.innerHeight * 0.54));
       } else {
-        setYOffset(540);
+        setYOffset(Math.max(480, window.innerHeight * 0.68));
       }
     };
     window.addEventListener("resize", handleResize);
@@ -113,13 +113,15 @@ export default function StoryCarousel() {
     <section ref={sectionRef} className="relative z-10 w-full bg-[#F8F8F6]">
       <div
         ref={panelRef}
-        className="h-screen w-full relative overflow-hidden flex items-center justify-center bg-[#F8F8F6]"
+        className="h-screen min-h-[620px] w-full relative overflow-hidden flex items-center justify-center bg-[#F8F8F6]"
       >
         {/* Main section heading pinned at the top */}
-        <div className="absolute top-12 md:top-16 lg:top-20 left-0 right-0 text-center px-6 pointer-events-none z-20">
-          <h2 className="font-neue font-bold text-3xl md:text-4.5xl lg:text-5.5xl text-neutral-900 uppercase tracking-tight leading-none">
-            The data was always there.
-          </h2>
+        <div className="absolute top-[max(5rem,8svh)] md:top-[9svh] left-0 right-0 text-center px-6 pointer-events-none z-20">
+          <span className="heading-opaque gsap-float inline-flex justify-center">
+            <h2 className="font-neue font-bold text-[clamp(1.65rem,7vw,3.4rem)] text-neutral-900 uppercase tracking-tight leading-[0.95]">
+              The data was always there.
+            </h2>
+          </span>
         </div>
 
         {CARDS.map((card, i) => (
@@ -128,18 +130,18 @@ export default function StoryCarousel() {
             ref={(el) => {
               cardRefs.current[i] = el;
             }}
-            className="absolute left-1/2 top-1/2 w-full max-w-lg md:max-w-2xl lg:max-w-4xl pointer-events-none will-change-transform opacity-0 px-6"
+            className="absolute left-1/2 top-[58%] md:top-[57%] w-full max-w-lg md:max-w-2xl lg:max-w-4xl pointer-events-none will-change-transform opacity-0 px-4 md:px-6"
             style={{
               transform: "translate3d(-50%, -50%, 0) scale(0.68)",
             }}
           >
-            <div className="flex flex-col items-center gap-8 w-full text-center">
+            <div className="flex flex-col items-center gap-5 md:gap-8 w-full text-center">
               {/* Visualizer Showcase Panel (no padding around it, no background box) */}
-              <div className="w-full aspect-video flex items-center justify-center bg-[#0B0B0C] border border-black/10 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.22)] relative">
+              <div className="w-full aspect-video max-h-[52svh] flex items-center justify-center bg-[#0B0B0C] border border-black/10 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.22)] relative">
                 {card.visual}
               </div>
               {/* Card copy heading below the image */}
-              <h3 className="font-neue font-bold text-2xl md:text-3xl lg:text-4.5xl text-neutral-900 leading-tight">
+              <h3 className="font-neue font-bold text-xl md:text-3xl lg:text-4.5xl text-neutral-900 leading-tight px-2">
                 {card.heading}
               </h3>
             </div>

@@ -33,16 +33,16 @@ const STEPS: StepItem[] = [
   {
     label: "A question",
     headline: "Ask anything.",
-    body: "Predict answers from your own data. No dashboards. No charts. A reply.",
+    body: "Depth answers from your own data. No dashboards. No charts. A reply.",
   },
   {
     label: "An insight",
     headline: "Patterns you'd\nnever spot.",
-    body: "Predict watches the whole record, and tells you what changed before you'd ever notice.",
+    body: "Depth watches the whole record, and tells you what changed before you'd ever notice.",
   },
   {
     label: "An action",
-    headline: "Tell Predict to act.",
+    headline: "Tell Depth to act.",
     body: "Schedules. Reminders. Bookings. One sentence is the whole flow.",
   },
 ];
@@ -108,6 +108,7 @@ export default function DepthScrollSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const threadRef = useRef<HTMLDivElement>(null);
+  const rightRef = useRef<HTMLDivElement>(null);
   const stepRefs = useRef<(HTMLElement | null)[]>([]);
   const chatRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -124,6 +125,8 @@ export default function DepthScrollSection() {
     if (prefersReducedMotion) return;
     if (!sectionRef.current || !panelRef.current) return;
 
+    ScrollTrigger.config({ ignoreMobileResize: true });
+
     const steps = stepRefs.current.filter(Boolean);
     const chat = chatRefs.current.filter(Boolean);
     const seg = 1 / steps.length;
@@ -139,7 +142,13 @@ export default function DepthScrollSection() {
     });
     gsap.set(chat, { autoAlpha: 0, y: 26, scale: 0.96, filter: "blur(0px)" });
 
-    const ctx = gsap.context(() => {
+    const mm = gsap.matchMedia();
+
+    mm.add({
+      isDesktop: "(min-width: 821px)",
+      isMobile: "(max-width: 820px)"
+    }, (context) => {
+      const { isDesktop } = context.conditions as { isDesktop: boolean };
       const thread = threadRef.current;
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -155,13 +164,23 @@ export default function DepthScrollSection() {
       });
 
       // Translate the chat thread container upwards as the conversation progresses to keep the active bubbles in view
-      // Adjusted values to be more shifted downwards (aligned with left-side height)
       if (thread) {
-        tl.to(thread, { y: 0, duration: 0.05 }, 0.08);
-        tl.to(thread, { y: -20, duration: 0.05, ease: "power2.out" }, 0.22);
-        tl.to(thread, { y: -76, duration: 0.05, ease: "power2.out" }, 0.30);
-        tl.to(thread, { y: -126, duration: 0.05, ease: "power2.out" }, 0.62);
-        tl.to(thread, { y: -158, duration: 0.05, ease: "power2.out" }, 0.72);
+        if (isDesktop) {
+          tl.to(thread, { y: 0, duration: 0.05 }, 0.08);
+          tl.to(thread, { y: -20, duration: 0.05, ease: "power2.out" }, 0.22);
+          tl.to(thread, { y: -76, duration: 0.05, ease: "power2.out" }, 0.30);
+          tl.to(thread, { y: -126, duration: 0.05, ease: "power2.out" }, 0.62);
+          tl.to(thread, { y: -158, duration: 0.05, ease: "power2.out" }, 0.72);
+        } else {
+          tl.to(thread, {
+            y: () => {
+              const viewportHeight = rightRef.current?.clientHeight ?? 0;
+              return -Math.max(0, thread.scrollHeight - viewportHeight + 20);
+            },
+            duration: 1,
+            ease: "none",
+          }, 0);
+        }
       }
 
       /* left panel cross-fade */
@@ -215,7 +234,7 @@ export default function DepthScrollSection() {
     }, sectionRef);
 
     return () => {
-      ctx.revert();
+      mm.revert();
     };
   }, [prefersReducedMotion]);
 
@@ -245,7 +264,7 @@ export default function DepthScrollSection() {
           </div>
 
           {/* RIGHT: chat thread */}
-          <div className="dx-right">
+          <div ref={rightRef} className="dx-right">
             <div ref={threadRef} className="dx-thread">
               {CHAT.map((item, i) => {
                 if (item.type === "user")
@@ -289,12 +308,14 @@ export default function DepthScrollSection() {
           --bg:#F8F8F6; --ink:#111115; --muted:#4A475A;
           --blue:#7C3AED; --bubble:rgba(255, 255, 255, 0.6); --accent:#9259C7;
           --font: inherit;
+          position: relative;
+          z-index: 4;
           background:var(--bg); color:var(--ink);
           font-family:var(--font);
           -webkit-font-smoothing:antialiased;
         }
         .dx-panel{
-          position:relative; height:100vh; width:100%;
+          position:relative; height:100vh; height:100svh; width:100%;
           overflow:hidden; display:flex; align-items:center;
         }
         .dx-inner{
@@ -403,7 +424,9 @@ export default function DepthScrollSection() {
         .dx-section.is-mobile .dx-headline{ font-size:clamp(38px,11vw,56px); }
         .dx-section.is-mobile .dx-progress{ display:none; }
         .dx-section.is-mobile .dx-bubble{ max-width:80%; font-size:17px; }
-        .dx-section.is-mobile .dx-right{ height:auto; }
+        /* Make left panel sticky at top on mobile while right thread scrolls */
+        .dx-section.is-mobile .dx-left{ position:sticky; top:0; z-index:3; background:var(--bg); }
+        .dx-section.is-mobile .dx-right{ height:auto; max-height:calc(100svh - 120px); overflow:auto; }
         .dx-section.is-mobile .dx-thread{ position:relative; }
         @keyframes dxFade{ to{opacity:1; transform:translateY(0);} }
         @media (prefers-reduced-motion:reduce){
@@ -413,40 +436,47 @@ export default function DepthScrollSection() {
         @media (max-width: 820px) {
           .dx-panel {
             height: 100vh !important;
+            height: 100svh !important;
             display: flex !important;
-            align-items: center !important;
+            align-items: stretch !important;
           }
           .dx-inner {
             grid-template-columns: 1fr !important;
-            gap: 16px !important;
-            padding: 0 16px !important;
-            align-content: center !important;
+            grid-template-rows: minmax(190px, 38svh) 1fr !important;
+            gap: 10px !important;
+            padding: max(76px, 9svh) 18px 18px !important;
+            align-content: stretch !important;
             height: 100% !important;
           }
           .dx-left {
-            height: 38% !important;
+            height: auto !important;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
+            position: relative;
+            z-index: 2;
           }
           .dx-stage {
-            min-height: 180px !important;
+            min-height: 170px !important;
           }
+          .dx-label { margin-bottom: 10px !important; font-size: 12px !important; }
           .dx-headline {
-            font-size: clamp(28px, 6.5vw, 40px) !important;
+            font-size: clamp(34px, 10vw, 48px) !important;
             margin: 0 0 12px !important;
           }
           .dx-body {
-            font-size: clamp(14px, 3.2vw, 16px) !important;
+            font-size: clamp(14px, 3.8vw, 17px) !important;
             max-width: 100% !important;
           }
           .dx-right {
-            height: 48% !important;
+            height: auto !important;
+            min-height: 0 !important;
             align-self: stretch !important;
+            overflow:auto !important;
           }
           .dx-bubble {
             font-size: 13px !important;
-            max-width: 85% !important;
+            max-width: 88% !important;
             padding: 10px 14px !important;
           }
         }
