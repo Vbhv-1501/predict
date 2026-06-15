@@ -465,44 +465,48 @@ const desktopCSS = `
 .dc-muscle.floating::before{ opacity:1; }
 
 @media (max-width: 820px) {
+  .dc-stage { flex-direction: column !important; align-items: center !important; }
   .dc-text {
-    left: 5% !important;
-    right: 5% !important;
-    top: 15% !important;
-    transform: translateY(-50%) !important;
+    left: 50% !important;
+    right: auto !important;
+    top: 12% !important;
+    transform: translateX(-50%) translateY(-50%) !important;
     width: 90% !important;
     text-align: center;
+    z-index: 2 !important;
   }
   .dc-headline {
-    font-size: clamp(32px, 7vw, 46px) !important;
+    font-size: clamp(28px, 6.5vw, 40px) !important;
   }
   .dc-sub {
-    margin-top: 16px !important;
+    margin-top: 12px !important;
     display: flex;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
+    flex-wrap: wrap;
   }
   .dc-sub p {
     margin: 0 !important;
-    font-size: clamp(14px, 3.5vw, 18px) !important;
+    font-size: clamp(12px, 3vw, 16px) !important;
   }
   .dc-card {
-    right: 5%;
-    left: 5%;
-    top: 45%;
-    transform: translateY(-50%);
-    width: 90%;
-    height: min(40svh, 380px);
+    left: 50% !important;
+    right: auto !important;
+    top: 50% !important;
+    transform: translateX(-50%) translateY(-50%) !important;
+    width: min(92vw, 100%) !important;
+    height: min(54svh, 420px) !important;
+    margin: 0 auto !important;
   }
   .dc-card-multi {
     position: absolute !important;
-    left: 8% !important;
-    right: 8% !important;
-    top: 25% !important;
+    left: 6% !important;
+    right: 6% !important;
+    top: 50% !important;
     transform: translateY(-50%) !important;
     height: auto !important;
-    padding: 0 !important;
-    gap: 16px !important;
+    padding: 16px !important;
+    gap: 14px !important;
   }
   .dc-msig {
     grid-template-columns: 18px 80px 1fr !important;
@@ -515,24 +519,32 @@ const desktopCSS = `
     height: 24px !important;
   }
   .dc-labels {
-    left: 5% !important;
-    right: 5% !important;
-    top: 42% !important;
-    transform: translateY(-50%) !important;
-    gap: clamp(18px, 4.5svh, 34px) !important;
+    display: none !important;
   }
-  .dc-lab {
-    grid-template-columns: 18px 80px 1fr !important;
-    gap: 8px !important;
+  .dc-msig {
+    grid-template-columns: 16px 70px 1fr !important;
+    gap: 6px !important;
   }
-  .dc-lab-txt {
-    font-size: 11px !important;
+  .dc-msig-label {
+    font-size: 10px !important;
+    letter-spacing: 0.08em !important;
+  }
+  .dc-msig-wave {
+    height: 20px !important;
   }
   .dc-muscle {
-    right: 3% !important;
-    top: 72% !important;
-    width: 44vw !important;
-    height: 35svh !important;
+    left: 50% !important;
+    right: auto !important;
+    top: 78% !important;
+    transform: translateX(-50%) !important;
+    width: 54vw !important;
+    height: 28svh !important;
+  }
+  .dc-live {
+    top: 12px !important;
+    right: 12px !important;
+    font-size: 10px !important;
+    padding: 4px 8px !important;
   }
 }
 `;

@@ -158,22 +158,27 @@
 
 @media (max-width: 767px) {
   .eco {
-    /* shorter on mobile so the stage remains visible and centered */
-    height: 110svh;
+    height: 100svh;
   }
   .eco__stage {
-    perspective: 800px;
+    perspective: 600px;
   }
-  .eco__field { height: 54vh; max-width: 92%; }
-  .eco__card { transition: transform .45s cubic-bezier(.2,1,.3,1), opacity .35s; }
+  .eco__field {
+    height: 62svh;
+    max-width: 88%;
+    min-width: 88%;
+  }
+  .eco__card {
+    transition: transform .35s cubic-bezier(.2,1,.3,1), opacity .3s;
+  }
   .eco__card--sm {
-    width: clamp(75px, 18vmin, 90px);
+    width: clamp(70px, 16vmin, 85px);
   }
   .eco__card--md {
-    width: clamp(90px, 22vmin, 105px);
+    width: clamp(85px, 20vmin, 100px);
   }
   .eco__card--lg {
-    width: clamp(105px, 26vmin, 120px);
+    width: clamp(100px, 24vmin, 110px);
   }
   .eco__center {
     inset: 0 !important;

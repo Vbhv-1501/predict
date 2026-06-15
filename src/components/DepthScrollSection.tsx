@@ -442,19 +442,23 @@ export default function DepthScrollSection() {
           }
           .dx-inner {
             grid-template-columns: 1fr !important;
-            grid-template-rows: minmax(190px, 38svh) 1fr !important;
-            gap: 10px !important;
-            padding: max(76px, 9svh) 18px 18px !important;
+            grid-template-rows: minmax(180px, 35svh) 1fr !important;
+            gap: 8px !important;
+            padding: max(68px, 8svh) 16px 16px !important;
             align-content: stretch !important;
             height: 100% !important;
+            max-width: 100% !important;
+            width: 100% !important;
+            margin: 0 !important;
           }
           .dx-left {
             height: auto !important;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            position: relative;
-            z-index: 2;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: flex-start !important;
+            position: relative !important;
+            z-index: 2 !important;
+            flex-shrink: 0 !important;
           }
           .dx-stage {
             min-height: 170px !important;
@@ -472,7 +476,9 @@ export default function DepthScrollSection() {
             height: auto !important;
             min-height: 0 !important;
             align-self: stretch !important;
-            overflow:auto !important;
+            overflow: auto !important;
+            flex: 1 !important;
+            width: 100% !important;
           }
           .dx-bubble {
             font-size: 13px !important;
