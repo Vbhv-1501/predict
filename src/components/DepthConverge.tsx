@@ -75,8 +75,9 @@ export default function DepthConverge() {
 
       if (isMobile) {
         // Calculate offsets in unrotated layout space for mobile
-        const clientW = canvas.clientWidth || stage.clientWidth || 300;
-        const clientH = canvas.clientHeight || stage.clientHeight || 500;
+        const stageEl = stageRef.current;
+        const clientW = canvas.clientWidth || (stageEl ? stageEl.clientWidth : 0) || 300;
+        const clientH = canvas.clientHeight || (stageEl ? stageEl.clientHeight : 0) || 500;
 
         if (labelsEl && rows.length === SIGNALS.length) {
           const labelsTop = labelsEl.offsetTop - labelsEl.offsetHeight / 2;
