@@ -69,28 +69,51 @@ export default function DepthConverge() {
 
     const measure = () => {
       const labelsEl = labelsRef.current;
-      const cr = canvas.getBoundingClientRect();
       const rows = labelsEl ? labelsEl.querySelectorAll(".dc-lab") : [];
       const ys: number[] = [];
-      if (labelsEl && rows.length === SIGNALS.length && cr.height > 0) {
-        rows.forEach((row) => {
-          const r = row.getBoundingClientRect();
-          ys.push(r.top + r.height / 2 - cr.top);
-        });
-        const lr = labelsEl.getBoundingClientRect();
-        startXRef.current = lr.right - cr.left + 8;
+      const isMobile = window.innerWidth <= 820;
+
+      if (isMobile) {
+        // Calculate offsets in unrotated layout space for mobile
+        const clientW = canvas.clientWidth || stage.clientWidth || 300;
+        const clientH = canvas.clientHeight || stage.clientHeight || 500;
+
+        if (labelsEl && rows.length === SIGNALS.length) {
+          const labelsTop = labelsEl.offsetTop - labelsEl.offsetHeight / 2;
+          rows.forEach((row) => {
+            const rowEl = row as HTMLElement;
+            const relY = rowEl.offsetTop + labelsTop + rowEl.offsetHeight / 2;
+            ys.push(relY);
+          });
+          startXRef.current = labelsEl.offsetLeft + labelsEl.offsetWidth + 8;
+        } else {
+          for (let i = 0; i < SIGNALS.length; i++)
+            ys.push(lerp(clientH * 0.16, clientH * 0.84, i / (SIGNALS.length - 1)));
+          startXRef.current = clientW * 0.16;
+        }
       } else {
-        for (let i = 0; i < SIGNALS.length; i++)
-          ys.push(lerp(H * 0.16, H * 0.84, i / (SIGNALS.length - 1)));
-        startXRef.current = W * 0.16;
+        const cr = canvas.getBoundingClientRect();
+        if (labelsEl && rows.length === SIGNALS.length && cr.height > 0) {
+          rows.forEach((row) => {
+            const r = row.getBoundingClientRect();
+            ys.push(r.top + r.height / 2 - cr.top);
+          });
+          const lr = labelsEl.getBoundingClientRect();
+          startXRef.current = lr.right - cr.left + 8;
+        } else {
+          for (let i = 0; i < SIGNALS.length; i++)
+            ys.push(lerp(H * 0.16, H * 0.84, i / (SIGNALS.length - 1)));
+          startXRef.current = W * 0.16;
+        }
       }
       laneYRef.current = ys;
     };
 
     const resize = () => {
-      const r = canvas.getBoundingClientRect();
-      if (!r.width || !r.height) return;
-      W = r.width; H = r.height;
+      const clientW = canvas.clientWidth;
+      const clientH = canvas.clientHeight;
+      if (!clientW || !clientH) return;
+      W = clientW; H = clientH;
       canvas.width = Math.round(W * dpr);
       canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -251,9 +274,11 @@ export default function DepthConverge() {
         },
       });
 
+      const isMobile = window.innerWidth <= 820;
       tl.to(card, {
         left: 0, top: 0, right: 0, bottom: 0,
-        width: "100vw", height: "100vh",
+        width: isMobile ? "100svh" : "100vw",
+        height: isMobile ? "100vw" : "100vh",
         borderRadius: 0, xPercent: 0, yPercent: 0,
         duration: 0.20, ease: "power2.inOut",
       }, 0.20);
@@ -465,38 +490,46 @@ const desktopCSS = `
 .dc-muscle.floating::before{ opacity:1; }
 
 @media (max-width: 820px) {
-  .dc-stage { flex-direction: column !important; align-items: center !important; }
+  .dc-stage {
+    width: 100svh !important;
+    height: 100vw !important;
+    transform: rotate(90deg) translate3d(0, -100%, 0) !important;
+    transform-origin: 0 0 !important;
+    overflow: hidden !important;
+  }
   .dc-text {
-    left: 50% !important;
-    right: auto !important;
-    top: 12% !important;
-    transform: translateX(-50%) translateY(-50%) !important;
-    width: 90% !important;
-    text-align: center;
+    position: absolute !important;
+    left: 4svh !important;
+    top: 50% !important;
+    width: 32svh !important;
+    height: 88vw !important;
+    transform: translateY(-50%) rotate(-90deg) !important;
+    transform-origin: center center !important;
+    text-align: left !important;
     z-index: 2 !important;
   }
   .dc-headline {
-    font-size: clamp(28px, 6.5vw, 40px) !important;
+    font-size: clamp(20px, 5vw, 30px) !important;
   }
   .dc-sub {
-    margin-top: 12px !important;
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    flex-wrap: wrap;
+    margin-top: 10px !important;
+    display: block !important;
   }
   .dc-sub p {
-    margin: 0 !important;
-    font-size: clamp(12px, 3vw, 16px) !important;
+    margin: 0 0 4px 0 !important;
+    font-size: clamp(12px, 3.2vw, 14px) !important;
   }
   .dc-card {
-    left: 50% !important;
-    right: auto !important;
+    position: absolute !important;
+    right: 4svh !important;
+    left: auto !important;
     top: 50% !important;
-    transform: translateX(-50%) translateY(-50%) !important;
-    width: min(92vw, 100%) !important;
-    height: min(54svh, 420px) !important;
-    margin: 0 auto !important;
+    width: 36svh !important;
+    height: 85vw !important;
+    transform: translateY(-50%) rotate(-90deg) !important;
+    transform-origin: center center !important;
+    border-radius: 16px !important;
+    margin: 0 !important;
   }
   .dc-card-multi {
     position: absolute !important;
@@ -505,24 +538,11 @@ const desktopCSS = `
     top: 50% !important;
     transform: translateY(-50%) !important;
     height: auto !important;
-    padding: 16px !important;
-    gap: 14px !important;
+    padding: 0 !important;
+    gap: 12px !important;
   }
   .dc-msig {
-    grid-template-columns: 18px 80px 1fr !important;
-    gap: 8px !important;
-  }
-  .dc-msig-label {
-    font-size: 11px !important;
-  }
-  .dc-msig-wave {
-    height: 24px !important;
-  }
-  .dc-labels {
-    display: none !important;
-  }
-  .dc-msig {
-    grid-template-columns: 16px 70px 1fr !important;
+    grid-template-columns: 14px 70px 1fr !important;
     gap: 6px !important;
   }
   .dc-msig-label {
@@ -530,21 +550,36 @@ const desktopCSS = `
     letter-spacing: 0.08em !important;
   }
   .dc-msig-wave {
-    height: 20px !important;
+    height: 18px !important;
+  }
+  .dc-labels {
+    position: absolute !important;
+    left: 6% !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    gap: 16px !important;
+  }
+  .dc-lab {
+    grid-template-columns: 14px 70px 1fr !important;
+    gap: 6px !important;
+  }
+  .dc-lab-txt {
+    font-size: 10px !important;
+    letter-spacing: 0.08em !important;
   }
   .dc-muscle {
-    left: 50% !important;
-    right: auto !important;
-    top: 78% !important;
-    transform: translateX(-50%) !important;
-    width: 54vw !important;
-    height: 28svh !important;
+    position: absolute !important;
+    right: 4% !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 22% !important;
+    height: 85% !important;
   }
   .dc-live {
     top: 12px !important;
     right: 12px !important;
-    font-size: 10px !important;
-    padding: 4px 8px !important;
+    font-size: 9px !important;
+    padding: 3px 6px !important;
   }
 }
 `;

@@ -164,9 +164,10 @@
     perspective: 600px;
   }
   .eco__field {
-    height: 62svh;
-    max-width: 88%;
-    min-width: 88%;
+    height: 48svh !important;
+    max-width: 95% !important;
+    min-width: 95% !important;
+    top: 60% !important;
   }
   .eco__card {
     transition: transform .35s cubic-bezier(.2,1,.3,1), opacity .3s;
@@ -181,12 +182,16 @@
     width: clamp(100px, 24vmin, 110px);
   }
   .eco__center {
-    inset: 0 !important;
-    display: grid !important;
-    place-content: center !important;
-    transform: none !important;
+    inset: auto !important;
+    left: 50% !important;
+    top: 12% !important;
+    transform: translateX(-50%) !important;
+    width: 92% !important;
     max-width: none !important;
-    padding: 0 10px !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
   }
   .eco__eyebrow {
     font-size: 10px !important;

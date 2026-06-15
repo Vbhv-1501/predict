@@ -163,8 +163,8 @@ export default function EcosystemSection() {
       L.mobile = mobile;
       // Calculate responsive orbit radii relative to the smaller viewport dimension, slightly reduced to keep cards in frame.
       const base = Math.min(sw, sh);
-      L.orbitRX = base * (mobile ? 0.20 : tablet ? 0.24 : 0.28);
-      L.orbitRY = base * (mobile ? 0.14 : tablet ? 0.18 : 0.22);
+      L.orbitRX = base * (mobile ? 0.35 : tablet ? 0.24 : 0.28);
+      L.orbitRY = base * (mobile ? 0.15 : tablet ? 0.18 : 0.22);
       L.zNear   = mobile ? 0.26 : tablet ? 0.45 : 0.65;
       L.zFar    = mobile ? 0.16 : tablet ? 0.30 : 0.50;
       L.ampMul  = mobile ? 0.16 : 0.35;

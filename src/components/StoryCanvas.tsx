@@ -314,7 +314,7 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
           position: "relative",
         }}
       >
-        <canvas ref={canvasRef} />
+        <canvas ref={canvasRef} style={{ maxWidth: "none" }} />
 
         {/* Text Steps Overlay Container */}
         <div className="absolute inset-0 z-20 pointer-events-none">
