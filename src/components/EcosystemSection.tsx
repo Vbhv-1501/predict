@@ -161,10 +161,10 @@ export default function EcosystemSection() {
       const mobile = sw < 768, tablet = sw >= 768 && sw < 1100;
       L.stageW = sw; L.stageH = sh;
       L.mobile = mobile;
-      // Calculate responsive orbit radii relative to the smaller viewport dimension to keep cards within frame.
+      // Calculate responsive orbit radii relative to the smaller viewport dimension, slightly reduced to keep cards in frame.
       const base = Math.min(sw, sh);
-      L.orbitRX = base * (mobile ? 0.24 : tablet ? 0.28 : 0.32);
-      L.orbitRY = base * (mobile ? 0.18 : tablet ? 0.22 : 0.26);
+      L.orbitRX = base * (mobile ? 0.20 : tablet ? 0.24 : 0.28);
+      L.orbitRY = base * (mobile ? 0.14 : tablet ? 0.18 : 0.22);
       L.zNear   = mobile ? 0.26 : tablet ? 0.45 : 0.65;
       L.zFar    = mobile ? 0.16 : tablet ? 0.30 : 0.50;
       L.ampMul  = mobile ? 0.16 : 0.35;
@@ -241,9 +241,17 @@ export default function EcosystemSection() {
         const rdX = Math.cos(t * 0.22 + c.ph) * (c.rdrift * 0.5);
 
         const zMul = c.tier === "near" ? L.zNear : L.zFar;
-        const x    = (px + fx) * dispersion;
-        const y    = (py + fy) * dispersion;
+        let x    = (px + fx) * dispersion;
+        let y    = (py + fy) * dispersion;
         const z    = (c.z * zMul + fz) * dispersion;
+
+        // Clamp final computed x/y relative to center to ensure card is fully inside the stage
+        const padX = 16;
+        const padY = 16;
+        const limitX = Math.max(0, L.stageW / 2 - L.cardHW[i] - padX);
+        const limitY = Math.max(0, L.stageH / 2 - L.cardHH[i] - padY);
+        x = clamp(x, -limitX, limitX);
+        y = clamp(y, -limitY, limitY);
 
         const baseSc = c.tier === "near" ? 0.55 : 0.45;
         const sc     = baseSc + (1 - baseSc) * dispersion;
@@ -262,7 +270,17 @@ export default function EcosystemSection() {
         if (!el) continue;
         const p    = targetPos(i);
         const zMul = c.tier === "near" ? L.zNear : L.zFar;
-        applyTransform(c, el, p.x, p.y, c.z * zMul, 0, 0, 1);
+
+        let x = p.x;
+        let y = p.y;
+        const padX = 16;
+        const padY = 16;
+        const limitX = Math.max(0, L.stageW / 2 - L.cardHW[i] - padX);
+        const limitY = Math.max(0, L.stageH / 2 - L.cardHH[i] - padY);
+        x = clamp(x, -limitX, limitX);
+        y = clamp(y, -limitY, limitY);
+
+        applyTransform(c, el, x, y, c.z * zMul, 0, 0, 1);
         el.style.opacity = "1";
       }
     };
@@ -290,7 +308,8 @@ export default function EcosystemSection() {
               running = true;
               raf = requestAnimationFrame(render);
             }
-          } else if (running) {
+          } else {
+            // When leaving viewport, immediately cancel RAF and call renderStatic() so the field stays visible
             running = false;
             cancelAnimationFrame(raf);
             renderStatic();

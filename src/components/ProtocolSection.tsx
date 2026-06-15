@@ -349,47 +349,39 @@ export default function ProtocolSection() {
       /* Get true path length in SVG user-units */
       const pLen = path.getTotalLength();
 
-      /* Fully hide trail then reveal element; GSAP drives from here */
-      gsap.set(path, {
-        strokeDasharray:  pLen,
-        strokeDashoffset: pLen,
-        visibility: "visible",
-        autoAlpha: 1,
-      });
-
-      const revealed = [false, false, false];
+      /* Initialize path properties to fully hidden before ScrollTrigger runs */
+      path.style.strokeDasharray = String(pLen);
+      path.style.strokeDashoffset = String(pLen);
+      path.style.visibility = "hidden";
 
       stRef.current = ScrollTrigger.create({
         trigger: outer,
-        start:   "top bottom",
+        start:   "top top", // Later start so it doesn't steal view or overlap early
         end:     "bottom bottom",
         pin: ".proto-sticky",
         pinSpacing: true,
         scrub: 0.5,
-        anticipatePin: 0.5,
+        anticipatePin: 0.4, // Between 0.3 and 0.6
         invalidateOnRefresh: true,
         onUpdate(self) {
           const p = self.progress;
 
-          /* Draw trail */
-          path.style.strokeDashoffset = String(pLen * (1 - p));
+          /* Draw trail - set visible only when GSAP is actively controlling dashoffset */
           path.style.visibility = "visible";
+          path.style.strokeDashoffset = String(pLen * (1 - p));
 
-          /* Reveal / retract steps */
+          /* Reveal / retract steps strictly based on progress and thresholds */
           THRESHOLDS.forEach((t, i) => {
             const dot  = dotRefs.current[i];
             const step = stepRefs.current[i];
-            if (p >= t && !revealed[i]) {
-              revealed[i] = true;
+            if (p >= t) {
               dot?.classList.add("lit");
               step?.classList.add("vis");
-            } else if (p < t && revealed[i]) {
-              revealed[i] = false;
+            } else {
               dot?.classList.remove("lit");
               step?.classList.remove("vis");
             }
           });
-
         },
       });
       ScrollTrigger.refresh();
