@@ -6,18 +6,12 @@ import { motion, useInView } from "framer-motion";
 import { 
   Activity, 
   CheckCircle2, 
-  ChevronRight, 
   Zap,
   TrendingUp,
   Sliders,
   Sparkles,
   Search,
-  User,
-  Mail,
-  Phone,
-  Calendar,
-  MapPin,
-  MessageSquare
+  User
 } from "lucide-react";
 
 // Helper Component for Scroll-based Counting Animations
@@ -227,74 +221,6 @@ function ProfileMark() {
 export default function Sections() {
   const phoneRef = useRef<HTMLDivElement>(null);
   const phoneInView = useInView(phoneRef, { once: false, margin: "-100px" });
-
-  // Contact Form States
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    age: "",
-    city: "",
-    message: "",
-  });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: "" }));
-    }
-  };
-
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-    if (!formData.fullName.trim()) newErrors.fullName = "Full name is required";
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
-    }
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
-    } else if (!/^\d{10}$/.test(formData.phone.replace(/[\s-]/g, ""))) {
-      newErrors.phone = "Please enter a valid 10-digit phone number";
-    }
-    if (!formData.age.trim()) {
-      newErrors.age = "Age is required";
-    } else {
-      const ageNum = parseInt(formData.age);
-      if (isNaN(ageNum) || ageNum < 1 || ageNum > 120) {
-        newErrors.age = "Please enter a valid age between 1 and 120";
-      }
-    }
-    if (!formData.city.trim()) newErrors.city = "City is required";
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-
-    setIsSubmitting(true);
-    // Simulate API Submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      setFormData({
-        fullName: "",
-        email: "",
-        phone: "",
-        age: "",
-        city: "",
-        message: "",
-      });
-    }, 1800);
-  };
 
   // Testimonials content
   const testimonials = [

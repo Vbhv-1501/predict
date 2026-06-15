@@ -270,7 +270,7 @@ export default function DepthConverge() {
       }, 0.78);
 
         // add a floating class so CSS animation applies
-        tl.call(() => { muscle?.classList.add('floating'); }, null, 0.78 + 0.08);
+        tl.call(() => { muscle?.classList.add('floating'); }, [], 0.78 + 0.08);
 
       ScrollTrigger.sort();
     }, sectionRef);
