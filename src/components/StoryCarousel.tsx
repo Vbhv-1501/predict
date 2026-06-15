@@ -51,6 +51,7 @@ export default function StoryCarousel() {
         pin: panelRef.current,
         pinSpacing: true,
         scrub: 0.5,
+        refreshPriority: 40,
         invalidateOnRefresh: true,
       },
     });

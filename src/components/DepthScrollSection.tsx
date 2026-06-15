@@ -158,7 +158,7 @@ export default function DepthScrollSection() {
           pin: panelRef.current,
           pinSpacing: true,
           scrub: 1,
-          refreshPriority: -30,
+          refreshPriority: 20,
           invalidateOnRefresh: true,
         },
       });

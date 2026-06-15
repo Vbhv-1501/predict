@@ -245,7 +245,7 @@ export default function DepthConverge() {
           pin: stageRef.current,
           pinSpacing: true,
           scrub: 1,
-          refreshPriority: -10,
+          refreshPriority: 30,
           onUpdate: (self) => { phaseRef.current = self.progress; },
           invalidateOnRefresh: true,
         },

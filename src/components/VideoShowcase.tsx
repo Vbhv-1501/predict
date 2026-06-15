@@ -46,6 +46,7 @@ export default function VideoShowcase() {
           start: "top 85%",
           end: "bottom 15%",
           scrub: 1,
+          refreshPriority: 50,
           invalidateOnRefresh: true,
         },
       });

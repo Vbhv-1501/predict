@@ -221,6 +221,7 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
         pin:               stageRef.current,
         pinSpacing:        true,
         anticipatePin:     1,
+        refreshPriority:   60,
         invalidateOnRefresh: true,
       },
     });
