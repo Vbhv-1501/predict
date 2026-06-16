@@ -37,22 +37,22 @@ export default function OurTestsSection({
           top: 50%;
           border-radius: 18px;
           overflow: hidden;
-          aspect-ratio: 1122 / 1550;
+          aspect-ratio: 1402 / 1122;
           background: ${brand.off};
-          width: clamp(160px, 20vw, 280px);
-          left: clamp(36px, 6%, 100px);
-          transform: translateY(-52%) rotate(-9deg);
+          width: clamp(240px, 28vw, 340px);
+          left: clamp(40px, 5%, 90px);
+          transform: translateY(-50%) rotate(-7deg);
         }
         .ot-img-2 {
           position: absolute;
           top: 50%;
           border-radius: 18px;
           overflow: hidden;
-          aspect-ratio: 1122 / 1550;
+          aspect-ratio: 1402 / 1122;
           background: ${brand.off};
-          width: clamp(155px, 19vw, 270px);
-          right: clamp(36px, 6%, 100px);
-          transform: translateY(-56%) rotate(8deg);
+          width: clamp(220px, 26vw, 320px);
+          right: clamp(40px, 5%, 90px);
+          transform: translateY(-50%) rotate(7deg);
         }
         .ot-copy-zone {
           width: 100%;
@@ -75,15 +75,16 @@ export default function OurTestsSection({
           width: 100%;
         }
         @media (max-width: 600px) {
-          .ot-image-zone { height: 55vw !important; min-height: 240px !important; max-height: 340px !important; }
-          .ot-img-1 { width: 40vw !important; left: 3vw !important; transform: translateY(-50%) rotate(-7deg) !important; }
-          .ot-img-2 { width: 38vw !important; right: 3vw !important; transform: translateY(-54%) rotate(6deg) !important; }
+          .ot-image-zone { height: 60vw !important; min-height: 260px !important; max-height: 380px !important; }
+          .ot-img-1 { width: 46vw !important; left: 3vw !important; transform: translateY(-50%) rotate(-7deg) !important; aspect-ratio: 1402 / 1122 !important; }
+          .ot-img-2 { width: 44vw !important; right: 3vw !important; transform: translateY(-50%) rotate(7deg) !important; aspect-ratio: 1402 / 1122 !important; }
           .ot-copy-zone { height: auto !important; min-height: unset !important; max-height: unset !important; padding: 18px 20px 44px !important; }
           .ot-body { font-size: 15px !important; max-width: 100% !important; }
         }
         @media (min-width: 601px) and (max-width: 900px) {
-          .ot-img-1 { width: 22vw !important; }
-          .ot-img-2 { width: 20vw !important; }
+          .ot-image-zone { height: 56vw !important; min-height: 320px !important; max-height: 420px !important; }
+          .ot-img-1 { width: 32vw !important; left: 4vw !important; }
+          .ot-img-2 { width: 30vw !important; right: 4vw !important; }
           .ot-body  { font-size: clamp(15px, 2vw, 19px) !important; max-width: 680px !important; }
         }
       `}</style>
