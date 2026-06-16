@@ -81,6 +81,8 @@ export default function PredictMembership({ id }: { id?: string }) {
           display: grid;
           grid-template-columns: 0.95fr 1.05fr;
           gap: 24px;
+          background: #000000;
+          padding: 60px 20px;
         }
 
         .left-card,
@@ -134,7 +136,7 @@ export default function PredictMembership({ id }: { id?: string }) {
         .membership-card {
           --x: 50%;
           --y: 50%;
-          width: min(78%, 340px);
+          width: min(90%, 420px);
           overflow: hidden;
           border-radius: 28px;
           position: relative;
@@ -209,6 +211,13 @@ export default function PredictMembership({ id }: { id?: string }) {
           cursor: pointer;
           font-size: 17px;
           font-weight: 600;
+          background: #8504fe;
+          color: #ffffff;
+          transition: background 0.3s ease;
+        }
+
+        .join-btn:hover {
+          background: #6b04cc;
         }
 
         .right-content {
@@ -222,20 +231,29 @@ export default function PredictMembership({ id }: { id?: string }) {
           font-size: clamp(32px,4vw,58px);
           line-height: 1.08;
           margin-bottom: 45px;
+          color: #ffffff;
+          font-weight: 700;
         }
 
         .subtitle {
           font-size: clamp(22px,3vw,30px);
           margin-bottom: 32px;
+          color: #e0e0e0;
+          font-weight: 600;
         }
 
         li {
           line-height: 1.9;
+          color: #d0d0d0;
+          font-size: 16px;
+          font-weight: 500;
         }
 
         .bottom-note {
           margin-top: 60px;
-          opacity: .6;
+          opacity: 0.8;
+          color: #b0b0b0;
+          font-size: 14px;
         }
 
         @keyframes shine {

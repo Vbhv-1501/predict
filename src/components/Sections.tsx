@@ -838,7 +838,7 @@ export default function Sections() {
       <WaitlistSection id="contact" />
 
       {/* FOOTER */}
-      <footer className="pt-24 pb-16 px-6 text-[#EFEFEF] border-t border-[#EFEFEF]/[0.05] relative overflow-hidden font-neue" style={{ background: 'linear-gradient(180deg, #47307D 0%, #352166 50%, #000000 100%)' }}>
+      <footer className="pt-24 pb-16 px-6 text-[#EFEFEF] border-t border-[#EFEFEF]/[0.05] relative overflow-hidden font-neue" style={{ background: 'linear-gradient(180deg, #000000 0%, #1a0d2e 50%, #47307D 100%)' }}>
         {/* Enhanced multi-layered premium purple gradient glows */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(71,48,125,0.32),transparent_75%)] pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(71,48,125,0.18),transparent_50%)] pointer-events-none" />
