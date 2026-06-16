@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 
-export default function PredictMembership() {
+export default function PredictMembership({ id }: { id?: string }) {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -29,7 +29,7 @@ export default function PredictMembership() {
 
   return (
     <>
-      <section className="membership-section">
+      <section id={id} className="membership-section">
         <div className="left-card">
           <div className="corner-lines" />
 
