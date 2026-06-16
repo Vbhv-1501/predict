@@ -150,8 +150,8 @@ export default function DepthConverge() {
       ctx.clearRect(0, 0, W, H);
 
       const reveal = 1;
-      const convergeIn = easeInOut(norm(p, 0.38, 0.62));
-      const convergeOut = 1 - easeInOut(norm(p, 0.72, 0.98));
+      const convergeIn = easeInOut(norm(p, 0.38, 0.58));
+      const convergeOut = 1 - easeInOut(norm(p, 0.65, 0.85));
       const conv = convergeIn * convergeOut;
       const t_stretch = easeInOut(norm(p, 0.20, 0.40));
 
@@ -265,7 +265,7 @@ export default function DepthConverge() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=400%",
+          end: "+=150%",
           pin: stageRef.current,
           pinSpacing: true,
           scrub: 1,
@@ -293,10 +293,10 @@ export default function DepthConverge() {
         x: 0,
         duration: 0.14,
         ease: "power2.out",
-      }, 0.78);
+      }, 0.65);
 
         // add a floating class so CSS animation applies
-        tl.call(() => { muscle?.classList.add('floating'); }, [], 0.78 + 0.08);
+        tl.call(() => { muscle?.classList.add('floating'); }, [], 0.65 + 0.08);
 
       ScrollTrigger.sort();
     }, sectionRef);

@@ -80,12 +80,12 @@ const STEP_LAYOUT: StepLayout[] = [
 
 /*
   Reveal thresholds as fractions of scroll progress (0 → 1).
-  Outer section = 300vh, scroll budget = 200vh:
-    0.22 →  ~44vh  Day 1
-    0.57 → ~114vh  Day 2–3
-    0.88 → ~176vh  Day 4–7
+  Outer section = 200vh, scroll budget = 100vh:
+    0.20 →  ~20vh  Day 1
+    0.50 →  ~50vh  Day 2–3
+    0.80 →  ~80vh  Day 4–7
 */
-const THRESHOLDS = [0.16, 0.44, 0.72];
+const THRESHOLDS = [0.2, 0.5, 0.8];
 
 /* ── Scoped CSS (injected via <style> tag — scoped under .proto-outer) ───── */
 const CSS = `
@@ -96,7 +96,7 @@ const CSS = `
 
   .proto-outer {
     position: relative;
-    height: 300vh;
+    height: 200vh;
     z-index: 5;
     background: #07090d;
     font-family: 'Neue Montreal', 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -276,7 +276,7 @@ const CSS = `
      that desktop layout uses.
   ──────────────────────────────────────────────────────────────────────── */
   @media (max-width: 640px) {
-    .proto-outer   { height: 320svh; }
+    .proto-outer   { height: 180svh; }
     .proto-svg     { display: none; }
     .proto-dot     { display: none; }
 
