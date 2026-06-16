@@ -37,10 +37,10 @@ export default function OurTestsSection({
           top: 50%;
           border-radius: 18px;
           overflow: hidden;
-          aspect-ratio: 1122 / 1402;
+          aspect-ratio: 1122 / 1550;
           background: ${brand.off};
-          width: clamp(130px, 15vw, 200px);
-          left: clamp(36px, 8%, 120px);
+          width: clamp(160px, 20vw, 280px);
+          left: clamp(36px, 6%, 100px);
           transform: translateY(-52%) rotate(-9deg);
         }
         .ot-img-2 {
@@ -48,10 +48,10 @@ export default function OurTestsSection({
           top: 50%;
           border-radius: 18px;
           overflow: hidden;
-          aspect-ratio: 1122 / 1402;
+          aspect-ratio: 1122 / 1550;
           background: ${brand.off};
-          width: clamp(120px, 14vw, 185px);
-          right: clamp(36px, 8%, 120px);
+          width: clamp(155px, 19vw, 270px);
+          right: clamp(36px, 6%, 100px);
           transform: translateY(-56%) rotate(8deg);
         }
         .ot-copy-zone {
@@ -75,15 +75,15 @@ export default function OurTestsSection({
           width: 100%;
         }
         @media (max-width: 600px) {
-          .ot-image-zone { height: 55vw !important; min-height: 200px !important; max-height: 280px !important; }
-          .ot-img-1 { width: 33vw !important; left: 4vw !important; transform: translateY(-50%) rotate(-7deg) !important; }
-          .ot-img-2 { width: 29vw !important; right: 4vw !important; transform: translateY(-54%) rotate(6deg) !important; }
+          .ot-image-zone { height: 55vw !important; min-height: 240px !important; max-height: 340px !important; }
+          .ot-img-1 { width: 40vw !important; left: 3vw !important; transform: translateY(-50%) rotate(-7deg) !important; }
+          .ot-img-2 { width: 38vw !important; right: 3vw !important; transform: translateY(-54%) rotate(6deg) !important; }
           .ot-copy-zone { height: auto !important; min-height: unset !important; max-height: unset !important; padding: 18px 20px 44px !important; }
           .ot-body { font-size: 15px !important; max-width: 100% !important; }
         }
         @media (min-width: 601px) and (max-width: 900px) {
-          .ot-img-1 { width: 17vw !important; }
-          .ot-img-2 { width: 15vw !important; }
+          .ot-img-1 { width: 22vw !important; }
+          .ot-img-2 { width: 20vw !important; }
           .ot-body  { font-size: clamp(15px, 2vw, 19px) !important; max-width: 680px !important; }
         }
       `}</style>
