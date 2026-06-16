@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useRef } from "react";
@@ -42,7 +43,7 @@ export default function PredictMembership() {
               onMouseMove={handleMove}
               onMouseLeave={resetTilt}
             >
-              <img src="/assets/Predict-member.webp" alt="Predict Membership" />
+              <img src="/predict-membership.webp" alt="Predict Membership" />
             </div>
           </div>
 
