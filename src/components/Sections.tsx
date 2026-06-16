@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import WaitlistSection from "./WaitlistSection";
+import OurTestsSection from "./OurTestsSection";
 import { motion, useInView } from "framer-motion";
 import { 
   Activity, 
@@ -286,6 +287,14 @@ export default function Sections() {
           </motion.div>
         </div>
       </section>
+
+      {/* SECTION 4.5: OUR TESTS */}
+      <OurTestsSection
+        image1Src="/assets/test-01.webp"
+        image1Alt="Blood biomarker analysis test"
+        image2Src="/assets/test-02.webp"
+        image2Alt="Muscle imaging scan test"
+      />
 
       {/* SECTION 5: HOW IT WORKS */}
       <section id="how-it-works" className="py-32 relative bg-[#F8F8F6]">
