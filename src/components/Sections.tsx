@@ -263,7 +263,7 @@ export default function Sections() {
   const row3 = [...testimonials.slice(2), ...testimonials.slice(0, 2), ...testimonials.slice(2), ...testimonials.slice(0, 2)];
 
   return (
-    <div className="relative w-full bg-[#F8F8F6] text-foreground z-[5]">
+    <div className="relative w-full bg-[#F8F8F6] text-foreground">
       
       {/* SECTION 4: 9000+ DATA POINTS */}
       <section className="py-24 bg-[#0B0B0C] relative overflow-hidden border-y border-white/[0.05]">

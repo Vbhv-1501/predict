@@ -413,7 +413,7 @@ const desktopCSS = `
 .dc-section{
   --bg:#F8F8F6; --ink:#111115; --muted:#4A475A; --red:#9259C7;
   --font: inherit;
-  position:relative; z-index:2; background:var(--bg); color:var(--ink); font-family:var(--font);
+  position:relative; background:var(--bg); color:var(--ink); font-family:var(--font);
   -webkit-font-smoothing:antialiased;
 }
 .dc-stage{ position:relative; height:100vh; height:100svh; width:100%; overflow:hidden; }

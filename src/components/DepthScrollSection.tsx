@@ -309,7 +309,6 @@ export default function DepthScrollSection() {
           --blue:#7C3AED; --bubble:rgba(255, 255, 255, 0.6); --accent:#9259C7;
           --font: inherit;
           position: relative;
-          z-index: 4;
           background:var(--bg); color:var(--ink);
           font-family:var(--font);
           -webkit-font-smoothing:antialiased;

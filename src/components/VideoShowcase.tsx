@@ -60,19 +60,10 @@ export default function VideoShowcase() {
         duration: 1,
       });
 
-      // 2. Hold Phase (25% to 75% scroll progress)
+      // 2. Hold Phase (25% to 100% scroll progress)
       tl.to(wrapper, {
         y: 0,
-        duration: 2, // Holds the element fully active
-      });
-
-      // 3. Exit Phase (75% to 100% scroll progress)
-      tl.to(wrapper, {
-        opacity: 0,
-        scale: 0.95,
-        y: -40,
-        ease: "power1.inOut",
-        duration: 1,
+        duration: 3, // Holds the element fully active
       });
     }, containerRef);
 
@@ -163,7 +154,7 @@ export default function VideoShowcase() {
       ref={containerRef}
       className="py-20 md:py-32 w-full bg-[#F8F8F6] relative overflow-hidden flex flex-col items-center border-t border-black/[0.04] font-neue select-none"
     >
-      <div className="max-w-7xl mx-auto px-6 w-full flex flex-col items-center relative z-10">
+      <div className="max-w-7xl mx-auto px-6 w-full flex flex-col items-center relative">
         
         {/* Top heading / Story copy */}
         <div className="text-center mb-10 md:mb-16 max-w-4xl">

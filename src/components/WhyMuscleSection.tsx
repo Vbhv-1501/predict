@@ -326,6 +326,9 @@ export default function WhyMuscleSection() {
           .wmb-wrap { position: relative; }
           .wmb-sticky { position: relative; top: auto; height: 100vh; display: flex; align-items: center; overflow: hidden; width: 100%; }
           .wmb-track {
+            display: flex;
+            flex-wrap: nowrap;
+            width: max-content;
             overflow-x: hidden;
             scroll-snap-type: none;
             padding: 0 8vw;

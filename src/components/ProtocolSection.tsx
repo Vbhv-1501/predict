@@ -97,7 +97,6 @@ const CSS = `
   .proto-outer {
     position: relative;
     height: 200vh;
-    z-index: 5;
     background: #07090d;
     font-family: 'Neue Montreal', 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
