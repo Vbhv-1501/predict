@@ -81,13 +81,10 @@ export default function VideoShowcase() {
           scrub: true,
         }
       });
-      titleLines.forEach((line) => {
-        titleTimeline.to(line, {
-          opacity: 1,
-          duration: 1,
-          ease: "none",
-        });
-      });
+      if (titleLines.length >= 2) {
+        titleTimeline.fromTo(titleLines[0], { opacity: 0.15 }, { opacity: 1, duration: 1, ease: "none" })
+                     .fromTo(titleLines[1], { opacity: 0 }, { opacity: 1, duration: 1, ease: "none" });
+      }
     }, containerRef);
 
     // 2. Interactive 3D Tilt and Specular Highlight Reflection (lerped inside RAF)
@@ -196,7 +193,7 @@ export default function VideoShowcase() {
           </span>
           <h2 className="video-showcase-title text-3xl md:text-4.5xl lg:text-5.5xl font-bold text-neutral-900 leading-[1.2] tracking-tight mb-6 font-neue flex flex-col items-center">
             {titleLines.map((line, i) => (
-              <span key={i} className="reveal-line block opacity-15">
+              <span key={i} className={`reveal-line block ${i === 0 ? "opacity-15" : "opacity-0"}`}>
                 {line}
               </span>
             ))}
@@ -206,7 +203,7 @@ export default function VideoShowcase() {
         {/* GSAP scroll trigger wrapper */}
         <div
           ref={gsapWrapperRef}
-          className="w-full max-w-2xl will-change-transform"
+          className="w-full max-w-3xl will-change-transform"
         >
           {/* Continuous floating animation wrapper */}
           <div className="dashboard-float-wrapper">

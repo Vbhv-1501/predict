@@ -106,13 +106,10 @@ export default function WhyMuscleSection() {
         scrub: true,
       }
     });
-    titleLines.forEach((line) => {
-      titleTimeline.to(line, {
-        opacity: 1,
-        duration: 1,
-        ease: "none",
-      });
-    });
+    if (titleLines.length >= 2) {
+      titleTimeline.fromTo(titleLines[0], { opacity: 0.15 }, { opacity: 1, duration: 1, ease: "none" })
+                   .fromTo(titleLines[1], { opacity: 0 }, { opacity: 1, duration: 1, ease: "none" });
+    }
 
     const subReveal = gsap.to(".wmb-reveal-sub", {
       opacity: 1,
@@ -237,7 +234,7 @@ export default function WhyMuscleSection() {
       <div className="wmb-header flex flex-col items-center">
         <h2 className="wmb-reveal-title flex flex-col items-center">
           {headingLines.map((line, i) => (
-            <span key={i} className="reveal-line block opacity-15">
+            <span key={i} className={`reveal-line block ${i === 0 ? "opacity-15" : "opacity-0"}`}>
               {line}
             </span>
           ))}
