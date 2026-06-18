@@ -164,9 +164,10 @@ export default function DepthScrollSection() {
 
       const tl = gsap.timeline({
         scrollTrigger: {
+          id: "depth-chat-trigger",
           trigger: sectionRef.current,
           start: "top top",
-          end: () => "+=" + steps.length * 80 + "%",
+          end: () => "+=" + steps.length * 55 + "%",
           pin: true,
           pinSpacing: true,
           scrub: 1,
@@ -249,11 +250,10 @@ export default function DepthScrollSection() {
 
     return () => {
       mm.revert();
-      ScrollTrigger.getAll().forEach((st) => {
-        if (st.trigger === sectionEl) {
-          st.kill(true);
-        }
-      });
+      const st = ScrollTrigger.getById("depth-chat-trigger");
+      if (st) {
+        st.kill(true);
+      }
     };
   }, [prefersReducedMotion]);
 

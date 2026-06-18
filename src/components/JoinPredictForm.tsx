@@ -236,7 +236,7 @@ export default function JoinPredictForm({
           align-items: center;
           justify-content: center;
           padding: 24px;
-          background: rgba(10, 10, 10, 0.55);
+          background: rgba(8, 8, 10, 0.75);
           backdrop-filter: blur(8px) saturate(120%);
           -webkit-backdrop-filter: blur(8px) saturate(120%);
           animation: jp-fade 0.35s cubic-bezier(0.22, 1, 0.36, 1);
@@ -252,8 +252,8 @@ export default function JoinPredictForm({
           border-radius: 28px;
           background: linear-gradient(
             155deg,
-            rgba(239, 239, 239, 0.14),
-            rgba(124, 58, 237, 0.08)
+            rgba(13, 13, 16, 0.94),
+            rgba(25, 15, 38, 0.92)
           );
           backdrop-filter: blur(28px) saturate(160%);
           -webkit-backdrop-filter: blur(28px) saturate(160%);
