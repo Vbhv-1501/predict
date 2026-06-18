@@ -221,7 +221,7 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
     drawFrame(0);
 
     // Initial positioning setup
-    gsap.set(canvas, { opacity: 0 });
+    gsap.set(canvas, { opacity: 1 });
     gsap.set(".text-step", { opacity: 0, y: 30 });
     gsap.set(".text-step-1", { opacity: 1, y: 0 }); // First text starts fully visible at Frame 000
     gsap.set(".text-step-7-bullet-1, .text-step-7-bullet-2, .text-step-7-bullet-3, .text-step-7-bullet-4, .text-step-7-bullet-5", { opacity: 0, x: 20 });
@@ -271,15 +271,6 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
         }
       },
     }, 0);
-
-    // 2. Canvas Opacity control:
-    // Screen is completely blank/black during first text (frames 0 to 75).
-    // Canvas fades in from frame 70 to 90 as the frame motion starts.
-    tl.fromTo(canvas, 
-      { opacity: 0 },
-      { opacity: 1, duration: 20, ease: "power2.out" },
-      70
-    );
 
     // 3. Text step scroll transitions:
     // Text 1: Center, starts fully visible at frame 000, fades out from frame 60 to 75
