@@ -92,7 +92,7 @@ export default function WhyMuscleSection() {
     let tween: gsap.core.Tween | null = null;
 
     function maxScroll() {
-      return Math.max(0, track!.scrollWidth - sticky!.clientWidth);
+      return Math.max(0, 2576 - 0.84 * window.innerWidth);
     }
 
     function buildDesktopScroll() {
@@ -103,10 +103,8 @@ export default function WhyMuscleSection() {
         scrollTrigger: {
           trigger: wrap,
           start: 'top top',
-          end: () => '+=' + maxScroll(),
+          end: 'bottom bottom',
           scrub: true,
-          pin: sticky,
-          anticipatePin: 1,
           invalidateOnRefresh: true,
           refreshPriority: 55,
           onEnter: () => dotsEl!.classList.add('is-visible'),
@@ -323,8 +321,8 @@ export default function WhyMuscleSection() {
 
         /* ---- desktop only: fine pointer + hover + >=900px ---- */
         @media (hover: hover) and (pointer: fine) and (min-width: 900px) {
-          .wmb-wrap { position: relative; }
-          .wmb-sticky { height: 100vh; display: flex; align-items: center; overflow: hidden; }
+          .wmb-wrap { height: 420vh; position: relative; }
+          .wmb-sticky { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; overflow: hidden; }
           .wmb-track {
             overflow-x: hidden;
             scroll-snap-type: none;
@@ -340,6 +338,66 @@ export default function WhyMuscleSection() {
           .wmb-content h3 { font-size: 42px; }
           .wmb-content p { font-size: 24px; }
           .wmb-dots { display: flex; }
+
+          /* Scale down card contents on shorter viewport heights to prevent vertical cropping */
+          @media (max-height: 850px) {
+            .wmb-card {
+              height: min(560px, 72vh);
+            }
+            .wmb-orb {
+              top: 30px;
+              left: 30px;
+              width: 140px;
+              height: 140px;
+            }
+            .wmb-content {
+              left: 32px;
+              right: 32px;
+              bottom: 32px;
+            }
+            .wmb-content h3 {
+              font-size: 32px;
+              margin-bottom: 12px;
+            }
+            .wmb-content p {
+              font-size: 18px;
+            }
+            .wmb-line {
+              margin-top: 16px;
+              padding-top: 12px;
+              font-size: 16px;
+            }
+          }
+
+          @media (max-height: 700px) {
+            .wmb-card {
+              height: min(460px, 72vh);
+            }
+            .wmb-orb {
+              top: 20px;
+              left: 24px;
+              width: 110px;
+              height: 110px;
+            }
+            .wmb-content {
+              left: 24px;
+              right: 24px;
+              bottom: 24px;
+            }
+            .wmb-content h3 {
+              font-size: 24px;
+              margin-bottom: 8px;
+            }
+            .wmb-content p {
+              font-size: 15px;
+              line-height: 1.45;
+            }
+            .wmb-line {
+              margin-top: 10px;
+              padding-top: 8px;
+              font-size: 14px;
+            }
+          }
         }
       `}</style>
     </section>
