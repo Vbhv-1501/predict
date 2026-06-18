@@ -75,6 +75,9 @@ export default function WhyMuscleSection() {
   const trackRef = useRef<HTMLDivElement>(null);
   const dotsRef = useRef<HTMLDivElement>(null);
 
+  const headingText = "Why muscle - and why blood";
+  const headingWords = headingText.split(" ");
+
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -90,6 +93,30 @@ export default function WhyMuscleSection() {
 
     let st: ScrollTrigger | null = null;
     let tween: gsap.core.Tween | null = null;
+
+    // Apple-style text reveal animation for title
+    const titleReveal = gsap.to(".wmb-reveal-title .reveal-word", {
+      opacity: 1,
+      stagger: 0.08,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".wmb-header",
+        start: "top 85%",
+        end: "bottom 55%",
+        scrub: true,
+      }
+    });
+
+    const subReveal = gsap.to(".wmb-reveal-sub", {
+      opacity: 1,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".wmb-header",
+        start: "top 70%",
+        end: "bottom 50%",
+        scrub: true,
+      }
+    });
 
     function maxScroll() {
       if (!trackRef.current) return 0;
@@ -171,6 +198,10 @@ export default function WhyMuscleSection() {
       clearTimeout(resizeTimer);
       clearTimeout(refreshTimer);
       destroyDesktopScroll();
+      titleReveal.scrollTrigger?.kill();
+      titleReveal.kill();
+      subReveal.scrollTrigger?.kill();
+      subReveal.kill();
     };
   }, []);
 
@@ -197,8 +228,14 @@ export default function WhyMuscleSection() {
       </svg>
 
       <div className="wmb-header">
-        <h2>Why muscle - and why blood</h2>
-        <p>Muscle doesn&apos;t fail in isolation. It takes four systems with it.</p>
+        <h2 className="wmb-reveal-title">
+          {headingWords.map((word, i) => (
+            <span key={i} className="reveal-word inline-block mr-[0.25em] opacity-15 transition-opacity duration-300">
+              {word}
+            </span>
+          ))}
+        </h2>
+        <p className="wmb-reveal-sub opacity-30">Muscle doesn&apos;t fail in isolation. It takes four systems with it.</p>
       </div>
 
       <div className="wmb-wrap" ref={wrapRef}>
@@ -258,8 +295,8 @@ export default function WhyMuscleSection() {
           font-family: 'Neue Montreal', sans-serif;
         }
         .wmb-header { text-align: center; padding: 100px 20px 60px; max-width: 1000px; margin: auto; }
-        .wmb-header h2 { font-size: clamp(36px, 4.5vw, 56px); font-weight: 500; margin: 0; }
-        .wmb-header p { font-size: clamp(16px, 1.8vw, 20px); color: #b9c0ce; margin-top: 16px; }
+        .wmb-header h2, .wmb-reveal-title { font-size: clamp(36px, 4.5vw, 56px); font-weight: 500; margin: 0; }
+        .wmb-reveal-sub { font-size: clamp(16px, 1.8vw, 20px); color: #b9c0ce; margin-top: 16px; transition: opacity 0.3s ease; }
 
         .wmb-wrap { position: relative; }
 

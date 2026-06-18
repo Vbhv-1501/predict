@@ -15,8 +15,11 @@ export default function VideoShowcase() {
   const reflectionRef = useRef<HTMLDivElement>(null);
 
   // States to keep track of mouse coordinates
-  const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0, isHovered: false });
+  const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0, targetScale: 1.0, isHovered: false });
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  const titleText = "Your results, your protocol, your doctors/health coaches — one dashboard.";
+  const titleWords = titleText.split(" ");
 
   useEffect(() => {
     // Detect touch device to disable tilt but keep float
@@ -65,6 +68,19 @@ export default function VideoShowcase() {
         y: 0,
         duration: 3, // Holds the element fully active
       });
+
+      // Apple-style text reveal animation
+      gsap.to(".video-showcase-title .reveal-word", {
+        opacity: 1,
+        stagger: 0.08,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".video-showcase-title",
+          start: "top 75%",
+          end: "bottom 35%",
+          scrub: true,
+        }
+      });
     }, containerRef);
 
     // 2. Interactive 3D Tilt and Specular Highlight Reflection (lerped inside RAF)
@@ -72,6 +88,7 @@ export default function VideoShowcase() {
     let animationFrameId: number;
     let curRotX = 0;
     let curRotY = 0;
+    let curScale = 1.0;
     let curReflectX = 50;
     let curReflectY = 50;
 
@@ -79,9 +96,10 @@ export default function VideoShowcase() {
       const mouse = mouseRef.current;
       
       if (mouse.isHovered && !isTouchDevice) {
-        // Interpolate (lerp) towards target mouse coordinates (max 8 degrees tilt)
+        // Interpolate (lerp) towards target mouse coordinates (max 12 degrees tilt)
         curRotX += (mouse.targetX - curRotX) * 0.1;
         curRotY += (mouse.targetY - curRotY) * 0.1;
+        curScale += (mouse.targetScale - curScale) * 0.1;
 
         // Glare specular position interpolation
         curReflectX += (mouse.x - curReflectX) * 0.1;
@@ -90,13 +108,14 @@ export default function VideoShowcase() {
         // Return smoothly to center/resting float state
         curRotX += (0 - curRotX) * 0.1;
         curRotY += (0 - curRotY) * 0.1;
+        curScale += (1.0 - curScale) * 0.1;
         curReflectX += (50 - curReflectX) * 0.1;
         curReflectY += (50 - curReflectY) * 0.1;
       }
 
       // Apply the transformations to the elements
       if (card) {
-        card.style.transform = `perspective(1000px) rotateX(${curRotX}deg) rotateY(${curRotY}deg) translateZ(0)`;
+        card.style.transform = `perspective(1000px) rotateX(${curRotX}deg) rotateY(${curRotY}deg) scale(${curScale}) translateZ(0)`;
       }
       if (reflectionRef.current) {
         reflectionRef.current.style.background = `radial-gradient(circle at ${curReflectX}% ${curReflectY}%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 60%)`;
@@ -113,13 +132,20 @@ export default function VideoShowcase() {
       const cardW = rect.width;
       const cardH = rect.height;
 
-      // Mouse position relative to the center of the card (-1 to 1)
+      // Mouse position relative to the center of the card (-0.5 to 0.5)
       const mouseX = (e.clientX - rect.left) / cardW - 0.5;
       const mouseY = (e.clientY - rect.top) / cardH - 0.5;
 
-      // Calculate target rotation degrees (X axis responds to mouse Y, Y axis responds to mouse X)
-      mouseRef.current.targetX = -mouseY * 8; // Max tilt X (vertical rotate)
-      mouseRef.current.targetY = mouseX * 8;  // Max tilt Y (horizontal rotate)
+      // Calculate target rotation degrees (pressed in towards mouse)
+      const maxRot = 12;
+      mouseRef.current.targetX = mouseY * maxRot;
+      mouseRef.current.targetY = -mouseX * maxRot;
+
+      // Calculate distance factor from center (0 to 1)
+      const dist = Math.hypot(mouseX, mouseY);
+      const maxDist = Math.hypot(0.5, 0.5);
+      const factor = Math.max(0, 1 - dist / maxDist); // 1 at center, 0 at corners
+      mouseRef.current.targetScale = 1.02 + 0.08 * factor; // 1.02 to 1.10 scale
 
       // Calculate reflection spotlight percentage coordinates (0 to 100)
       mouseRef.current.x = (e.clientX - rect.left) / cardW * 100;
@@ -158,19 +184,22 @@ export default function VideoShowcase() {
         
         {/* Top heading / Story copy */}
         <div className="text-center mb-10 md:mb-16 max-w-4xl">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 leading-[1.08] tracking-tight uppercase mb-6 font-neue">
-            Your blood carries <br className="hidden md:inline" />
-            your true age.
+          <span className="text-xs uppercase tracking-widest text-[#7C3AED] font-bold mb-4 block">
+            Inside the platform
+          </span>
+          <h2 className="video-showcase-title text-3xl md:text-4.5xl lg:text-5.5xl font-bold text-neutral-900 leading-[1.12] tracking-tight mb-6 font-neue">
+            {titleWords.map((word, i) => (
+              <span key={i} className="reveal-word inline-block mr-[0.25em] opacity-15 transition-opacity duration-300">
+                {word}
+              </span>
+            ))}
           </h2>
-          <p className="font-neue text-sm md:text-base lg:text-lg text-neutral-500 font-medium max-w-2xl mx-auto leading-relaxed">
-            Every second, it circulates signals. The rate of breakdown. The capacity to regenerate. The metabolic efficiency. The inflammatory burden. The vascular integrity.
-          </p>
         </div>
 
         {/* GSAP scroll trigger wrapper */}
         <div
           ref={gsapWrapperRef}
-          className="w-full max-w-5xl will-change-transform"
+          className="w-full max-w-7xl will-change-transform"
         >
           {/* Continuous floating animation wrapper */}
           <div className="dashboard-float-wrapper">
@@ -190,15 +219,12 @@ export default function VideoShowcase() {
                 }}
               />
 
-              {/* iPad Metallic Frame Border highlight */}
-              <div className="absolute inset-0 border border-white/[0.08] rounded-[32px] pointer-events-none z-30" />
-
-              {/* Actual Dashboard Image asset */}
+              {/* Actual Dashboard Image asset with scale to crop out the white outer bezel */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/assets/dashboard.png"
                 alt="Predict Clinical Dashboard"
-                className="w-full h-auto object-cover relative z-10 block pointer-events-none"
+                className="w-full h-auto object-cover relative z-10 block pointer-events-none scale-[1.13]"
               />
             </div>
           </div>
