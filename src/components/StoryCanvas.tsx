@@ -183,7 +183,6 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
 
   useEffect(() => {
     if (!containerRef.current || !stageRef.current || !canvasRef.current) return;
-    if (preloadedImages.length === 0) return;
 
     const canvas = canvasRef.current;
     const ctx    = canvas.getContext("2d");
@@ -324,10 +323,19 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
           height:   "100vh",
           overflow: "hidden",
           background: "#080A09",
+          backgroundImage: preloadedImages.length === 0 ? "url('/assets/hero-fallback.jpg')" : "none",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
           position: "relative",
         }}
       >
-        <canvas ref={canvasRef} style={{ maxWidth: "none" }} />
+        <canvas
+          ref={canvasRef}
+          style={{
+            maxWidth: "none",
+            display: preloadedImages.length === 0 ? "none" : "block"
+          }}
+        />
 
         {/* Text Steps Overlay Container */}
         <div className="absolute inset-0 z-20 pointer-events-none">

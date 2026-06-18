@@ -15,6 +15,38 @@ export default function LoadingScreen({ onLoaded }: LoadingScreenProps) {
   useEffect(() => {
     let active = true;
 
+    // Detect mobile or small screen devices
+    const isMobile = typeof window !== "undefined" && 
+      (window.innerWidth < 768 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent));
+
+    if (isMobile) {
+      // Simulate rapid progress on mobile to bypass downloading 50MB JSON
+      let count = 0;
+      const interval = setInterval(() => {
+        count += 5;
+        if (count > 100) count = 100;
+        setProgress(count);
+
+        if (count === 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            if (!active) return;
+            setFadeOut(true);
+            setTimeout(() => {
+              if (!active) return;
+              setVisible(false);
+              onLoaded([]);
+            }, 850);
+          }, 400);
+        }
+      }, 20);
+
+      return () => {
+        active = false;
+        clearInterval(interval);
+      };
+    }
+
     // Preload logo first
     const logoImg = new globalThis.Image();
     logoImg.src = "/assets/Predict-Logo.png";
@@ -80,6 +112,19 @@ export default function LoadingScreen({ onLoaded }: LoadingScreenProps) {
       })
       .catch((err) => {
         console.error("[LoadingScreen] Error loading frames:", err);
+        // Safety fallback: allow the site to load even if the JSON fetch fails
+        if (active) {
+          setProgress(100);
+          setTimeout(() => {
+            if (!active) return;
+            setFadeOut(true);
+            setTimeout(() => {
+              if (!active) return;
+              setVisible(false);
+              onLoaded([]);
+            }, 850);
+          }, 400);
+        }
       });
 
     return () => {
