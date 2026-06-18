@@ -94,7 +94,7 @@ export default function WhyMuscleSection() {
     function buildDesktopScroll() {
       gsap.set(track, { x: 0 });
       tween = gsap.to(track, {
-        x: () => -(track.scrollWidth - window.innerWidth + 250),
+        x: () => -(track!.scrollWidth - window.innerWidth + 250),
         ease: 'none',
         scrollTrigger: {
           trigger: wrap,
