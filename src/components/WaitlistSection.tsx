@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
+import JoinPredictForm from "./JoinPredictForm";
 
 export default function PredictMembership({ id }: { id?: string }) {
   const cardRef = useRef<HTMLDivElement>(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = cardRef.current;
@@ -47,7 +49,7 @@ export default function PredictMembership({ id }: { id?: string }) {
           </div>
 
           <div className="membership-info">
-            <button className="join-btn">Join Predict</button>
+            <button className="join-btn" onClick={() => setIsFormOpen(true)}>Join Predict</button>
           </div>
         </div>
 
@@ -292,6 +294,7 @@ export default function PredictMembership({ id }: { id?: string }) {
           }
         }
       `}</style>
+      <JoinPredictForm open={isFormOpen} onClose={() => setIsFormOpen(false)} />
     </>
   );
 }

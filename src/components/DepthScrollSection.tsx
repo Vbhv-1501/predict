@@ -167,7 +167,7 @@ export default function DepthScrollSection() {
           trigger: sectionRef.current,
           start: "top top",
           end: () => "+=" + steps.length * 80 + "%",
-          pin: panelRef.current,
+          pin: true,
           pinSpacing: true,
           scrub: 1,
           refreshPriority: 20,
