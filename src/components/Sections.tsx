@@ -856,7 +856,21 @@ export default function Sections() {
             <div className="flex flex-col gap-1 font-mono text-[10px] tracking-wider text-[#EFEFEF]/30 font-bold leading-normal">
               <div>2026 PREDICT MOVEMENT INTELLIGENCE, INC.</div>
               <div>ALL RIGHTS RESERVED</div>
-              <div className="mt-3 text-[#EFEFEF]/15">DEVELOPED BY URBAN BEAR AGENCY</div>
+              
+              {/* Trust Logos */}
+              <div className="flex gap-2.5 my-3 items-center">
+                <div className="w-8 h-8 rounded-full bg-black border border-white/10 flex items-center justify-center overflow-hidden">
+                  <img src="/assets/nature-logo.svg" alt="Nature" className="w-[18px] h-[18px] object-contain" />
+                </div>
+                <div className="w-8 h-8 rounded-full bg-[#00479b] border border-white/10 flex items-center justify-center overflow-hidden">
+                  <img src="/assets/aging-logo.svg" alt="Aging" className="w-[18px] h-[18px] object-contain" />
+                </div>
+                <div className="w-8 h-8 rounded-full bg-white border border-white/10 flex items-center justify-center overflow-hidden">
+                  <img src="/assets/wiley-logo.svg" alt="Wiley" className="w-[18px] h-[18px] object-contain" />
+                </div>
+              </div>
+
+              <div className="mt-1 text-[#EFEFEF]/15">DEVELOPED BY URBAN BEAR AGENCY</div>
             </div>
 
             {/* Social links */}

@@ -97,18 +97,33 @@ export default function ScienceOrbitSection() {
           width: 120px;
           height: 120px;
           border-radius: 50%;
-          background: #ffffff;
           border: 1px solid rgba(0, 0, 0, 0.05);
           box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
           display: flex;
           align-items: center;
           justify-content: center;
-          animation: counterRotate 24s linear infinite;
+        }
+
+        .orbit-1 .circle {
+          background: #000000;
+          border-color: rgba(255, 255, 255, 0.05);
+          animation: counterRotate1 24s linear infinite;
+        }
+
+        .orbit-2 .circle {
+          background: #ffffff;
+          animation: counterRotate2 24s linear infinite;
+        }
+
+        .orbit-3 .circle {
+          background: #00479b;
+          border-color: rgba(255, 255, 255, 0.05);
+          animation: counterRotate3 24s linear infinite;
         }
 
         .circle img {
-          width: 70px;
-          height: 70px;
+          width: 60%;
+          height: 60%;
           object-fit: contain;
         }
 
@@ -146,9 +161,19 @@ export default function ScienceOrbitSection() {
           to { transform: rotate(360deg); }
         }
 
-        @keyframes counterRotate {
+        @keyframes counterRotate1 {
           from { transform: rotate(0deg); }
           to { transform: rotate(-360deg); }
+        }
+
+        @keyframes counterRotate2 {
+          from { transform: rotate(-120deg); }
+          to { transform: rotate(-480deg); }
+        }
+
+        @keyframes counterRotate3 {
+          from { transform: rotate(-240deg); }
+          to { transform: rotate(-600deg); }
         }
 
         @media (max-width: 991px) {
