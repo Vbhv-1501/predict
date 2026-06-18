@@ -762,6 +762,8 @@ export default function Sections() {
                 </span>
               </div>
             ))}
+          </div>
+        </div>
       </section>
 
       {/* SECTION 9.5: SCIENCE ORBIT SECTION */}
