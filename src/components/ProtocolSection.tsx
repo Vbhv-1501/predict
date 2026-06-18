@@ -362,7 +362,7 @@ export default function ProtocolSection() {
         pinSpacing: true,
         scrub: 0.5,
         anticipatePin: 0.4, // Between 0.3 and 0.6
-        refreshPriority: 10,
+        refreshPriority: 40,
         invalidateOnRefresh: true,
         onUpdate(self) {
           const p = self.progress;

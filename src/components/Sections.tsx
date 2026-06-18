@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import WaitlistSection from "./WaitlistSection";
-import OurTestsSection from "./OurTestsSection";
+import ScienceOrbitSection from "./ScienceOrbitSection";
 import { motion, useInView } from "framer-motion";
 import { 
   Activity, 
@@ -285,16 +285,7 @@ export default function Sections() {
               Thousands Of Insights. Fully Mapped In Real Time.
             </p>
           </motion.div>
-        </div>
       </section>
-
-      {/* SECTION 4.5: OUR TESTS */}
-      <OurTestsSection
-        image1Src="/assets/test-01.webp"
-        image1Alt="Blood biomarker analysis test"
-        image2Src="/assets/test-02.webp"
-        image2Alt="Muscle imaging scan test"
-      />
 
       {/* SECTION 5: HOW IT WORKS */}
       <section id="how-it-works" className="py-32 relative bg-[#F8F8F6]">
@@ -770,9 +761,10 @@ export default function Sections() {
                 </span>
               </div>
             ))}
-          </div>
-        </div>
       </section>
+
+      {/* SECTION 9.5: SCIENCE ORBIT SECTION */}
+      <ScienceOrbitSection />
 
       {/* SECTION 10: FULLSCREEN STATEMENT */}
       <section className="py-40 relative bg-gradient-to-b from-[#0B0B0C] to-[#120D1A] overflow-hidden flex items-center justify-center border-y border-white/[0.05]">

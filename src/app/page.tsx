@@ -6,7 +6,8 @@ import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
 import StoryCanvas from "@/components/StoryCanvas";
 import VideoShowcase from "@/components/VideoShowcase";
-import StoryCarousel from "@/components/StoryCarousel";
+import WhyMuscleSection from "@/components/WhyMuscleSection";
+import OurTestsSection from "@/components/OurTestsSection";
 import DepthConverge from "@/components/DepthConverge";
 import EcosystemSection from "@/components/EcosystemSection";
 import ProtocolSection from "@/components/ProtocolSection";
@@ -63,24 +64,35 @@ export default function Home() {
             {/* Section 1: Cinematic frame-by-frame canvas (Hero) */}
             <StoryCanvas preloadedImages={preloadedImages} />
 
-            {/* Section 2: Video Showcase (Interactive Dashboard) — flows after StoryCanvas spacer */}
+            {/* Section 2: Video Showcase / Flow elements */}
             <div className="post-hero-flow">
+              {/* Section 1.5: Why muscle - and why blood (horizontal scroll section) */}
+              <WhyMuscleSection />
+
+              {/* Section 2: Our Tests (Second screenshot) */}
+              <OurTestsSection
+                image1Src="/assets/test-01.webp"
+                image1Alt="Blood biomarker analysis test"
+                image2Src="/assets/test-02.webp"
+                image2Alt="Muscle imaging scan test"
+              />
+
+              {/* Section 3: Video Showcase (Third screenshot: Your blood carries your true age) */}
               <VideoShowcase />
 
-            {/* Section 2.5: Storytelling Carousel (Interactive Cards) */}
-              <StoryCarousel />
-
-            {/* Section 3: DepthConverge — signal convergence animation */}
-              <DepthConverge />
-
-            {/* Section 4: Ecosystem Section */}
-              <EcosystemSection />
-
-            {/* Section 5: Chat storytelling */}
-              <DepthScrollSection />
+              {/* Section 4: Protocol (How it works timeline) */}
               <ProtocolSection />
 
-            {/* Sections 6–12 */}
+              {/* Section 5: DepthConverge (Fourth screenshot: Only we see the whole picture) */}
+              <DepthConverge />
+
+              {/* Section 6: Ecosystem Section */}
+              <EcosystemSection />
+
+              {/* Section 7: Chat storytelling */}
+              <DepthScrollSection />
+
+              {/* Sections 8–12 */}
               <Sections />
             </div>
           </main>
