@@ -124,7 +124,8 @@ export default function DepthScrollSection() {
 
   useEffect(() => {
     if (prefersReducedMotion) return;
-    if (!sectionRef.current || !panelRef.current) return;
+    const sectionEl = sectionRef.current;
+    if (!sectionEl || !panelRef.current) return;
 
     ScrollTrigger.config({ ignoreMobileResize: true });
 
@@ -237,7 +238,7 @@ export default function DepthScrollSection() {
     return () => {
       mm.revert();
       ScrollTrigger.getAll().forEach((st) => {
-        if (st.trigger === sectionRef.current) {
+        if (st.trigger === sectionEl) {
           st.kill(true);
         }
       });

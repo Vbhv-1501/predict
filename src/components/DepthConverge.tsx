@@ -81,9 +81,9 @@ export default function DepthConverge() {
       const labelsEl = labelsRef.current;
       const rows = labelsEl ? labelsEl.querySelectorAll(".dc-lab") : [];
       const ys: number[] = [];
-      const isMobile = window.innerWidth <= 820;
+      const isMobileWidth = window.innerWidth <= 820;
 
-      if (isMobile) {
+      if (isMobileWidth) {
         // Calculate offsets in unrotated layout space for mobile
         const stageEl = stageRef.current;
         const clientW = canvas.clientWidth || (stageEl ? stageEl.clientWidth : 0) || 300;
@@ -253,7 +253,7 @@ export default function DepthConverge() {
     rafRef.current = requestAnimationFrame(draw);
 
     return () => { cancelAnimationFrame(rafRef.current); ro.disconnect(); };
-  }, [prefersReducedMotion]);
+  }, [prefersReducedMotion, isMobile]);
 
   /* ----------------------- scroll timeline ------------------------------ */
   useEffect(() => {
@@ -312,7 +312,7 @@ export default function DepthConverge() {
     }, sectionRef);
 
     return () => { ctxGsap.revert(); };
-  }, [prefersReducedMotion]);
+  }, [prefersReducedMotion, isMobile]);
 
   /* ----------------------- mobile/reduced-motion fallback ------------------------------ */
   if (prefersReducedMotion || isMobile) {

@@ -134,6 +134,7 @@ export default function EcosystemSection() {
     let raf = 0, running = false, scrollProgress = 0;
     const start = performance.now();
     let st: ScrollTrigger | null = null;
+    let io: IntersectionObserver | null = null;
 
     const L = {
       orbitRX: 0, orbitRY: 0,
