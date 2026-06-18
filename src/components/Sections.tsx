@@ -858,15 +858,15 @@ export default function Sections() {
               <div>ALL RIGHTS RESERVED</div>
               
               {/* Trust Logos */}
-              <div className="flex gap-2.5 my-3 items-center">
-                <div className="w-8 h-8 rounded-full bg-black border border-white/10 flex items-center justify-center overflow-hidden">
-                  <img src="/assets/nature-logo.svg" alt="Nature" className="w-[18px] h-[18px] object-contain" />
+              <div className="flex gap-3 my-4 items-center">
+                <div className="w-11 h-11 rounded-full bg-black border border-white/10 flex items-center justify-center overflow-hidden">
+                  <img src="/assets/nature-logo.svg" alt="Nature" className="w-6 h-6 object-contain" />
                 </div>
-                <div className="w-8 h-8 rounded-full bg-[#00479b] border border-white/10 flex items-center justify-center overflow-hidden">
-                  <img src="/assets/aging-logo.svg" alt="Aging" className="w-[18px] h-[18px] object-contain" />
+                <div className="w-11 h-11 rounded-full bg-[#00479b] border border-white/10 flex items-center justify-center overflow-hidden">
+                  <img src="/assets/aging-logo.svg" alt="Aging" className="w-6 h-6 object-contain" />
                 </div>
-                <div className="w-8 h-8 rounded-full bg-white border border-white/10 flex items-center justify-center overflow-hidden">
-                  <img src="/assets/wiley-logo.svg" alt="Wiley" className="w-[18px] h-[18px] object-contain" />
+                <div className="w-11 h-11 rounded-full bg-white border border-white/10 flex items-center justify-center overflow-hidden">
+                  <img src="/assets/wiley-logo.svg" alt="Wiley" className="w-6 h-6 object-contain" />
                 </div>
               </div>
 

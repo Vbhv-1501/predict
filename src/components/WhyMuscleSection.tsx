@@ -91,16 +91,22 @@ export default function WhyMuscleSection() {
     let st: ScrollTrigger | null = null;
     let tween: gsap.core.Tween | null = null;
 
+    function maxScroll() {
+      return Math.max(0, track!.scrollWidth - sticky!.clientWidth);
+    }
+
     function buildDesktopScroll() {
       gsap.set(track, { x: 0 });
       tween = gsap.to(track, {
-        x: () => -(track!.scrollWidth - window.innerWidth + 250),
+        x: () => -maxScroll(),
         ease: 'none',
         scrollTrigger: {
           trigger: wrap,
           start: 'top top',
-          end: 'bottom bottom',
+          end: () => '+=' + maxScroll(),
           scrub: true,
+          pin: sticky,
+          anticipatePin: 1,
           invalidateOnRefresh: true,
           refreshPriority: 55,
           onEnter: () => dotsEl!.classList.add('is-visible'),
@@ -317,8 +323,8 @@ export default function WhyMuscleSection() {
 
         /* ---- desktop only: fine pointer + hover + >=900px ---- */
         @media (hover: hover) and (pointer: fine) and (min-width: 900px) {
-          .wmb-wrap { height: 420vh; position: relative; }
-          .wmb-sticky { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; overflow: hidden; }
+          .wmb-wrap { position: relative; }
+          .wmb-sticky { height: 100vh; display: flex; align-items: center; overflow: hidden; }
           .wmb-track {
             overflow-x: hidden;
             scroll-snap-type: none;
@@ -328,7 +334,7 @@ export default function WhyMuscleSection() {
           .wmb-card {
             width: 620px;
             min-width: 620px;
-            height: 760px;
+            height: min(640px, 70vh);
             scroll-snap-align: unset;
           }
           .wmb-content h3 { font-size: 42px; }
