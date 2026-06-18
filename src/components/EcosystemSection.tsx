@@ -39,48 +39,48 @@ interface EcosystemCard {
 }
 
 const CARDS: EcosystemCard[] = [
-  // ── NEAR orbit  ·  inner images closer to center, subtle negative z for depth ──
+  // ── NEAR orbit  ·  inner images closer to center, subtle Z depth ──
   { id:"training",
     label:"Training",       w:960,  h:640,  size:"sm", tier:"near",
-    angleDeg: 340, rScaleX: 0.86, rScaleY: 0.86,
-    z: -70, rotX:  8, rotY:  15, rotZ: -6,
-    ampX:4, ampY:4, ampZ:6, sp:0.44, ph:0.0, rdrift:1.6,
+    angleDeg: 315, rScaleX: 0.9, rScaleY: 0.9,
+    z: -70, rotX:  10, rotY: -15, rotZ: -3,
+    ampX:0, ampY:0, ampZ:0, sp:0, ph:0, rdrift:0,
     src: "/assets/Training.webp" },
 
   { id:"prescription",
     label:"Prescription",   w:800,  h:800,  size:"sm", tier:"near",
-    angleDeg:  85, rScaleX: 0.86, rScaleY: 0.86,
-    z: -82, rotX: -8, rotY: -12, rotZ:  5,
-    ampX:4, ampY:4, ampZ:6, sp:0.50, ph:2.1, rdrift:-1.6,
+    angleDeg:  75, rScaleX: 0.9, rScaleY: 0.9,
+    z: -80, rotX: -15, rotY: -10, rotZ:  2,
+    ampX:0, ampY:0, ampZ:0, sp:0, ph:0, rdrift:0,
     src: "/assets/Prescription.webp" },
 
   { id:"dexa",
     label:"DEXA Scan",      w:640,  h:960,  size:"sm", tier:"near",
-    angleDeg: 205, rScaleX: 0.86, rScaleY: 0.86,
-    z: -68, rotX:  6, rotY:  14, rotZ:  5,
-    ampX:4, ampY:4, ampZ:6, sp:0.56, ph:3.9, rdrift:1.4,
+    angleDeg: 195, rScaleX: 0.9, rScaleY: 0.9,
+    z: -70, rotX:  10, rotY:  15, rotZ: -4,
+    ampX:0, ampY:0, ampZ:0, sp:0, ph:0, rdrift:0,
     src: "/assets/DEXA Scan.webp" },
 
-  // ── FAR orbit  ·  outer images placed closer but still lifted forward ──
+  // ── FAR orbit  ·  outer images placed further out ──
   { id:"hyrox",
     label:"Hyrox",          w:1200, h:800,  size:"lg", tier:"far",
-    angleDeg:  25, rScaleX: 1.08, rScaleY: 1.08,
-    z:  105, rotX:  4, rotY: -18, rotZ:  8,
-    ampX:5, ampY:5, ampZ:8, sp:0.38, ph:1.0, rdrift:-2.2,
+    angleDeg:  15, rScaleX: 1.15, rScaleY: 1.15,
+    z:  80, rotX: -5, rotY: -20, rotZ:  4,
+    ampX:0, ampY:0, ampZ:0, sp:0, ph:0, rdrift:0,
     src: "/assets/Hyrox.webp" },
 
   { id:"supplements",
     label:"Supplements",    w:800,  h:1200, size:"md", tier:"far",
-    angleDeg: 150, rScaleX: 1.08, rScaleY: 1.08,
-    z:  100, rotX: -5, rotY:  20, rotZ:  6,
-    ampX:5, ampY:5, ampZ:8, sp:0.43, ph:2.8, rdrift:2.0,
+    angleDeg: 135, rScaleX: 1.15, rScaleY: 1.15,
+    z:  80, rotX: -15, rotY:  10, rotZ: -2,
+    ampX:0, ampY:0, ampZ:0, sp:0, ph:0, rdrift:0,
     src: "/assets/Supplements.webp" },
 
   { id:"retreat",
     label:"Retreat",        w:1200, h:800,  size:"md", tier:"far",
-    angleDeg: 265, rScaleX: 1.08, rScaleY: 1.08,
-    z:  100, rotX:  4, rotY: -16, rotZ: -5,
-    ampX:5, ampY:5, ampZ:8, sp:0.41, ph:4.9, rdrift:1.8,
+    angleDeg: 255, rScaleX: 1.15, rScaleY: 1.15,
+    z:  80, rotX:  15, rotY:   0, rotZ:  0,
+    ampX:0, ampY:0, ampZ:0, sp:0, ph:0, rdrift:0,
     src: "/assets/Retreat.webp" },
 ];
 
@@ -152,13 +152,13 @@ export default function EcosystemSection() {
       const baseVal = Math.min(sw, sh);
       let width = 0;
       if (mobile) {
-        if (c.size === "sm") width = Math.min(Math.max(75, baseVal * 0.18), 90);
-        else if (c.size === "md") width = Math.min(Math.max(90, baseVal * 0.22), 105);
-        else width = Math.min(Math.max(105, baseVal * 0.26), 120);
+        if (c.size === "sm") width = Math.min(Math.max(100, baseVal * 0.22), 120);
+        else if (c.size === "md") width = Math.min(Math.max(120, baseVal * 0.26), 140);
+        else width = Math.min(Math.max(140, baseVal * 0.30), 160);
       } else {
-        if (c.size === "sm") width = Math.min(Math.max(120, baseVal * 0.14), 180);
-        else if (c.size === "md") width = Math.min(Math.max(140, baseVal * 0.16), 220);
-        else width = Math.min(Math.max(160, baseVal * 0.18), 260);
+        if (c.size === "sm") width = Math.min(Math.max(170, baseVal * 0.20), 220);
+        else if (c.size === "md") width = Math.min(Math.max(200, baseVal * 0.23), 260);
+        else width = Math.min(Math.max(240, baseVal * 0.26), 300);
       }
       const height = (width / (c.w / c.h)) + 28;
       return { w: width, h: height };
@@ -171,8 +171,8 @@ export default function EcosystemSection() {
       L.mobile = mobile;
       // Calculate responsive orbit radii relative to the smaller viewport dimension, slightly reduced to keep cards in frame.
       const base = Math.min(sw, sh);
-      L.orbitRX = base * (mobile ? 0.35 : tablet ? 0.24 : 0.28);
-      L.orbitRY = base * (mobile ? 0.15 : tablet ? 0.18 : 0.22);
+      L.orbitRX = base * (mobile ? 0.38 : tablet ? 0.44 : 0.50);
+      L.orbitRY = base * (mobile ? 0.18 : tablet ? 0.32 : 0.36);
       L.zNear   = mobile ? 0.26 : tablet ? 0.45 : 0.65;
       L.zFar    = mobile ? 0.16 : tablet ? 0.30 : 0.50;
       L.ampMul  = mobile ? 0.16 : 0.35;
@@ -196,7 +196,7 @@ export default function EcosystemSection() {
       const hby = L.mobile ? 90 : 150;
       const minDist = Math.hypot(hbx + L.cardHW[i] + 22, hby + L.cardHH[i] + 22);
       const dist    = Math.hypot(bx, by);
-      if (c.tier === "near" && dist < minDist) {
+      if (dist < minDist) {
         const s = minDist / dist;
         bx *= s; by *= s;
       }
@@ -222,10 +222,7 @@ export default function EcosystemSection() {
     };
 
     const render = (now: number) => {
-      const t          = (now - start) / 1000;
       const dispersion = 0.15 + 0.85 * easeOutCubic(clamp(scrollProgress / 0.85, 0, 1));
-      const theta      = DRIFT_RATE * t * dispersion;
-      const cosT = Math.cos(theta), sinT = Math.sin(theta);
 
       for (let i = 0; i < CARDS.length; i++) {
         const c  = CARDS[i];
@@ -233,19 +230,13 @@ export default function EcosystemSection() {
         if (!el) continue;
         const p  = targetPos(i);
 
-        const px = p.x * cosT - p.y * sinT;
-        const py = p.x * sinT + p.y * cosT;
-
-        const fx  = Math.cos(t * c.sp * 0.8 + c.ph) * c.ampX * L.ampMul;
-        const fy  = Math.sin(t * c.sp        + c.ph) * c.ampY * L.ampMul;
-        const fz  = Math.sin(t * c.sp * 0.6  + c.ph) * c.ampZ * L.ampMul;
-        const rdZ = Math.sin(t * 0.28 + c.ph) * c.rdrift;
-        const rdX = Math.cos(t * 0.22 + c.ph) * (c.rdrift * 0.5);
+        const px = p.x;
+        const py = p.y;
 
         const zMul = c.tier === "near" ? L.zNear : L.zFar;
-        let x    = (px + fx) * dispersion;
-        let y    = (py + fy) * dispersion;
-        const z    = (c.z * zMul + fz) * dispersion;
+        let x    = px * dispersion;
+        let y    = py * dispersion;
+        const z    = (c.z * zMul) * dispersion;
 
         // Clamp final computed x/y relative to center to ensure card is fully inside the stage
         const padX = 16;
@@ -258,7 +249,7 @@ export default function EcosystemSection() {
         const baseSc = c.tier === "near" ? 0.55 : 0.45;
         const sc     = baseSc + (1 - baseSc) * dispersion;
 
-        applyTransform(c, el, x, y, z, rdX, rdZ, sc);
+        applyTransform(c, el, x, y, z, 0, 0, sc);
         el.style.opacity = (0.20 + 0.80 * clamp(dispersion * 1.5, 0, 1)).toFixed(3);
       }
 
