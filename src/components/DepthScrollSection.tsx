@@ -28,40 +28,40 @@ interface ChatItem {
   lines?: ChatLine[];
 }
 
-/* ---- Left-panel steps (matches the recording exactly) ------------------- */
+/* ---- Left-panel steps (customized for PREDICT brand) ------------------- */
 const STEPS: StepItem[] = [
   {
     label: "A question",
     headline: "Ask anything.",
-    body: "Depth answers from your own data. No dashboards. No charts. A reply.",
+    body: "Predict answers from your bio-data. No dashboards. No complex charts. A direct reply.",
   },
   {
     label: "An insight",
     headline: "Patterns you'd\nnever spot.",
-    body: "Depth watches the whole record, and tells you what changed before you'd ever notice.",
+    body: "Predict tracks your longitudinal trends, highlighting shifts before you'd ever notice.",
   },
   {
     label: "An action",
-    headline: "Tell Depth to act.",
-    body: "Schedules. Reminders. Bookings. One sentence is the whole flow.",
+    headline: "Tell Predict to act.",
+    body: "Schedule draws. Adjust routines. Set reminders. One sentence executes the workflow.",
   },
 ];
 
 /* ---- Chat thread, in scroll order. Each item carries an `at` value:
  *      the timeline progress (0..1) at which it appears. -------------------- */
 const CHAT: ChatItem[] = [
-  { type: "user", at: 0.08, text: "Why has my energy been off this month?" },
+  { type: "user", at: 0.08, text: "Why has my recovery been slow this month?" },
   { type: "typing", at: 0.14, hideAt: 0.22 },
   {
     type: "ai",
     at: 0.22,
     lines: [
-      { html: "Your ferritin dropped from <b>78 → 41</b> since February." },
+      { html: "Your recovery index dropped from <b>78 → 41</b> since February." },
       {
-        html: "Your last three weeks of sleep have been <b>32 minutes</b> shorter than your baseline.",
+        html: "Your left-leg load symmetry has deviated <b>3.8%</b> from your optimal baseline.",
       },
       {
-        html: "Both are contributing, ferritin more than sleep. Worth a recheck in six weeks.",
+        html: "Both point to localized calf muscle fatigue. Worth a recheck in six weeks.",
       },
     ],
   },
@@ -70,23 +70,23 @@ const CHAT: ChatItem[] = [
     at: 0.3,
     accent: true,
     lines: [
-      { html: "Your <b>ApoB</b> has crept up <b>14 points</b> across the last three panels." },
+      { html: "Your <b>ApoB</b> and inflammatory load are up <b>14%</b> across panels." },
       {
-        html: "It lines up with saturated fat going up after you started bulking in December.",
+        html: "It correlates with the mechanical joint stiffness logged after your runs.",
       },
       { action: true },
       {
-        html: 'Swap <span class="dx-hl">two weekly red-meat meals for fish</span> and the trajectory reverses by your next draw.',
+        html: 'Add <span class="dx-hl">unilateral calf extensions</span> to your daily protocol to restore structural balance.',
       },
     ],
   },
-  { type: "user", at: 0.62, text: "Book my next draw." },
+  { type: "user", at: 0.62, text: "Book my next assessment." },
   {
     type: "ai",
     at: 0.72,
     lines: [
       { html: "Booked. Phlebo arrives <b>Saturday · 7 AM</b> at your Indiranagar address." },
-      { html: "Same panel as last time, plus the <b>Lp(a)</b> you've been meaning to test." },
+      { html: "Same blood panel as last time, plus the <b>gait scan</b> you requested." },
       { html: "I'll remind you to fast Friday night." },
     ],
   },
@@ -156,7 +156,7 @@ export default function DepthScrollSection() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: () => "+=" + steps.length * 120 + "%",
+          end: () => "+=" + steps.length * 80 + "%",
           pin: panelRef.current,
           pinSpacing: true,
           scrub: 1,
@@ -323,6 +323,7 @@ export default function DepthScrollSection() {
         .dx-panel{
           position:relative; height:100vh; height:100svh; width:100%;
           overflow:hidden; display:flex; align-items:center;
+          background: var(--bg);
         }
         .dx-inner{
           width:100%; max-width:1320px; margin:0 auto;

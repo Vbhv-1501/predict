@@ -426,7 +426,7 @@ const desktopCSS = `
   position:relative; background:var(--bg); color:var(--ink); font-family:var(--font);
   -webkit-font-smoothing:antialiased;
 }
-.dc-stage{ position:relative; height:100vh; height:100svh; width:100%; overflow:hidden; }
+.dc-stage{ position:relative; height:100vh; height:100svh; width:100%; overflow:hidden; background: var(--bg); }
 
 .dc-text{
   position:absolute; left:clamp(24px,6vw,110px); top:50%; transform:translateY(-50%);
