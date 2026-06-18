@@ -33,35 +33,35 @@ const STEPS: StepItem[] = [
   {
     label: "A question",
     headline: "Ask anything.",
-    body: "Predict answers from your bio-data. No dashboards. No complex charts. A direct reply.",
+    body: "Predict decodes your biomechanics. No complex charts. Just instant, direct movement answers.",
   },
   {
     label: "An insight",
-    headline: "Patterns you'd\nnever spot.",
-    body: "Predict tracks your longitudinal trends, highlighting shifts before you'd ever notice.",
+    headline: "Kinetics you'd\nnever feel.",
+    body: "Predict tracks load symmetry anomalies, catching potential joint strain before pain strikes.",
   },
   {
     label: "An action",
     headline: "Tell Predict to act.",
-    body: "Schedule draws. Adjust routines. Set reminders. One sentence executes the workflow.",
+    body: "Order home draws. Deploy gait correctives. Adjust schedules. One line runs your protocol.",
   },
 ];
 
 /* ---- Chat thread, in scroll order. Each item carries an `at` value:
  *      the timeline progress (0..1) at which it appears. -------------------- */
 const CHAT: ChatItem[] = [
-  { type: "user", at: 0.08, text: "Why has my recovery been slow this month?" },
+  { type: "user", at: 0.08, text: "Why is my left knee aching after my 10k runs?" },
   { type: "typing", at: 0.14, hideAt: 0.22 },
   {
     type: "ai",
     at: 0.22,
     lines: [
-      { html: "Your recovery index dropped from <b>78 → 41</b> since February." },
+      { html: "Your gait scan shows left leg landing impact up <b>12%</b> since March." },
       {
-        html: "Your left-leg load symmetry has deviated <b>3.8%</b> from your optimal baseline.",
+        html: "Your ground contact time balance is skewed <b>4.2%</b> towards your right side.",
       },
       {
-        html: "Both point to localized calf muscle fatigue. Worth a recheck in six weeks.",
+        html: "Both indicate a compensation pattern overloading your left patellar tendon.",
       },
     ],
   },
@@ -70,24 +70,24 @@ const CHAT: ChatItem[] = [
     at: 0.3,
     accent: true,
     lines: [
-      { html: "Your <b>ApoB</b> and inflammatory load are up <b>14%</b> across panels." },
+      { html: "Your <b>hs-CRP</b> biomarker is elevated at <b>2.8 mg/L</b> indicating knee inflammation." },
       {
-        html: "It correlates with the mechanical joint stiffness logged after your runs.",
+        html: "It aligns with the decreased hamstring flexibility in your latest assessment.",
       },
       { action: true },
       {
-        html: 'Add <span class="dx-hl">unilateral calf extensions</span> to your daily protocol to restore structural balance.',
+        html: 'Add <span class="dx-hl">isometric quad holds</span> and hamstring curls to your routines to rebuild symmetry.',
       },
     ],
   },
-  { type: "user", at: 0.62, text: "Book my next assessment." },
+  { type: "user", at: 0.62, text: "Schedule my biomechanics test." },
   {
     type: "ai",
     at: 0.72,
     lines: [
-      { html: "Booked. Phlebo arrives <b>Saturday · 7 AM</b> at your Indiranagar address." },
-      { html: "Same blood panel as last time, plus the <b>gait scan</b> you requested." },
-      { html: "I'll remind you to fast Friday night." },
+      { html: "Scheduled. Physio visits <b>Sunday · 9 AM</b> at your Indiranagar residence." },
+      { html: "We will run the 3D gait scan and check your muscle-tendon load markers." },
+      { html: "Wear your running shoes for the test." },
     ],
   },
 ];
@@ -167,7 +167,7 @@ export default function DepthScrollSection() {
           trigger: sectionRef.current,
           start: "top top",
           end: () => "+=" + steps.length * 80 + "%",
-          pin: true,
+          pin: panelRef.current,
           pinSpacing: true,
           scrub: 1,
           refreshPriority: 20,
@@ -241,6 +241,9 @@ export default function DepthScrollSection() {
           tl.to(el, { autoAlpha: 0, duration: 0.04, ease: "power1.in" }, item.hideAt);
         }
       });
+
+      // Fade out panel at the end of the timeline to prevent duplication and spacer gap visibility
+      tl.to(panelRef.current, { autoAlpha: 0, duration: 0.12, ease: "power2.inOut" }, 0.88);
 
       ScrollTrigger.sort();
     }, sectionRef);

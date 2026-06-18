@@ -113,6 +113,9 @@ export default function Home() {
                 <EcosystemSection />
               </div>
 
+              {/* Spacer for natural scroll flow */}
+              <div className="h-[60vh] bg-[#F8F8F6] relative" style={{ zIndex: 16 }} />
+
               {/* Section 7: Chat storytelling */}
               <div style={{ position: "relative", zIndex: 17 }}>
                 <DepthScrollSection />
