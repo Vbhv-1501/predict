@@ -1,6 +1,12 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 /* ─────────────────────────────────────────────────────────────────────────
    ProtocolSection.tsx
@@ -336,56 +342,50 @@ export default function ProtocolSection() {
   const stRef    = useRef<{ kill: () => void } | null>(null);
 
   useEffect(() => {
-    (async () => {
-      const { default: gsap }     = await import("gsap");
-      const { ScrollTrigger }      = await import("gsap/ScrollTrigger");
-      gsap.registerPlugin(ScrollTrigger);
+    const outer = outerRef.current;
+    const path  = pathRef.current;
+    if (!outer || !path) return;
 
-      const outer = outerRef.current;
-          const path  = pathRef.current;
-      if (!outer || !path) return;
+    /* Get true path length in SVG user-units */
+    const pLen = path.getTotalLength();
 
-      /* Get true path length in SVG user-units */
-      const pLen = path.getTotalLength();
+    /* Initialize path properties to fully hidden before ScrollTrigger runs */
+    path.style.strokeDasharray = String(pLen);
+    path.style.strokeDashoffset = String(pLen);
+    path.style.visibility = "hidden";
 
-      /* Initialize path properties to fully hidden before ScrollTrigger runs */
-      path.style.strokeDasharray = String(pLen);
-      path.style.strokeDashoffset = String(pLen);
-      path.style.visibility = "hidden";
+    stRef.current = ScrollTrigger.create({
+      trigger: outer,
+      start:   "top top", // Later start so it doesn't steal view or overlap early
+      end:     "bottom bottom",
+      pin: ".proto-sticky",
+      pinSpacing: true,
+      scrub: 0.5,
+      anticipatePin: 0.4, // Between 0.3 and 0.6
+      refreshPriority: 40,
+      invalidateOnRefresh: true,
+      onUpdate(self) {
+        const p = self.progress;
 
-      stRef.current = ScrollTrigger.create({
-        trigger: outer,
-        start:   "top top", // Later start so it doesn't steal view or overlap early
-        end:     "bottom bottom",
-        pin: ".proto-sticky",
-        pinSpacing: true,
-        scrub: 0.5,
-        anticipatePin: 0.4, // Between 0.3 and 0.6
-        refreshPriority: 40,
-        invalidateOnRefresh: true,
-        onUpdate(self) {
-          const p = self.progress;
+        /* Draw trail - set visible only when GSAP is actively controlling dashoffset */
+        path.style.visibility = "visible";
+        path.style.strokeDashoffset = String(pLen * (1 - p));
 
-          /* Draw trail - set visible only when GSAP is actively controlling dashoffset */
-          path.style.visibility = "visible";
-          path.style.strokeDashoffset = String(pLen * (1 - p));
-
-          /* Reveal / retract steps strictly based on progress and thresholds */
-          THRESHOLDS.forEach((t, i) => {
-            const dot  = dotRefs.current[i];
-            const step = stepRefs.current[i];
-            if (p >= t) {
-              dot?.classList.add("lit");
-              step?.classList.add("vis");
-            } else {
-              dot?.classList.remove("lit");
-              step?.classList.remove("vis");
-            }
-          });
-        },
-      });
-      ScrollTrigger.refresh();
-    })();
+        /* Reveal / retract steps strictly based on progress and thresholds */
+        THRESHOLDS.forEach((t, i) => {
+          const dot  = dotRefs.current[i];
+          const step = stepRefs.current[i];
+          if (p >= t) {
+            dot?.classList.add("lit");
+            step?.classList.add("vis");
+          } else {
+            dot?.classList.remove("lit");
+            step?.classList.remove("vis");
+          }
+        });
+      },
+    });
+    ScrollTrigger.refresh();
 
     return () => {
       stRef.current?.kill();

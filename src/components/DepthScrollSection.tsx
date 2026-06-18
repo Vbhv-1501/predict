@@ -95,11 +95,12 @@ const CHAT: ChatItem[] = [
 /* ---- Tiny inline avatar (the Depth mark) -------------------------------- */
 function Avatar() {
   return (
-    <span className="dx-avatar" aria-hidden="true">
-      <svg viewBox="0 0 24 24" width="14" height="14">
-        <path d="M3 7 L17 5 L21 12 L14 14 L3 18 Z" fill="#111" />
-        <path d="M17 5 L21 12 L18.5 12.6 Z" fill="#9B1C2E" />
-      </svg>
+    <span className="dx-avatar" aria-hidden="true" style={{ overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <img
+        src="/fav.ico"
+        alt="Predict Logo"
+        className="w-full h-full object-cover rounded-full"
+      />
     </span>
   );
 }

@@ -27,7 +27,7 @@ import type { PointerEvent as ReactPointerEvent } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const DESKTOP_QUERY = '(hover: hover) and (pointer: fine) and (min-width: 900px)';
+const DESKTOP_QUERY = '(min-width: 900px)';
 
 type System = {
   id: 'c1' | 'c2' | 'c3' | 'c4';
@@ -92,8 +92,7 @@ export default function WhyMuscleSection() {
     let tween: gsap.core.Tween | null = null;
 
     function maxScroll() {
-      if (!trackRef.current) return 0;
-      return Math.max(0, trackRef.current.scrollWidth - window.innerWidth);
+      return Math.max(0, 2576 - 0.84 * window.innerWidth);
     }
 
     function buildDesktopScroll() {
@@ -321,8 +320,8 @@ export default function WhyMuscleSection() {
         .wmb-dot { width: 10px; height: 10px; border-radius: 50%; background: #444; }
         .wmb-dot.active { background: #6e3bff; }
 
-        /* ---- desktop only: fine pointer + hover + >=900px ---- */
-        @media (hover: hover) and (pointer: fine) and (min-width: 900px) {
+        /* ---- desktop only: >=900px ---- */
+        @media (min-width: 900px) {
           .wmb-wrap { position: relative; }
           .wmb-sticky { position: relative; top: auto; height: 100vh; display: flex; align-items: center; overflow: hidden; width: 100%; }
           .wmb-track {

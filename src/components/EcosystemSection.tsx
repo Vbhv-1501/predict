@@ -1,5 +1,11 @@
 import { useEffect, useRef } from "react";
 import "./EcosystemSection.css";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 /*
  * PLACEMENT STRATEGY
@@ -127,6 +133,7 @@ export default function EcosystemSection() {
 
     let raf = 0, running = false, scrollProgress = 0;
     const start = performance.now();
+    let st: ScrollTrigger | null = null;
 
     const L = {
       orbitRX: 0, orbitRY: 0,
@@ -197,12 +204,6 @@ export default function EcosystemSection() {
       bx = clamp(bx, -(L.stageW / 2 - L.cardHW[i] - 14), L.stageW / 2 - L.cardHW[i] - 14);
       by = clamp(by, -(L.stageH / 2 - L.cardHH[i] - 14), L.stageH / 2 - L.cardHH[i] - 14);
       return { x: bx, y: by };
-    };
-
-    const computeProgress = () => {
-      const rect   = wrap.getBoundingClientRect();
-      const travel = rect.height - window.innerHeight;
-      scrollProgress = travel <= 0 ? 0 : clamp(-rect.top / travel, 0, 1);
     };
 
     const applyTransform = (
@@ -285,21 +286,26 @@ export default function EcosystemSection() {
       }
     };
 
-    const onScroll = () => computeProgress();
-    const onResize = () => {
-      measure();
-      computeProgress();
-      if (prefersReduced) renderStatic();
-    };
-
     measure();
-    computeProgress();
 
-    let io: IntersectionObserver | null = null;
     const mobileView = window.innerWidth < 768;
     if (prefersReduced || mobileView) {
       renderStatic();
     } else {
+      st = ScrollTrigger.create({
+        trigger: wrap,
+        start: "top top",
+        end: "+=100%",
+        pin: stage,
+        pinSpacing: true,
+        scrub: true,
+        invalidateOnRefresh: true,
+        refreshPriority: 15,
+        onUpdate: (self) => {
+          scrollProgress = self.progress;
+        },
+      });
+
       io = new IntersectionObserver(
         (entries) => {
           const entry = entries[0];
@@ -320,15 +326,19 @@ export default function EcosystemSection() {
       io.observe(stage);
     }
 
-    window.addEventListener("scroll", onScroll, { passive: true });
+    const onResize = () => {
+      measure();
+      if (prefersReduced || window.innerWidth < 768) renderStatic();
+    };
+
     window.addEventListener("resize", onResize);
 
     return () => {
       running = false;
       cancelAnimationFrame(raf);
       io?.disconnect();
-      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
+      st?.kill();
     };
   }, []);
 
