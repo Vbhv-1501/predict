@@ -8,7 +8,7 @@ import StoryCanvas from "@/components/StoryCanvas";
 import VideoShowcase from "@/components/VideoShowcase";
 import WhyMuscleSection from "@/components/WhyMuscleSection";
 import OurTestsSection from "@/components/OurTestsSection";
-import DepthConverge from "@/components/DepthConverge";
+import BiomechanicalSection from "@/components/BiomechanicalSection";
 import EcosystemSection from "@/components/EcosystemSection";
 import ProtocolSection from "@/components/ProtocolSection";
 import DepthScrollSection from "@/components/DepthScrollSection";
@@ -67,7 +67,7 @@ export default function Home() {
 
           {/*
             IMPORTANT: main has no z-index, no overflow:hidden, no position:absolute.
-            Each pinned section (StoryCanvas, DepthConverge, DepthScrollSection)
+            Each pinned section (StoryCanvas, DepthScrollSection)
             creates its own GSAP spacer via pinSpacing:true and stacks in normal flow.
           */}
           <main className="relative w-full bg-[#F8F8F6]">
@@ -103,9 +103,9 @@ export default function Home() {
                 <ProtocolSection />
               </div>
 
-              {/* Section 5: DepthConverge (Fourth screenshot: Only we see the whole picture) */}
+              {/* Section 5: Biomechanical Live Stream (Benchmark Today. Breakthrough Tomorrow.) */}
               <div style={{ position: "relative", zIndex: 15 }}>
-                <DepthConverge />
+                <BiomechanicalSection />
               </div>
 
               {/* Section 6: Ecosystem Section */}
