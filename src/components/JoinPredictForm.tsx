@@ -236,9 +236,9 @@ export default function JoinPredictForm({
           align-items: center;
           justify-content: center;
           padding: 24px;
-          background: rgba(8, 8, 10, 0.75);
-          backdrop-filter: blur(8px) saturate(120%);
-          -webkit-backdrop-filter: blur(8px) saturate(120%);
+          background: rgba(8, 8, 10, 0.82) !important;
+          backdrop-filter: blur(8px) saturate(120%) !important;
+          -webkit-backdrop-filter: blur(8px) saturate(120%) !important;
           animation: jp-fade 0.35s cubic-bezier(0.22, 1, 0.36, 1);
           font-family: "Neue Montreal", -apple-system, BlinkMacSystemFont,
             "Segoe UI", sans-serif;
@@ -250,16 +250,12 @@ export default function JoinPredictForm({
           max-width: 440px;
           padding: 40px 36px 32px;
           border-radius: 28px;
-          background: linear-gradient(
-            155deg,
-            rgba(13, 13, 16, 0.94),
-            rgba(25, 15, 38, 0.92)
-          );
-          backdrop-filter: blur(28px) saturate(160%);
-          -webkit-backdrop-filter: blur(28px) saturate(160%);
-          border: 1px solid rgba(239, 239, 239, 0.18);
-          box-shadow: 0 24px 80px rgba(10, 10, 10, 0.5),
-            inset 0 1px 0 rgba(255, 255, 255, 0.22);
+          background: #0F0F12 !important;
+          backdrop-filter: blur(28px) saturate(160%) !important;
+          -webkit-backdrop-filter: blur(28px) saturate(160%) !important;
+          border: 1px solid rgba(239, 239, 239, 0.18) !important;
+          box-shadow: 0 24px 80px rgba(10, 10, 10, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
           color: var(--jp-off);
           animation: jp-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1);
         }

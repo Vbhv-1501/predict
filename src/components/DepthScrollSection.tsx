@@ -167,9 +167,7 @@ export default function DepthScrollSection() {
           id: "depth-chat-trigger",
           trigger: sectionRef.current,
           start: "top top",
-          end: () => "+=" + steps.length * 55 + "%",
-          pin: true,
-          pinSpacing: true,
+          end: "bottom bottom",
           scrub: 1,
           refreshPriority: 20,
           invalidateOnRefresh: true,
@@ -331,9 +329,12 @@ export default function DepthScrollSection() {
           background:var(--bg); color:var(--ink);
           font-family:var(--font);
           -webkit-font-smoothing:antialiased;
+          height: 265vh; /* Native sticky scroll range */
         }
         .dx-panel{
-          position:relative; height:100vh; height:100svh; width:100%;
+          position: sticky;
+          top: 0;
+          height:100vh; height:100svh; width:100%;
           overflow:hidden; display:flex; align-items:center;
           background: var(--bg);
         }
@@ -430,7 +431,8 @@ export default function DepthScrollSection() {
         @keyframes dxBlink{ 0%,80%,100%{opacity:.3} 40%{opacity:1} }
 
         /* ---------- MOBILE FALLBACK & RESPONSIVE LAYOUT ---------- */
-        .dx-section.is-mobile .dx-panel{ height:auto; display:block; padding:64px 0; }
+        .dx-section.is-mobile { height: auto !important; }
+        .dx-section.is-mobile .dx-panel{ height:auto !important; display:block !important; padding:64px 0; position: relative !important; }
         .dx-section.is-mobile .dx-inner{
           grid-template-columns:1fr; gap:40px; padding:0 24px;
         }
@@ -453,7 +455,12 @@ export default function DepthScrollSection() {
         }
 
         @media (max-width: 820px) {
+          .dx-section {
+            height: 265vh !important;
+          }
           .dx-panel {
+            position: sticky !important;
+            top: 0 !important;
             height: 100vh !important;
             height: 100svh !important;
             display: flex !important;
