@@ -15,62 +15,73 @@ export default function LoadingScreen({ onLoaded }: LoadingScreenProps) {
   useEffect(() => {
     let active = true;
 
-    // Detect mobile or small screen devices
-    const isMobile = typeof window !== "undefined" && 
-      (window.innerWidth < 768 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent));
-
-    if (isMobile) {
-      // Simulate rapid progress on mobile to bypass downloading 50MB JSON
-      let count = 0;
-      const interval = setInterval(() => {
-        count += 5;
-        if (count > 100) count = 100;
-        setProgress(count);
-
-        if (count === 100) {
-          clearInterval(interval);
-          setTimeout(() => {
-            if (!active) return;
-            setFadeOut(true);
-            setTimeout(() => {
-              if (!active) return;
-              setVisible(false);
-              onLoaded([]);
-            }, 850);
-          }, 400);
-        }
-      }, 20);
-
-      return () => {
-        active = false;
-        clearInterval(interval);
-      };
-    }
-
     // Preload logo first
     const logoImg = new globalThis.Image();
     logoImg.src = "/assets/Predict-Logo.png";
 
-    // Fetch the 30fps frames JSON
-    fetch("/frames_30fps.json")
-      .then((res) => {
-        if (!res.ok) {
+    const loadFrames = async () => {
+      try {
+        const response = await fetch("/frames_30fps.json");
+        if (!response.ok) {
           throw new Error("Failed to fetch frames JSON");
         }
-        return res.json();
-      })
-      .then((data: string[]) => {
+
+        const contentLength = response.headers.get("content-length");
+        const totalBytes = contentLength ? parseInt(contentLength, 10) : 0;
+
+        const reader = response.body?.getReader();
+        if (!reader) {
+          throw new Error("Response body reader is not available");
+        }
+
+        let receivedBytes = 0;
+        const chunks: Uint8Array[] = [];
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          if (value) {
+            chunks.push(value);
+            receivedBytes += value.length;
+
+            if (totalBytes > 0 && active) {
+              // Map download progress to 0% - 85%
+              const pct = Math.floor((receivedBytes / totalBytes) * 85);
+              setProgress(pct);
+            }
+          }
+        }
+
         if (!active) return;
+
+        // Combine chunks
+        const allChunks = new Uint8Array(receivedBytes);
+        let position = 0;
+        for (const chunk of chunks) {
+          allChunks.set(chunk, position);
+          position += chunk.length;
+        }
+
+        // Decode JSON
+        const jsonText = new TextDecoder("utf-8").decode(allChunks);
+        const data: string[] = JSON.parse(jsonText);
+
         const total = data.length;
         const imagesArray: HTMLImageElement[] = [];
         let loadedCount = 0;
+
+        if (total === 0) {
+          throw new Error("Frames data is empty");
+        }
 
         for (let i = 0; i < total; i++) {
           const img = new globalThis.Image();
           img.onload = () => {
             if (!active) return;
             loadedCount++;
-            const pct = Math.floor((loadedCount / total) * 100);
+            // Map image decoding/loading to 85% - 100%
+            const pct = 85 + Math.floor((loadedCount / total) * 15);
             setProgress(pct);
 
             if (loadedCount === total) {
@@ -90,7 +101,7 @@ export default function LoadingScreen({ onLoaded }: LoadingScreenProps) {
             if (!active) return;
             console.warn(`[LoadingScreen] failed to decode frame at index: ${i}`);
             loadedCount++;
-            const pct = Math.floor((loadedCount / total) * 100);
+            const pct = 85 + Math.floor((loadedCount / total) * 15);
             setProgress(pct);
 
             if (loadedCount === total) {
@@ -109,8 +120,7 @@ export default function LoadingScreen({ onLoaded }: LoadingScreenProps) {
           img.src = "data:image/jpeg;base64," + data[i];
           imagesArray.push(img);
         }
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error("[LoadingScreen] Error loading frames:", err);
         // Safety fallback: allow the site to load even if the JSON fetch fails
         if (active) {
@@ -125,7 +135,10 @@ export default function LoadingScreen({ onLoaded }: LoadingScreenProps) {
             }, 850);
           }, 400);
         }
-      });
+      }
+    };
+
+    loadFrames();
 
     return () => {
       active = false;
