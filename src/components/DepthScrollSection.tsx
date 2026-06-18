@@ -50,11 +50,11 @@ const STEPS: StepItem[] = [
 /* ---- Chat thread, in scroll order. Each item carries an `at` value:
  *      the timeline progress (0..1) at which it appears. -------------------- */
 const CHAT: ChatItem[] = [
-  { type: "user", at: 0.08, text: "Why is my left knee aching after my 10k runs?" },
-  { type: "typing", at: 0.14, hideAt: 0.22 },
+  { type: "user", at: 0.01, text: "Why is my left knee aching after my 10k runs?" },
+  { type: "typing", at: 0.06, hideAt: 0.12 },
   {
     type: "ai",
-    at: 0.22,
+    at: 0.12,
     lines: [
       { html: "Your gait scan shows left leg landing impact up <b>12%</b> since March." },
       {
@@ -67,7 +67,7 @@ const CHAT: ChatItem[] = [
   },
   {
     type: "ai",
-    at: 0.3,
+    at: 0.20,
     accent: true,
     lines: [
       { html: "Your <b>hs-CRP</b> biomarker is elevated at <b>2.8 mg/L</b> indicating knee inflammation." },
@@ -80,10 +80,10 @@ const CHAT: ChatItem[] = [
       },
     ],
   },
-  { type: "user", at: 0.62, text: "Schedule my biomechanics test." },
+  { type: "user", at: 0.50, text: "Schedule my biomechanics test." },
   {
     type: "ai",
-    at: 0.72,
+    at: 0.60,
     lines: [
       { html: "Scheduled. Physio visits <b>Sunday · 9 AM</b> at your Indiranagar residence." },
       { html: "We will run the 3D gait scan and check your muscle-tendon load markers." },
@@ -142,7 +142,13 @@ export default function DepthScrollSection() {
         filter: i === 0 ? "blur(0px)" : "blur(10px)",
       });
     });
-    gsap.set(chat, { autoAlpha: 0, y: 26, scale: 0.96, filter: "blur(0px)" });
+    chat.forEach((el, i) => {
+      if (i === 0) {
+        gsap.set(el, { autoAlpha: 1, y: 0, scale: 1, filter: "blur(0px)" });
+      } else {
+        gsap.set(el, { autoAlpha: 0, y: 26, scale: 0.96, filter: "blur(0px)" });
+      }
+    });
 
     const mm = gsap.matchMedia();
 
@@ -177,11 +183,11 @@ export default function DepthScrollSection() {
       // Translate the chat thread container upwards as the conversation progresses to keep the active bubbles in view
       if (thread) {
         if (isDesktop) {
-          tl.to(thread, { y: () => getTranslateY(0), duration: 0.05 }, 0.08);
-          tl.to(thread, { y: () => getTranslateY(2), duration: 0.05, ease: "power2.out" }, 0.22);
-          tl.to(thread, { y: () => getTranslateY(3), duration: 0.05, ease: "power2.out" }, 0.30);
-          tl.to(thread, { y: () => getTranslateY(4), duration: 0.05, ease: "power2.out" }, 0.62);
-          tl.to(thread, { y: () => getTranslateY(5), duration: 0.05, ease: "power2.out" }, 0.72);
+          tl.to(thread, { y: () => getTranslateY(0), duration: 0.05 }, 0.01);
+          tl.to(thread, { y: () => getTranslateY(2), duration: 0.05, ease: "power2.out" }, 0.12);
+          tl.to(thread, { y: () => getTranslateY(3), duration: 0.05, ease: "power2.out" }, 0.20);
+          tl.to(thread, { y: () => getTranslateY(4), duration: 0.05, ease: "power2.out" }, 0.50);
+          tl.to(thread, { y: () => getTranslateY(5), duration: 0.05, ease: "power2.out" }, 0.60);
         } else {
           tl.to(thread, {
             y: () => {
