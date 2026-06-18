@@ -92,7 +92,10 @@ export default function WhyMuscleSection() {
     let tween: gsap.core.Tween | null = null;
 
     function maxScroll() {
-      return Math.max(0, 2576 - 0.84 * window.innerWidth);
+      if (!trackRef.current) return 0;
+      const measured = trackRef.current.scrollWidth - window.innerWidth;
+      const calculated = 2576 - 0.84 * window.innerWidth;
+      return Math.max(0, Math.max(measured, calculated));
     }
 
     function buildDesktopScroll() {
@@ -138,6 +141,10 @@ export default function WhyMuscleSection() {
 
     init();
 
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 300);
+
     // Crossing the desktop/touch boundary (not just any resize) is what
     // should rebuild the engine — this is what keeps tablet rotation safe.
     mq.addEventListener('change', init);
@@ -155,6 +162,7 @@ export default function WhyMuscleSection() {
       mq.removeEventListener('change', init);
       window.removeEventListener('resize', onResize);
       clearTimeout(resizeTimer);
+      clearTimeout(refreshTimer);
       destroyDesktopScroll();
     };
   }, []);
@@ -325,19 +333,19 @@ export default function WhyMuscleSection() {
           .wmb-wrap { position: relative; }
           .wmb-sticky { position: relative; top: auto; height: 100vh; display: flex; align-items: center; overflow: hidden; width: 100%; }
           .wmb-track {
-            display: flex;
-            flex-wrap: nowrap;
-            width: max-content;
-            overflow-x: hidden;
-            scroll-snap-type: none;
-            padding: 0 8vw;
-            will-change: transform;
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            width: max-content !important;
+            overflow-x: hidden !important;
+            scroll-snap-type: none !important;
+            padding: 0 8vw !important;
+            will-change: transform !important;
           }
           .wmb-card {
-            width: 620px;
-            min-width: 620px;
-            height: min(640px, 70vh);
-            scroll-snap-align: unset;
+            width: 620px !important;
+            min-width: 620px !important;
+            height: min(640px, 70vh) !important;
+            scroll-snap-align: unset !important;
           }
           .wmb-content h3 { font-size: 42px; }
           .wmb-content p { font-size: 24px; }

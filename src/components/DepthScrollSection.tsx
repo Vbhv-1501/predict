@@ -236,6 +236,11 @@ export default function DepthScrollSection() {
 
     return () => {
       mm.revert();
+      ScrollTrigger.getAll().forEach((st) => {
+        if (st.trigger === sectionRef.current) {
+          st.kill(true);
+        }
+      });
     };
   }, [prefersReducedMotion]);
 

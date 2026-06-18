@@ -14,6 +14,12 @@ import {
   Search,
   User
 } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 // Helper Component for Scroll-based Counting Animations
 interface CounterProps {
@@ -26,51 +32,38 @@ interface CounterProps {
 
 function Counter({ from, to, duration = 1.5, suffix = "", className = "" }: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const [val, setVal] = useState(from);
-  const [triggered, setTriggered] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setTriggered(true);
-            observer.unobserve(el);
+    const obj = { val: from };
+    const st = ScrollTrigger.create({
+      trigger: el,
+      start: "top 95%",
+      onEnter: () => {
+        gsap.to(obj, {
+          val: to,
+          duration: duration,
+          ease: "power2.out",
+          onUpdate: () => {
+            if (el) {
+              el.innerText = Math.round(obj.val).toLocaleString() + suffix;
+            }
           }
         });
       },
-      { threshold: 0.1 }
-    );
+      once: true,
+    });
 
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!triggered) return;
-
-    let startTime: number | null = null;
-
-    const animateCount = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
-      const easedProgress = progress * (2 - progress); // easeOutQuad
-      setVal(Math.round(from + (to - from) * easedProgress));
-
-      if (progress < 1) {
-        requestAnimationFrame(animateCount);
-      }
+    return () => {
+      st.kill();
     };
-
-    requestAnimationFrame(animateCount);
-  }, [triggered, from, to, duration]);
+  }, [from, to, duration, suffix]);
 
   return (
     <span ref={ref} className={className}>
-      {val.toLocaleString()}
+      {from.toLocaleString()}
       {suffix}
     </span>
   );

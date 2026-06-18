@@ -49,6 +49,7 @@ export default function DepthConverge() {
   const laneYRef = useRef<number[]>([]);
   const startXRef = useRef<number>(0);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -57,9 +58,18 @@ export default function DepthConverge() {
     return () => mq.removeEventListener("change", upd);
   }, []);
 
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 820);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   /* ----------------------- canvas signal field ------------------------- */
   useEffect(() => {
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || isMobile) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -247,7 +257,7 @@ export default function DepthConverge() {
 
   /* ----------------------- scroll timeline ------------------------------ */
   useEffect(() => {
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || isMobile) return;
     if (!sectionRef.current || !cardRef.current || !stageRef.current) return;
 
     const card = cardRef.current;
@@ -305,7 +315,7 @@ export default function DepthConverge() {
   }, [prefersReducedMotion]);
 
   /* ----------------------- mobile/reduced-motion fallback ------------------------------ */
-  if (prefersReducedMotion) {
+  if (prefersReducedMotion || isMobile) {
     return (
       <section className="dc-section is-mobile" aria-label="Depth reads every signal">
         <div className="dc-m-text">
