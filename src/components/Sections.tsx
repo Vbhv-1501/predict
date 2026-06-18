@@ -285,6 +285,7 @@ export default function Sections() {
               Thousands Of Insights. Fully Mapped In Real Time.
             </p>
           </motion.div>
+        </div>
       </section>
 
       {/* SECTION 5: HOW IT WORKS */}
