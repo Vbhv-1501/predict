@@ -152,12 +152,22 @@ export default function DepthScrollSection() {
     }, (context) => {
       const { isDesktop } = context.conditions as { isDesktop: boolean };
       const thread = threadRef.current;
+      const getTranslateY = (index: number) => {
+        const container = rightRef.current;
+        const rows = chatRefs.current.filter(Boolean);
+        if (!container || !rows[index]) return 0;
+        const row = rows[index] as HTMLElement;
+        const containerHeight = container.clientHeight;
+        const rowBottom = row.offsetTop + row.offsetHeight;
+        return -Math.max(0, rowBottom - containerHeight + 24);
+      };
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
           end: () => "+=" + steps.length * 80 + "%",
-          pin: panelRef.current,
+          pin: true,
           pinSpacing: true,
           scrub: 1,
           refreshPriority: 20,
@@ -168,11 +178,11 @@ export default function DepthScrollSection() {
       // Translate the chat thread container upwards as the conversation progresses to keep the active bubbles in view
       if (thread) {
         if (isDesktop) {
-          tl.to(thread, { y: 0, duration: 0.05 }, 0.08);
-          tl.to(thread, { y: -20, duration: 0.05, ease: "power2.out" }, 0.22);
-          tl.to(thread, { y: -76, duration: 0.05, ease: "power2.out" }, 0.30);
-          tl.to(thread, { y: -126, duration: 0.05, ease: "power2.out" }, 0.62);
-          tl.to(thread, { y: -158, duration: 0.05, ease: "power2.out" }, 0.72);
+          tl.to(thread, { y: () => getTranslateY(0), duration: 0.05 }, 0.08);
+          tl.to(thread, { y: () => getTranslateY(2), duration: 0.05, ease: "power2.out" }, 0.22);
+          tl.to(thread, { y: () => getTranslateY(3), duration: 0.05, ease: "power2.out" }, 0.30);
+          tl.to(thread, { y: () => getTranslateY(4), duration: 0.05, ease: "power2.out" }, 0.62);
+          tl.to(thread, { y: () => getTranslateY(5), duration: 0.05, ease: "power2.out" }, 0.72);
         } else {
           tl.to(thread, {
             y: () => {
