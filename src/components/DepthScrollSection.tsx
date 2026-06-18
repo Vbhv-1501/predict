@@ -242,8 +242,7 @@ export default function DepthScrollSection() {
         }
       });
 
-      // Fade out panel at the end of the timeline to prevent duplication and spacer gap visibility
-      tl.to(panelRef.current, { autoAlpha: 0, duration: 0.12, ease: "power2.inOut" }, 0.88);
+
 
       ScrollTrigger.sort();
     }, sectionRef);
