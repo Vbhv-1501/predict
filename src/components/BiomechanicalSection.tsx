@@ -155,28 +155,26 @@ export default function BiomechanicalSection() {
             <span className="text-xs uppercase tracking-widest text-primary-400 font-semibold mb-3 block">
               Quantified Self
             </span>
-            <h2 className="section-title text-white mb-6">
-              Benchmark Today.<br />
-              Breakthrough Tomorrow.
+            <h2 className="section-title text-white mb-4">
+              Why We Built Bio-AgeClocks™
             </h2>
-            <p className="text-white/60 text-sm leading-relaxed mb-8">
-              Create a permanent biomechanical baseline for your future health. Access premium tracking protocols to map physical velocity, adjust vector loads, and preempt structural deterioration.
+            <p className="text-[#7C3AED] text-lg font-semibold mb-6">
+              Health should be measured before it is felt.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-              {[
-                "Create a baseline for health",
-                "Track movement improvement",
-                "Measure real-time progress",
-                "Prevent degenerative decline",
-                "Move confidently & safely",
-                "Optimize mechanical longevity"
-              ].map((item, index) => (
-                <div key={index} className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-accent shrink-0" />
-                  <span className="text-sm text-white/85 font-medium">{item}</span>
-                </div>
-              ))}
+            <div className="flex flex-col gap-5">
+              <div className="flex items-start gap-3">
+                <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                <span className="text-sm text-white/85 leading-relaxed">
+                  Muscles, nerves, blood vessels, bones, and joints age together.
+                </span>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                <span className="text-sm text-white/85 leading-relaxed">
+                  Bio-AgeClocks™ decode these hidden signals to measure structural aging and uncover future health risks—years before symptoms appear.
+                </span>
+              </div>
             </div>
           </motion.div>
 
@@ -192,7 +190,7 @@ export default function BiomechanicalSection() {
             <div className="flex justify-between items-center border-b border-white/[0.08] pb-4">
               <div className="flex items-center gap-3">
                 <Activity className="w-5 h-5 text-primary-400" />
-                <span className="text-sm font-semibold text-white/90">Biomechanical Live Stream</span>
+                <span className="text-sm font-semibold text-white/90">Advanced biomarker panel</span>
               </div>
               <div className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
             </div>
@@ -200,26 +198,18 @@ export default function BiomechanicalSection() {
             {/* Graphical simulation of joints */}
             <div className="h-64 bg-[#09090b] rounded-xl relative overflow-hidden flex items-center justify-center border border-white/[0.08]">
               <BiomechanicalLiveStreamCanvas />
-
-              {/* Floating Metric indicators */}
-              <div className="absolute top-2 left-2 px-2 py-1 bg-black/80 backdrop-blur-sm rounded border border-white/[0.1] text-[10px] font-mono text-white/60 z-10">
-                KNEE EXT: 142.3&deg;
-              </div>
-              <div className="absolute bottom-2 right-2 px-2 py-1 bg-black/80 backdrop-blur-sm rounded border border-white/[0.1] text-[10px] font-mono text-white/60 z-10">
-                LOAD VEC: 84.1 N/kg
-              </div>
             </div>
 
             {/* Simulated status cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {[
-                { label: "Gait Symmetry", val: "98.2%", color: "text-accent" },
-                { label: "Joint Stress", val: "Optimal", color: "text-green-400" },
-                { label: "Stability Index", val: "94.7", color: "text-purple-400" }
-              ].map((m, idx) => (
-                <div key={idx} className="p-3 bg-white/[0.01] border border-white/[0.08] rounded-xl text-center">
-                  <span className="text-[10px] text-white/40 block mb-1 uppercase tracking-wider">{m.label}</span>
-                  <span className={`text-sm font-semibold font-mono ${m.color}`}>{m.val}</span>
+                "Proprietary Multidomain Algorithm",
+                "Built on 30,000+ Clinical Data Points",
+                "Patent Filed",
+                "Validated Through Peer-Reviewed Research"
+              ].map((text, idx) => (
+                <div key={idx} className="p-3 bg-white/[0.02] border border-white/[0.08] rounded-xl flex items-center justify-center text-center">
+                  <span className="text-xs font-semibold text-white/80 leading-normal">{text}</span>
                 </div>
               ))}
             </div>
