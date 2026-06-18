@@ -69,6 +69,7 @@ const SYSTEMS: System[] = [
 ];
 
 export default function WhyMuscleSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -77,10 +78,11 @@ export default function WhyMuscleSection() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
+    const wrap = wrapRef.current;
     const sticky = stickyRef.current;
     const track = trackRef.current;
     const dotsEl = dotsRef.current;
-    if (!sticky || !track || !dotsEl) return;
+    if (!wrap || !sticky || !track || !dotsEl) return;
 
     const cards = track.querySelectorAll<HTMLDivElement>('.wmb-card');
     const dots = dotsEl.querySelectorAll<HTMLSpanElement>('.wmb-dot');
@@ -89,22 +91,16 @@ export default function WhyMuscleSection() {
     let st: ScrollTrigger | null = null;
     let tween: gsap.core.Tween | null = null;
 
-    function maxScroll() {
-      return Math.max(0, track!.scrollWidth - sticky!.clientWidth);
-    }
-
     function buildDesktopScroll() {
       gsap.set(track, { x: 0 });
       tween = gsap.to(track, {
-        x: () => -maxScroll(),
+        x: () => -(track.scrollWidth - window.innerWidth + 250),
         ease: 'none',
         scrollTrigger: {
-          trigger: sticky,
+          trigger: wrap,
           start: 'top top',
-          end: () => '+=' + maxScroll(),
+          end: 'bottom bottom',
           scrub: true,
-          pin: true,
-          anticipatePin: 1,
           invalidateOnRefresh: true,
           refreshPriority: 55,
           onEnter: () => dotsEl!.classList.add('is-visible'),
@@ -171,7 +167,7 @@ export default function WhyMuscleSection() {
   }
 
   return (
-    <section className="wmb-section" ref={wrapRef}>
+    <section className="wmb-section" ref={sectionRef}>
       <svg width="0" height="0" style={{ position: 'absolute' }}>
         <filter id="wmb-goo">
           <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur" />
@@ -184,7 +180,7 @@ export default function WhyMuscleSection() {
         <p>Muscle doesn&apos;t fail in isolation. It takes four systems with it.</p>
       </div>
 
-      <div className="wmb-wrap">
+      <div className="wmb-wrap" ref={wrapRef}>
         <div className="wmb-sticky" ref={stickyRef}>
           <div className="wmb-track" ref={trackRef}>
             {SYSTEMS.map((sys) => (
@@ -242,8 +238,8 @@ export default function WhyMuscleSection() {
           font-family: 'Neue Montreal', sans-serif;
         }
         .wmb-header { text-align: center; padding: 100px 20px 60px; max-width: 1000px; margin: auto; }
-        .wmb-header h2 { font-size: clamp(48px, 6vw, 84px); font-weight: 500; margin: 0; }
-        .wmb-header p { font-size: clamp(18px, 2vw, 24px); color: #b9c0ce; margin-top: 16px; }
+        .wmb-header h2 { font-size: clamp(36px, 4.5vw, 56px); font-weight: 500; margin: 0; }
+        .wmb-header p { font-size: clamp(16px, 1.8vw, 20px); color: #b9c0ce; margin-top: 16px; }
 
         .wmb-wrap { position: relative; }
 
@@ -321,7 +317,8 @@ export default function WhyMuscleSection() {
 
         /* ---- desktop only: fine pointer + hover + >=900px ---- */
         @media (hover: hover) and (pointer: fine) and (min-width: 900px) {
-          .wmb-sticky { height: 100vh; display: flex; align-items: center; overflow: hidden; }
+          .wmb-wrap { height: 420vh; position: relative; }
+          .wmb-sticky { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; overflow: hidden; }
           .wmb-track {
             overflow-x: hidden;
             scroll-snap-type: none;
@@ -329,8 +326,8 @@ export default function WhyMuscleSection() {
             will-change: transform;
           }
           .wmb-card {
-            width: clamp(480px, calc(50vw - 16px), 820px);
-            min-width: clamp(480px, calc(50vw - 16px), 820px);
+            width: 620px;
+            min-width: 620px;
             height: 760px;
             scroll-snap-align: unset;
           }
