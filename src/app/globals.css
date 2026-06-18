@@ -3,7 +3,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #F8F8F6; /* Premium Off White */
+  --background: #ffffff; /* Premium Off White */
   --foreground: #111115; /* Charcoal Black */
   --primary-900: #EADFF9; /* Soft Lavender Tint */
   --primary-800: #DAC9F3; 
@@ -132,7 +132,7 @@ canvas {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #F8F8F6;
+  background: #ffffff;
 }
 ::-webkit-scrollbar-thumb {
   background: #E4DFED;

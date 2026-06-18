@@ -141,7 +141,7 @@ function BiomechanicalLiveStreamCanvas() {
 
 export default function BiomechanicalSection() {
   return (
-    <section className="py-32 relative bg-[#0D0D0F] text-white border-y border-white/[0.05] overflow-hidden">
+    <section className="py-32 relative bg-[#000000] text-white border-y border-white/[0.05] overflow-hidden">
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">

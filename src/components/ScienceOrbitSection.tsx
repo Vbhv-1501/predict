@@ -42,7 +42,7 @@ export default function ScienceOrbitSection() {
       <style jsx>{`
         .science-section {
           height: 650px;
-          background: #efefef;
+          background: #ffffff;
           display: flex;
           align-items: center;
           padding: 0 7%;

@@ -70,7 +70,7 @@ export default function Home() {
             Each pinned section (StoryCanvas, DepthScrollSection)
             creates its own GSAP spacer via pinSpacing:true and stacks in normal flow.
           */}
-          <main className="relative w-full bg-[#F8F8F6]">
+          <main className="relative w-full bg-[#ffffff]">
             {/* Section 1: Cinematic frame-by-frame canvas (Hero) */}
             <div style={{ position: "relative", zIndex: 5 }}>
               <StoryCanvas preloadedImages={preloadedImages} />

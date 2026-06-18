@@ -4,7 +4,7 @@
   z-index: 6;
   width: 100%;
   height: auto;
-  background: #0D0D0F; /* Sleek dark background matching dark theme sections */
+  background: #000000; /* Sleek dark background matching dark theme sections */
   color: #EFEFEF;
   overflow: visible;
 }
@@ -22,7 +22,7 @@
   overflow: hidden;
   perspective: 1200px;
   perspective-origin: 50% 50%;
-  background: #0D0D0F;
+  background: #000000;
 }
 
 .eco__field {

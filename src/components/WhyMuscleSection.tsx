@@ -75,8 +75,10 @@ export default function WhyMuscleSection() {
   const trackRef = useRef<HTMLDivElement>(null);
   const dotsRef = useRef<HTMLDivElement>(null);
 
-  const headingText = "Why muscle - and why blood";
-  const headingWords = headingText.split(" ");
+  const headingLines = [
+    "Why muscle -",
+    "and why blood"
+  ];
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -94,17 +96,22 @@ export default function WhyMuscleSection() {
     let st: ScrollTrigger | null = null;
     let tween: gsap.core.Tween | null = null;
 
-    // Apple-style text reveal animation for title
-    const titleReveal = gsap.to(".wmb-reveal-title .reveal-word", {
-      opacity: 1,
-      stagger: 0.08,
-      ease: "none",
+    // Apple-style line-by-line reveal animation
+    const titleLines = gsap.utils.toArray<HTMLElement>(".wmb-reveal-title .reveal-line");
+    const titleTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: ".wmb-header",
         start: "top 85%",
         end: "bottom 55%",
         scrub: true,
       }
+    });
+    titleLines.forEach((line) => {
+      titleTimeline.to(line, {
+        opacity: 1,
+        duration: 1,
+        ease: "none",
+      });
     });
 
     const subReveal = gsap.to(".wmb-reveal-sub", {
@@ -198,8 +205,8 @@ export default function WhyMuscleSection() {
       clearTimeout(resizeTimer);
       clearTimeout(refreshTimer);
       destroyDesktopScroll();
-      titleReveal.scrollTrigger?.kill();
-      titleReveal.kill();
+      titleTimeline.scrollTrigger?.kill();
+      titleTimeline.kill();
       subReveal.scrollTrigger?.kill();
       subReveal.kill();
     };
@@ -227,11 +234,11 @@ export default function WhyMuscleSection() {
         </filter>
       </svg>
 
-      <div className="wmb-header">
-        <h2 className="wmb-reveal-title">
-          {headingWords.map((word, i) => (
-            <span key={i} className="reveal-word inline-block mr-[0.25em] opacity-15 transition-opacity duration-300">
-              {word}
+      <div className="wmb-header flex flex-col items-center">
+        <h2 className="wmb-reveal-title flex flex-col items-center">
+          {headingLines.map((line, i) => (
+            <span key={i} className="reveal-line block opacity-15">
+              {line}
             </span>
           ))}
         </h2>
@@ -289,7 +296,7 @@ export default function WhyMuscleSection() {
         }
 
         .wmb-section {
-          background: #05070b;
+          background: #000000;
           overflow: hidden;
           color: #fff;
           font-family: 'Neue Montreal', sans-serif;
@@ -297,9 +304,9 @@ export default function WhyMuscleSection() {
         .wmb-header { text-align: center; padding: 100px 20px 60px; max-width: 1000px; margin: auto; }
         .wmb-header h2, .wmb-reveal-title { font-size: clamp(36px, 4.5vw, 56px); font-weight: 500; margin: 0; }
         .wmb-reveal-sub { font-size: clamp(16px, 1.8vw, 20px); color: #b9c0ce; margin-top: 16px; transition: opacity 0.3s ease; }
-
+ 
         .wmb-wrap { position: relative; }
-
+ 
         /* ---- mobile + tablet (default): plain native swipe ---- */
         .wmb-sticky { position: relative; height: auto; }
         .wmb-track {
@@ -312,7 +319,7 @@ export default function WhyMuscleSection() {
           scrollbar-width: none;
         }
         .wmb-track::-webkit-scrollbar { display: none; }
-
+ 
         .wmb-card {
           flex: none;
           width: 88vw;
@@ -340,7 +347,7 @@ export default function WhyMuscleSection() {
         .wmb-c2::before { background: radial-gradient(circle, #6e3bff 0, transparent 50%); }
         .wmb-c3::before { background: radial-gradient(circle, #ff8a00 0, transparent 50%); }
         .wmb-c4::before { background: radial-gradient(circle, #2979ff 0, transparent 50%); }
-
+ 
         .wmb-orb { position: absolute; top: 50px; left: 40px; width: 190px; height: 190px; }
         .wmb-gooey { width: 100%; height: 100%; filter: url(#wmb-goo); }
         .wmb-blob { position: absolute; border-radius: 50%; mix-blend-mode: screen; }
@@ -348,21 +355,21 @@ export default function WhyMuscleSection() {
         .wmb-c2 .wmb-b1 { background: #6e3bff; } .wmb-c2 .wmb-b2 { background: #b88cff; } .wmb-c2 .wmb-b3 { background: #ead8ff; }
         .wmb-c3 .wmb-b1 { background: #ff8a00; } .wmb-c3 .wmb-b2 { background: #ffc266; } .wmb-c3 .wmb-b3 { background: #ffe1b3; }
         .wmb-c4 .wmb-b1 { background: #2979ff; } .wmb-c4 .wmb-b2 { background: #72a7ff; } .wmb-c4 .wmb-b3 { background: #d4e4ff; }
-
+ 
         .wmb-b1 { width: 120px; height: 120px; left: 10px; top: 20px; animation: wmb-f1 8s infinite ease-in-out; }
         .wmb-b2 { width: 110px; height: 110px; left: 70px; top: 50px; animation: wmb-f2 7s infinite ease-in-out; }
         .wmb-b3 { width: 95px; height: 95px; left: 40px; top: 90px; animation: wmb-f3 6s infinite ease-in-out; }
-
+ 
         .wmb-content { position: absolute; left: 42px; right: 42px; bottom: 42px; }
         .wmb-num { font-size: 14px; color: #aaa; margin-bottom: 16px; }
         .wmb-content h3 { font-size: 34px; line-height: 1.05; margin-bottom: 22px; font-weight: 500; }
         .wmb-content p { font-size: 18px; line-height: 1.55; color: #d7deea; margin: 0; }
         .wmb-line { margin-top: 28px; padding-top: 18px; border-top: 1px dashed rgba(255, 255, 255, 0.15); font-size: 18px; color: #c2c9d5; }
-
+ 
         @keyframes wmb-f1 { 50% { transform: translate(25px, -12px); } }
         @keyframes wmb-f2 { 50% { transform: translate(-20px, 20px); } }
         @keyframes wmb-f3 { 50% { transform: translate(18px, 12px); } }
-
+ 
         .wmb-dots {
           position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
           display: none; gap: 10px; z-index: 20;
@@ -371,11 +378,11 @@ export default function WhyMuscleSection() {
         .wmb-dots.is-visible { opacity: 1; pointer-events: auto; }
         .wmb-dot { width: 10px; height: 10px; border-radius: 50%; background: #444; }
         .wmb-dot.active { background: #6e3bff; }
-
+ 
         /* ---- desktop only: >=900px ---- */
         @media (min-width: 900px) {
           .wmb-wrap { position: relative; }
-          .wmb-sticky { position: relative; top: auto; height: 100vh; display: flex; align-items: center; overflow: hidden; width: 100%; background: #05070b; }
+          .wmb-sticky { position: relative; top: auto; height: 100vh; display: flex; align-items: center; overflow: hidden; width: 100%; background: #000000; }
           .wmb-track {
             display: flex !important;
             flex-wrap: nowrap !important;

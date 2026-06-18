@@ -103,7 +103,7 @@ const CSS = `
   .proto-outer {
     position: relative;
     height: 200vh;
-    background: #07090d;
+    background: #000000;
     font-family: 'Neue Montreal', 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
     color: #eef2f7;
@@ -119,7 +119,7 @@ const CSS = `
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: radial-gradient(120% 80% at 50% -10%, #12161e 0%, #07090d 65%);
+    background: #000000;
   }
 
   /* Header */

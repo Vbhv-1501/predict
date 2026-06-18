@@ -18,8 +18,10 @@ export default function VideoShowcase() {
   const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0, targetScale: 1.0, isHovered: false });
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
-  const titleText = "Your results, your protocol, your doctors/health coaches — one dashboard.";
-  const titleWords = titleText.split(" ");
+  const titleLines = [
+    "Your results, your protocol,",
+    "your doctors/health coaches — one dashboard."
+  ];
 
   useEffect(() => {
     // Detect touch device to disable tilt but keep float
@@ -69,17 +71,22 @@ export default function VideoShowcase() {
         duration: 3, // Holds the element fully active
       });
 
-      // Apple-style text reveal animation
-      gsap.to(".video-showcase-title .reveal-word", {
-        opacity: 1,
-        stagger: 0.08,
-        ease: "none",
+      // Apple-style line-by-line reveal animation
+      const titleLines = gsap.utils.toArray<HTMLElement>(".video-showcase-title .reveal-line");
+      const titleTimeline = gsap.timeline({
         scrollTrigger: {
           trigger: ".video-showcase-title",
-          start: "top 75%",
-          end: "bottom 35%",
+          start: "top 80%",
+          end: "bottom 50%",
           scrub: true,
         }
+      });
+      titleLines.forEach((line) => {
+        titleTimeline.to(line, {
+          opacity: 1,
+          duration: 1,
+          ease: "none",
+        });
       });
     }, containerRef);
 
@@ -178,7 +185,7 @@ export default function VideoShowcase() {
   return (
     <section
       ref={containerRef}
-      className="py-20 md:py-32 w-full bg-[#F8F8F6] relative overflow-hidden flex flex-col items-center border-t border-black/[0.04] font-neue select-none"
+      className="py-20 md:py-32 w-full bg-[#ffffff] relative overflow-hidden flex flex-col items-center border-t border-black/[0.04] font-neue select-none"
     >
       <div className="max-w-7xl mx-auto px-6 w-full flex flex-col items-center relative">
         
@@ -187,10 +194,10 @@ export default function VideoShowcase() {
           <span className="text-xs uppercase tracking-widest text-[#7C3AED] font-bold mb-4 block">
             Inside the platform
           </span>
-          <h2 className="video-showcase-title text-3xl md:text-4.5xl lg:text-5.5xl font-bold text-neutral-900 leading-[1.12] tracking-tight mb-6 font-neue">
-            {titleWords.map((word, i) => (
-              <span key={i} className="reveal-word inline-block mr-[0.25em] opacity-15 transition-opacity duration-300">
-                {word}
+          <h2 className="video-showcase-title text-3xl md:text-4.5xl lg:text-5.5xl font-bold text-neutral-900 leading-[1.2] tracking-tight mb-6 font-neue flex flex-col items-center">
+            {titleLines.map((line, i) => (
+              <span key={i} className="reveal-line block opacity-15">
+                {line}
               </span>
             ))}
           </h2>
@@ -199,7 +206,7 @@ export default function VideoShowcase() {
         {/* GSAP scroll trigger wrapper */}
         <div
           ref={gsapWrapperRef}
-          className="w-full max-w-7xl will-change-transform"
+          className="w-full max-w-2xl will-change-transform"
         >
           {/* Continuous floating animation wrapper */}
           <div className="dashboard-float-wrapper">

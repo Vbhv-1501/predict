@@ -328,7 +328,7 @@ export default function DepthScrollSection() {
 
       <style>{`
         .dx-section {
-          --bg:#F8F8F6; --ink:#111115; --muted:#4A475A;
+          --bg:#ffffff; --ink:#111115; --muted:#4A475A;
           --blue:#7C3AED; --bubble:rgba(255, 255, 255, 0.6); --accent:#9259C7;
           --font: inherit;
           position: relative;

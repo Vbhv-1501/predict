@@ -113,10 +113,10 @@ export default function Sections() {
   const row3 = [...testimonials.slice(2), ...testimonials.slice(0, 2), ...testimonials.slice(2), ...testimonials.slice(0, 2)];
 
   return (
-    <div className="relative w-full bg-[#F8F8F6] text-foreground">
+    <div className="relative w-full bg-[#ffffff] text-foreground">
       
       {/* SECTION 4: 9000+ DATA POINTS */}
-      <section className="py-24 bg-[#0B0B0C] relative overflow-hidden border-y border-white/[0.05]">
+      <section className="py-24 bg-[#000000] relative overflow-hidden border-y border-white/[0.05]">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(124,58,237,0.08),transparent_60%)] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
           <motion.div
@@ -147,7 +147,7 @@ export default function Sections() {
 
 
       {/* SECTION 9: SOCIAL PROOF (TESTIMONIALS LOOPING MARQUEE) */}
-      <section className="py-32 relative overflow-hidden bg-[#0B0B0C] text-white border-y border-white/[0.05]">
+      <section className="py-32 relative overflow-hidden bg-[#000000] text-white border-y border-white/[0.05]">
         <div className="max-w-7xl mx-auto px-6 mb-16">
           <div className="text-center">
             <span className="text-xs uppercase tracking-widest text-primary-400 font-semibold mb-3 block">
