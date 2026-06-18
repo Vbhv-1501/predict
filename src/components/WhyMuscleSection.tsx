@@ -93,7 +93,14 @@ export default function WhyMuscleSection() {
 
     function maxScroll() {
       if (!trackRef.current) return 0;
-      const measured = trackRef.current.scrollWidth - window.innerWidth;
+      const cards = trackRef.current.querySelectorAll<HTMLDivElement>('.wmb-card');
+      if (cards.length === 0) return 0;
+      const lastCard = cards[cards.length - 1];
+      const lastCardOffsetLeft = lastCard.offsetLeft;
+      const lastCardWidth = lastCard.offsetWidth;
+      const paddingRight = 0.08 * window.innerWidth;
+      const totalWidth = lastCardOffsetLeft + lastCardWidth + paddingRight;
+      const measured = totalWidth - window.innerWidth;
       const calculated = 2576 - 0.84 * window.innerWidth;
       return Math.max(0, Math.max(measured, calculated));
     }
@@ -340,6 +347,8 @@ export default function WhyMuscleSection() {
             scroll-snap-type: none !important;
             padding: 0 8vw !important;
             will-change: transform !important;
+            position: relative !important;
+            flex-shrink: 0 !important;
           }
           .wmb-card {
             width: 620px !important;

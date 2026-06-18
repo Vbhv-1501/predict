@@ -35,13 +35,23 @@ export default function Home() {
   useEffect(() => {
     if (isLoading) return;
 
-    // Give DOM time to settle, then sort + refresh all ScrollTriggers
-    const timer = setTimeout(() => {
+    const refresh = () => {
       ScrollTrigger.sort();
       ScrollTrigger.refresh();
-    }, 200);
+    };
 
-    return () => clearTimeout(timer);
+    window.addEventListener("load", refresh);
+
+    const timer1 = setTimeout(refresh, 200);
+    const timer2 = setTimeout(refresh, 800);
+    const timer3 = setTimeout(refresh, 2000);
+
+    return () => {
+      window.removeEventListener("load", refresh);
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+    };
   }, [isLoading]);
 
   return (
@@ -62,38 +72,56 @@ export default function Home() {
           */}
           <main className="relative w-full bg-[#F8F8F6]">
             {/* Section 1: Cinematic frame-by-frame canvas (Hero) */}
-            <StoryCanvas preloadedImages={preloadedImages} />
+            <div style={{ position: "relative", zIndex: 5 }}>
+              <StoryCanvas preloadedImages={preloadedImages} />
+            </div>
 
             {/* Section 2: Video Showcase / Flow elements */}
-            <div className="post-hero-flow">
+            <div className="post-hero-flow" style={{ position: "relative", zIndex: 10 }}>
               {/* Section 1.5: Why muscle - and why blood (horizontal scroll section) */}
-              <WhyMuscleSection />
+              <div style={{ position: "relative", zIndex: 11 }}>
+                <WhyMuscleSection />
+              </div>
 
               {/* Section 2: Our Tests (Second screenshot) */}
-              <OurTestsSection
-                image1Src="/assets/test-01.webp"
-                image1Alt="Blood biomarker analysis test"
-                image2Src="/assets/test-02.webp"
-                image2Alt="Muscle imaging scan test"
-              />
+              <div style={{ position: "relative", zIndex: 12 }}>
+                <OurTestsSection
+                  image1Src="/assets/test-01.webp"
+                  image1Alt="Blood biomarker analysis test"
+                  image2Src="/assets/test-02.webp"
+                  image2Alt="Muscle imaging scan test"
+                />
+              </div>
 
               {/* Section 3: Video Showcase (Third screenshot: Your blood carries your true age) */}
-              <VideoShowcase />
+              <div style={{ position: "relative", zIndex: 13 }}>
+                <VideoShowcase />
+              </div>
 
               {/* Section 4: Protocol (How it works timeline) */}
-              <ProtocolSection />
+              <div style={{ position: "relative", zIndex: 14 }}>
+                <ProtocolSection />
+              </div>
 
               {/* Section 5: DepthConverge (Fourth screenshot: Only we see the whole picture) */}
-              <DepthConverge />
+              <div style={{ position: "relative", zIndex: 15 }}>
+                <DepthConverge />
+              </div>
 
               {/* Section 6: Ecosystem Section */}
-              <EcosystemSection />
+              <div style={{ position: "relative", zIndex: 16 }}>
+                <EcosystemSection />
+              </div>
 
               {/* Section 7: Chat storytelling */}
-              <DepthScrollSection />
+              <div style={{ position: "relative", zIndex: 17 }}>
+                <DepthScrollSection />
+              </div>
 
               {/* Sections 8–12 */}
-              <Sections />
+              <div style={{ position: "relative", zIndex: 18 }}>
+                <Sections />
+              </div>
             </div>
           </main>
         </SmoothScroll>
