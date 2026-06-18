@@ -93,6 +93,25 @@ export default function WhyMuscleSection() {
     const dots = dotsEl.querySelectorAll<HTMLSpanElement>('.wmb-dot');
     const mq = window.matchMedia(DESKTOP_QUERY);
 
+    const handleTrackScroll = () => {
+      if (!track) return;
+      const cardEl = track.querySelector('.wmb-card');
+      if (!cardEl) return;
+      const cardWidth = (cardEl as HTMLElement).offsetWidth + 32;
+      const scrollLeft = track.scrollLeft;
+      const activeIndex = Math.min(cards.length - 1, Math.round(scrollLeft / cardWidth));
+
+      dots.forEach((d, i) => d.classList.toggle('active', i === activeIndex));
+
+      const hint = dotsEl.querySelector('.wmb-swipe-hint');
+      if (hint) {
+        (hint as HTMLElement).style.opacity = '0';
+        setTimeout(() => hint.remove(), 400);
+      }
+    };
+
+    track.addEventListener('scroll', handleTrackScroll, { passive: true });
+
     let st: ScrollTrigger | null = null;
     let tween: gsap.core.Tween | null = null;
 
@@ -206,6 +225,7 @@ export default function WhyMuscleSection() {
       titleTimeline.kill();
       subReveal.scrollTrigger?.kill();
       subReveal.kill();
+      track.removeEventListener('scroll', handleTrackScroll);
     };
   }, []);
 
@@ -269,6 +289,7 @@ export default function WhyMuscleSection() {
             ))}
           </div>
           <div className="wmb-dots" ref={dotsRef}>
+            <span className="wmb-swipe-hint">Swipe to explore ↔</span>
             {SYSTEMS.map((sys, i) => (
               <span key={sys.id} className={`wmb-dot${i === 0 ? ' active' : ''}`} />
             ))}
@@ -369,12 +390,30 @@ export default function WhyMuscleSection() {
  
         .wmb-dots {
           position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-          display: none; gap: 10px; z-index: 20;
-          opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+          display: flex; gap: 10px; z-index: 20;
+          opacity: 1; pointer-events: none; transition: opacity 0.3s ease;
         }
         .wmb-dots.is-visible { opacity: 1; pointer-events: auto; }
         .wmb-dot { width: 10px; height: 10px; border-radius: 50%; background: #444; }
         .wmb-dot.active { background: #6e3bff; }
+        .wmb-swipe-hint {
+          position: absolute;
+          top: -28px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 11px;
+          text-transform: uppercase;
+          letter-spacing: 0.15em;
+          color: rgba(255, 255, 255, 0.45);
+          white-space: nowrap;
+          transition: opacity 0.4s ease;
+          animation: wmbPulse 2s infinite ease-in-out;
+          pointer-events: none;
+        }
+        @keyframes wmbPulse {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.8; }
+        }
  
         /* ---- desktop only: >=900px ---- */
         @media (min-width: 900px) {
@@ -399,7 +438,8 @@ export default function WhyMuscleSection() {
           }
           .wmb-content h3 { font-size: 42px; }
           .wmb-content p { font-size: 24px; }
-          .wmb-dots { display: flex; }
+          .wmb-dots { display: flex; opacity: 0; }
+          .wmb-swipe-hint { display: none; }
 
           /* Scale down card contents on shorter viewport heights to prevent vertical cropping */
           @media (max-height: 850px) {

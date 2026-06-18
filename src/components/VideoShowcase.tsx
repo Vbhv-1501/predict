@@ -99,8 +99,8 @@ export default function VideoShowcase() {
     const updateTilt = () => {
       const mouse = mouseRef.current;
       
-      if (mouse.isHovered && !isTouchDevice) {
-        // Interpolate (lerp) towards target mouse coordinates (max 12 degrees tilt)
+      if (mouse.isHovered) {
+        // Interpolate (lerp) towards target mouse/touch coordinates (max 12 degrees tilt)
         curRotX += (mouse.targetX - curRotX) * 0.1;
         curRotY += (mouse.targetY - curRotY) * 0.1;
         curScale += (mouse.targetScale - curScale) * 0.1;
@@ -164,9 +164,44 @@ export default function VideoShowcase() {
       mouseRef.current.isHovered = false;
     };
 
+    const handleTouchStart = (e: TouchEvent) => {
+      mouseRef.current.isHovered = true;
+      handleTouchMove(e);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 0) return;
+      const touch = e.touches[0];
+      const rect = card.getBoundingClientRect();
+      const cardW = rect.width;
+      const cardH = rect.height;
+
+      const mouseX = (touch.clientX - rect.left) / cardW - 0.5;
+      const mouseY = (touch.clientY - rect.top) / cardH - 0.5;
+
+      const maxRot = 12;
+      mouseRef.current.targetX = mouseY * maxRot;
+      mouseRef.current.targetY = -mouseX * maxRot;
+
+      const dist = Math.hypot(mouseX, mouseY);
+      const maxDist = Math.hypot(0.5, 0.5);
+      const factor = Math.max(0, 1 - dist / maxDist);
+      mouseRef.current.targetScale = 1.02 + 0.08 * factor;
+
+      mouseRef.current.x = (touch.clientX - rect.left) / cardW * 100;
+      mouseRef.current.y = (touch.clientY - rect.top) / cardH * 100;
+    };
+
+    const handleTouchEnd = () => {
+      mouseRef.current.isHovered = false;
+    };
+
     card.addEventListener("mousemove", handleMouseMove);
     card.addEventListener("mouseenter", handleMouseEnter);
     card.addEventListener("mouseleave", handleMouseLeave);
+    card.addEventListener("touchstart", handleTouchStart, { passive: true });
+    card.addEventListener("touchmove", handleTouchMove, { passive: true });
+    card.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     return () => {
       ctx.revert();
@@ -175,6 +210,9 @@ export default function VideoShowcase() {
         card.removeEventListener("mousemove", handleMouseMove);
         card.removeEventListener("mouseenter", handleMouseEnter);
         card.removeEventListener("mouseleave", handleMouseLeave);
+        card.removeEventListener("touchstart", handleTouchStart);
+        card.removeEventListener("touchmove", handleTouchMove);
+        card.removeEventListener("touchend", handleTouchEnd);
       }
     };
   }, [isTouchDevice]);
