@@ -42,8 +42,8 @@ const STORY_TEXTS: StoryText[] = [
         <span className="font-neue text-[11px] md:text-xs tracking-widest text-[#7C3AED] uppercase font-bold">
           The Organ
         </span>
-        <h2 className="font-neue font-bold text-6xl md:text-7xl lg:text-8xl text-white leading-none">
-          Muscle.
+        <h2 className="font-neue font-bold text-5xl md:text-7xl lg:text-8xl text-white leading-none">
+          the <span className="italic font-bold">organ</span> muscle.
         </h2>
       </div>
     ),
@@ -65,8 +65,9 @@ const STORY_TEXTS: StoryText[] = [
     align: "left",
     content: (
       <div className="flex flex-col gap-4">
-        <h2 className="font-neue font-medium text-2xl md:text-3.5xl lg:text-4xl text-white leading-tight">
-          Most chronic disease <span className="text-[#7C3AED] font-bold">doesn&apos;t start</span> in the organ that fails.
+        <h2 className="font-neue font-bold text-2xl md:text-3.5xl lg:text-4xl text-white leading-tight">
+          Most <span className="italic font-bold">chronic disease</span> doesn&apos;t start <br />
+          in the <span className="italic font-bold">organ</span> that fails.
         </h2>
         <p className="font-neue text-sm md:text-base text-neutral-200 font-normal leading-relaxed">
           It starts in the <span className="text-[#7C3AED] font-bold">muscle</span> that stopped protecting it.
@@ -126,12 +127,27 @@ const STORY_TEXTS: StoryText[] = [
         <p className="font-neue text-sm md:text-base text-neutral-200 font-normal leading-relaxed">
           Every second, it circulates signals:
         </p>
-        <div className="flex flex-col gap-2 text-xs md:text-sm font-neue font-medium text-neutral-300 border-l border-[#7C3AED]/50 pl-3 text-left md:text-right md:border-l-0 md:border-r md:pr-3">
-          <span>• The rate of breakdown</span>
-          <span>• The capacity to regenerate</span>
-          <span>• The metabolic efficiency</span>
-          <span>• The inflammatory burden</span>
-          <span>• The vascular integrity</span>
+        <div className="flex flex-col gap-3 text-xs md:text-sm font-neue font-medium text-neutral-300 border-l border-[#7C3AED]/50 pl-4 text-left md:text-right md:border-l-0 md:border-r md:pr-4">
+          <span className="text-step-7-bullet-1 flex items-center gap-2 justify-start md:justify-end">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#7C3AED] shadow-[0_0_8px_#7C3AED]" />
+            The rate of breakdown
+          </span>
+          <span className="text-step-7-bullet-2 flex items-center gap-2 justify-start md:justify-end">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#7C3AED] shadow-[0_0_8px_#7C3AED]" />
+            The capacity to regenerate
+          </span>
+          <span className="text-step-7-bullet-3 flex items-center gap-2 justify-start md:justify-end">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#7C3AED] shadow-[0_0_8px_#7C3AED]" />
+            The metabolic efficiency
+          </span>
+          <span className="text-step-7-bullet-4 flex items-center gap-2 justify-start md:justify-end">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#7C3AED] shadow-[0_0_8px_#7C3AED]" />
+            The inflammatory burden
+          </span>
+          <span className="text-step-7-bullet-5 flex items-center gap-2 justify-start md:justify-end">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#7C3AED] shadow-[0_0_8px_#7C3AED]" />
+            The vascular integrity
+          </span>
         </div>
       </div>
     ),
@@ -208,6 +224,7 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
     gsap.set(canvas, { opacity: 0 });
     gsap.set(".text-step", { opacity: 0, y: 30 });
     gsap.set(".text-step-1", { opacity: 1, y: 0 }); // First text starts fully visible at Frame 000
+    gsap.set(".text-step-7-bullet-1, .text-step-7-bullet-2, .text-step-7-bullet-3, .text-step-7-bullet-4, .text-step-7-bullet-5", { opacity: 0, x: 20 });
 
     const scrollState = { frameIndex: 0 };
 
@@ -290,6 +307,11 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
 
     // Text 7: Right, frame 560 to 670
     tl.to(".text-step-7", { opacity: 1, y: 0, duration: 20, ease: "power2.out" }, 560);
+    tl.to(".text-step-7-bullet-1", { opacity: 1, x: 0, duration: 10, ease: "power2.out" }, 575);
+    tl.to(".text-step-7-bullet-2", { opacity: 1, x: 0, duration: 10, ease: "power2.out" }, 590);
+    tl.to(".text-step-7-bullet-3", { opacity: 1, x: 0, duration: 10, ease: "power2.out" }, 605);
+    tl.to(".text-step-7-bullet-4", { opacity: 1, x: 0, duration: 10, ease: "power2.out" }, 620);
+    tl.to(".text-step-7-bullet-5", { opacity: 1, x: 0, duration: 10, ease: "power2.out" }, 635);
     tl.to(".text-step-7", { opacity: 0, y: -30, duration: 15, ease: "power2.in" }, 655);
 
     ScrollTrigger.refresh();

@@ -92,7 +92,8 @@ export default function WhyMuscleSection() {
     let tween: gsap.core.Tween | null = null;
 
     function maxScroll() {
-      return Math.max(0, 2576 - 0.84 * window.innerWidth);
+      if (!trackRef.current) return 0;
+      return Math.max(0, trackRef.current.scrollWidth - window.innerWidth);
     }
 
     function buildDesktopScroll() {
@@ -102,8 +103,10 @@ export default function WhyMuscleSection() {
         ease: 'none',
         scrollTrigger: {
           trigger: wrap,
+          pin: sticky,
+          pinSpacing: true,
           start: 'top top',
-          end: 'bottom bottom',
+          end: () => `+=${maxScroll()}`,
           scrub: true,
           invalidateOnRefresh: true,
           refreshPriority: 55,
@@ -210,13 +213,12 @@ export default function WhyMuscleSection() {
               </div>
             ))}
           </div>
+          <div className="wmb-dots" ref={dotsRef}>
+            {SYSTEMS.map((sys, i) => (
+              <span key={sys.id} className={`wmb-dot${i === 0 ? ' active' : ''}`} />
+            ))}
+          </div>
         </div>
-      </div>
-
-      <div className="wmb-dots" ref={dotsRef}>
-        {SYSTEMS.map((sys, i) => (
-          <span key={sys.id} className={`wmb-dot${i === 0 ? ' active' : ''}`} />
-        ))}
       </div>
 
       <style jsx>{`
@@ -311,7 +313,7 @@ export default function WhyMuscleSection() {
         @keyframes wmb-f3 { 50% { transform: translate(18px, 12px); } }
 
         .wmb-dots {
-          position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+          position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
           display: none; gap: 10px; z-index: 20;
           opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
@@ -321,8 +323,8 @@ export default function WhyMuscleSection() {
 
         /* ---- desktop only: fine pointer + hover + >=900px ---- */
         @media (hover: hover) and (pointer: fine) and (min-width: 900px) {
-          .wmb-wrap { height: 420vh; position: relative; }
-          .wmb-sticky { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; overflow: hidden; }
+          .wmb-wrap { position: relative; }
+          .wmb-sticky { position: relative; top: auto; height: 100vh; display: flex; align-items: center; overflow: hidden; width: 100%; }
           .wmb-track {
             overflow-x: hidden;
             scroll-snap-type: none;
