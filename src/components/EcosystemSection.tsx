@@ -41,21 +41,21 @@ interface EcosystemCard {
 const CARDS: EcosystemCard[] = [
   // ── NEAR orbit  ·  inner images closer to center, subtle Z depth ──
   { id:"training",
-    label:"Training",       w:960,  h:640,  size:"sm", tier:"near",
+    label:"Training",       w:1254, h:1254, size:"sm", tier:"near",
     angleDeg: 315, rScaleX: 0.9, rScaleY: 0.9,
     z: -70, rotX:  10, rotY: -15, rotZ: -3,
     ampX:0, ampY:0, ampZ:0, sp:0, ph:0, rdrift:0,
     src: "/assets/Training.webp" },
 
   { id:"prescription",
-    label:"Prescription",   w:800,  h:800,  size:"sm", tier:"near",
+    label:"Prescription",   w:1254, h:1254, size:"sm", tier:"near",
     angleDeg:  75, rScaleX: 0.9, rScaleY: 0.9,
     z: -80, rotX: -15, rotY: -10, rotZ:  2,
     ampX:0, ampY:0, ampZ:0, sp:0, ph:0, rdrift:0,
     src: "/assets/Prescription.webp" },
 
   { id:"dexa",
-    label:"DEXA Scan",      w:640,  h:960,  size:"sm", tier:"near",
+    label:"DEXA Scan",      w:1254, h:1254, size:"sm", tier:"near",
     angleDeg: 195, rScaleX: 0.9, rScaleY: 0.9,
     z: -70, rotX:  10, rotY:  15, rotZ: -4,
     ampX:0, ampY:0, ampZ:0, sp:0, ph:0, rdrift:0,
@@ -63,21 +63,21 @@ const CARDS: EcosystemCard[] = [
 
   // ── FAR orbit  ·  outer images placed further out ──
   { id:"hyrox",
-    label:"Hyrox",          w:1200, h:800,  size:"lg", tier:"far",
+    label:"Hyrox",          w:1254, h:1254, size:"lg", tier:"far",
     angleDeg:  15, rScaleX: 1.15, rScaleY: 1.15,
     z:  80, rotX: -5, rotY: -20, rotZ:  4,
     ampX:0, ampY:0, ampZ:0, sp:0, ph:0, rdrift:0,
     src: "/assets/Hyrox.webp" },
 
   { id:"supplements",
-    label:"Supplements",    w:800,  h:1200, size:"md", tier:"far",
+    label:"Supplements",    w:1254, h:1254, size:"md", tier:"far",
     angleDeg: 135, rScaleX: 1.15, rScaleY: 1.15,
     z:  80, rotX: -15, rotY:  10, rotZ: -2,
     ampX:0, ampY:0, ampZ:0, sp:0, ph:0, rdrift:0,
     src: "/assets/Supplements.webp" },
 
   { id:"retreat",
-    label:"Retreat",        w:1200, h:800,  size:"md", tier:"far",
+    label:"Retreat",        w:1122, h:1402, size:"md", tier:"far",
     angleDeg: 255, rScaleX: 1.15, rScaleY: 1.15,
     z:  80, rotX:  15, rotY:   0, rotZ:  0,
     ampX:0, ampY:0, ampZ:0, sp:0, ph:0, rdrift:0,
@@ -152,9 +152,9 @@ export default function EcosystemSection() {
       const baseVal = Math.min(sw, sh);
       let width = 0;
       if (mobile) {
-        if (c.size === "sm") width = Math.min(Math.max(100, baseVal * 0.22), 120);
-        else if (c.size === "md") width = Math.min(Math.max(120, baseVal * 0.26), 140);
-        else width = Math.min(Math.max(140, baseVal * 0.30), 160);
+        if (c.size === "sm") width = Math.min(Math.max(120, baseVal * 0.28), 140);
+        else if (c.size === "md") width = Math.min(Math.max(140, baseVal * 0.32), 160);
+        else width = Math.min(Math.max(160, baseVal * 0.36), 180);
       } else {
         if (c.size === "sm") width = Math.min(Math.max(170, baseVal * 0.20), 220);
         else if (c.size === "md") width = Math.min(Math.max(200, baseVal * 0.23), 260);
@@ -180,6 +180,10 @@ export default function EcosystemSection() {
         const dims = getCardDimensions(i, sw, sh);
         L.cardHW[i] = dims.w / 2;
         L.cardHH[i] = dims.h / 2;
+        if (el) {
+          el.style.width = `${dims.w}px`;
+          el.style.height = `${dims.h}px`;
+        }
       });
     };
 
