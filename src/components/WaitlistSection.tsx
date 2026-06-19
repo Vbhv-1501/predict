@@ -132,12 +132,16 @@ export default function PredictMembership({ id }: { id?: string }) {
           transform: translate(-50%, -50%);
           perspective: 1200px;
           animation: floatCard 6s ease-in-out infinite;
+          width: 90%;
+          max-width: 540px;
+          display: flex;
+          justify-content: center;
         }
 
         .membership-card {
           --x: 50%;
           --y: 50%;
-          width: min(90%, 500px);
+          width: 100%;
           overflow: hidden;
           border-radius: 28px;
           position: relative;
