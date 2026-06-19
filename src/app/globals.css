@@ -2,6 +2,17 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'ITC Garamond Std Condensed Light Italic';
+  src: url('/assets/ITC Garamond Std Light Condensed Italic.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+.font-garamond {
+  font-family: 'ITC Garamond Std Condensed Light Italic', serif !important;
+}
+
 :root {
   --background: #ffffff; /* Premium Off White */
   --foreground: #111115; /* Charcoal Black */

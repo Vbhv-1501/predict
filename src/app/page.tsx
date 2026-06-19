@@ -93,19 +93,19 @@ export default function Home() {
                 />
               </div>
 
-              {/* Section 3: Video Showcase (Third screenshot: Your blood carries your true age) */}
-              <div style={{ position: "relative", zIndex: 13 }}>
-                <VideoShowcase />
-              </div>
-
               {/* Section 4: Protocol (How it works timeline) */}
-              <div style={{ position: "relative", zIndex: 14 }}>
+              <div style={{ position: "relative", zIndex: 13 }}>
                 <ProtocolSection />
               </div>
 
-              {/* Section 5: Biomechanical Live Stream (Benchmark Today. Breakthrough Tomorrow.) */}
-              <div style={{ position: "relative", zIndex: 15 }}>
+              {/* Section 5: Biomechanical Live Stream (Benchmark Today. Breakthrough Tomorrow. / Why We Built Bio-AgeClocks) */}
+              <div style={{ position: "relative", zIndex: 14 }}>
                 <BiomechanicalSection />
+              </div>
+
+              {/* Section 3: Video Showcase (Third screenshot: Your blood carries your true age) */}
+              <div style={{ position: "relative", zIndex: 15 }}>
+                <VideoShowcase />
               </div>
 
               {/* Section 6: Ecosystem Section */}

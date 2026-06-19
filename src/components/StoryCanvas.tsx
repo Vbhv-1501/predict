@@ -28,7 +28,7 @@ const STORY_TEXTS: StoryText[] = [
     className: "text-step-1",
     align: "center",
     content: (
-      <h1 className="font-neue font-medium text-3xl md:text-5xl lg:text-6xl text-white max-w-3xl leading-tight select-none">
+      <h1 className="font-garamond font-bold italic text-3xl md:text-5xl lg:text-6xl text-white max-w-3xl leading-tight select-none">
         There is an organ that predicts everything.
       </h1>
     ),
@@ -36,16 +36,11 @@ const STORY_TEXTS: StoryText[] = [
   {
     id: 2,
     className: "text-step-2",
-    align: "left",
+    align: "center",
     content: (
-      <div className="flex flex-col gap-2">
-        <span className="font-neue text-[11px] md:text-xs tracking-widest text-[#7C3AED] uppercase font-bold">
-          The Organ
-        </span>
-        <h2 className="font-neue font-bold text-5xl md:text-7xl lg:text-8xl text-white leading-none">
-          the <span className="italic font-bold">organ</span> muscle.
-        </h2>
-      </div>
+      <h2 className="font-garamond font-bold italic text-5xl md:text-7xl lg:text-8xl text-[#7C3AED] leading-none">
+        Muscle
+      </h2>
     ),
   },
   {
@@ -53,9 +48,9 @@ const STORY_TEXTS: StoryText[] = [
     className: "text-step-3",
     align: "right",
     content: (
-      <h2 className="font-neue font-medium text-3xl md:text-4xl lg:text-5xl text-white leading-snug">
-        When muscle declines — <br />
-        <span className="text-[#7C3AED] font-bold">everything follows.</span>
+      <h2 className="font-garamond font-bold italic text-3xl md:text-4xl lg:text-5xl text-white leading-snug">
+        When <span className="text-[#7C3AED] font-bold">muscle</span> declines — <br />
+        <span className="text-[#7C3AED] font-bold">everything</span> follows.
       </h2>
     ),
   },
@@ -65,14 +60,14 @@ const STORY_TEXTS: StoryText[] = [
     align: "left",
     content: (
       <div className="flex flex-col gap-4">
-        <h2 className="font-neue font-bold text-2xl md:text-3.5xl lg:text-4xl text-white leading-tight">
-          Most <span className="italic font-bold">chronic disease</span> doesn&apos;t start <br />
-          in the <span className="italic font-bold">organ</span> that fails.
+        <h2 className="font-garamond font-bold italic text-2xl md:text-3.5xl lg:text-4xl text-white leading-tight">
+          Most <span className="text-[#7C3AED] font-bold">chronic disease</span> doesn&apos;t start <br />
+          in the <span className="text-[#7C3AED] font-bold">organ</span> that fails.
         </h2>
-        <p className="font-neue text-sm md:text-base text-neutral-200 font-normal leading-relaxed">
-          It starts in the <span className="text-[#7C3AED] font-bold">muscle</span> that stopped protecting it.
+        <p className="font-garamond font-bold italic text-sm md:text-base text-neutral-200 leading-relaxed">
+          It starts in the muscle that stopped protecting it.
         </p>
-        <span className="font-neue text-[10px] md:text-xs text-neutral-300 uppercase tracking-widest font-bold mt-2">
+        <span className="font-garamond font-bold italic text-[10px] md:text-xs text-neutral-300 uppercase tracking-widest mt-2">
           Years earlier.
         </span>
       </div>
@@ -84,71 +79,12 @@ const STORY_TEXTS: StoryText[] = [
     align: "right",
     content: (
       <div className="flex flex-col gap-2">
-        <span className="font-neue text-[10px] md:text-xs tracking-widest text-neutral-300 uppercase font-bold">
+        <span className="font-garamond font-bold italic text-[10px] md:text-xs tracking-widest text-neutral-300 uppercase">
           The Signal
         </span>
-        <h2 className="font-neue font-bold text-6xl md:text-7xl lg:text-8xl text-[#7C3AED] leading-none">
+        <h2 className="font-garamond font-bold italic text-6xl md:text-7xl lg:text-8xl text-[#7C3AED] leading-none">
           Blood.
         </h2>
-      </div>
-    ),
-  },
-  {
-    id: 6,
-    className: "text-step-6",
-    align: "left",
-    content: (
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center gap-3 justify-center md:justify-start">
-          <h2 className="font-neue font-bold text-5xl md:text-6xl text-[#7C3AED] leading-none">
-            Blood
-          </h2>
-          <span className="relative flex h-3.5 w-3.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-[#7C3AED]"></span>
-          </span>
-        </div>
-        <p className="font-neue text-sm md:text-base text-neutral-200 font-normal leading-relaxed">
-          A live data stream. Flowing through you. Right now.
-        </p>
-      </div>
-    ),
-  },
-  {
-    id: 7,
-    className: "text-step-7",
-    align: "right",
-    content: (
-      <div className="flex flex-col gap-4 max-w-sm md:max-w-md">
-        <h2 className="font-neue font-bold text-3xl md:text-4xl text-white leading-tight">
-          Your blood carries <br />
-          <span className="text-[#7C3AED] font-bold">your true age.</span>
-        </h2>
-        <p className="font-neue text-sm md:text-base text-neutral-200 font-normal leading-relaxed">
-          Every second, it circulates signals:
-        </p>
-        <div className="flex flex-col gap-3 text-xs md:text-sm font-neue font-medium text-neutral-300 border-l border-[#7C3AED]/50 pl-4 text-left md:text-right md:border-l-0 md:border-r md:pr-4">
-          <span className="text-step-7-bullet-1 flex items-center gap-2 justify-start md:justify-end">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#7C3AED] shadow-[0_0_8px_#7C3AED]" />
-            The rate of breakdown
-          </span>
-          <span className="text-step-7-bullet-2 flex items-center gap-2 justify-start md:justify-end">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#7C3AED] shadow-[0_0_8px_#7C3AED]" />
-            The capacity to regenerate
-          </span>
-          <span className="text-step-7-bullet-3 flex items-center gap-2 justify-start md:justify-end">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#7C3AED] shadow-[0_0_8px_#7C3AED]" />
-            The metabolic efficiency
-          </span>
-          <span className="text-step-7-bullet-4 flex items-center gap-2 justify-start md:justify-end">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#7C3AED] shadow-[0_0_8px_#7C3AED]" />
-            The inflammatory burden
-          </span>
-          <span className="text-step-7-bullet-5 flex items-center gap-2 justify-start md:justify-end">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#7C3AED] shadow-[0_0_8px_#7C3AED]" />
-            The vascular integrity
-          </span>
-        </div>
       </div>
     ),
   },
@@ -223,7 +159,6 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
     gsap.set(canvas, { opacity: 1 });
     gsap.set(".text-step", { opacity: 0, y: 30 });
     gsap.set(".text-step-1", { opacity: 1, y: 0 }); // First text starts fully visible at Frame 000
-    gsap.set(".text-step-7-bullet-1, .text-step-7-bullet-2, .text-step-7-bullet-3, .text-step-7-bullet-4, .text-step-7-bullet-5", { opacity: 0, x: 20 });
 
     const scrollState = { frameIndex: 0 };
 
@@ -272,37 +207,24 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
     }, 0);
 
     // 3. Text step scroll transitions:
-    // Text 1: Center, starts fully visible at frame 000, fades out from frame 60 to 75
-    tl.to(".text-step-1", { opacity: 0, y: -30, duration: 15, ease: "power2.in" }, 60);
+    // Text 1: Center, starts fully visible at frame 000, fades out from frame 80 to 110
+    tl.to(".text-step-1", { opacity: 0, y: -30, duration: 30, ease: "power2.in" }, 80);
 
-    // Text 2: Left, frame 90 to 170
-    tl.to(".text-step-2", { opacity: 1, y: 0, duration: 20, ease: "power2.out" }, 90);
-    tl.to(".text-step-2", { opacity: 0, y: -30, duration: 20, ease: "power2.in" }, 150);
+    // Text 2: Center, fades in 120 to 140, fades out 210 to 240
+    tl.to(".text-step-2", { opacity: 1, y: 0, duration: 20, ease: "power2.out" }, 120);
+    tl.to(".text-step-2", { opacity: 0, y: -30, duration: 30, ease: "power2.in" }, 210);
 
-    // Text 3: Right, frame 180 to 260
-    tl.to(".text-step-3", { opacity: 1, y: 0, duration: 20, ease: "power2.out" }, 180);
-    tl.to(".text-step-3", { opacity: 0, y: -30, duration: 20, ease: "power2.in" }, 240);
+    // Text 3: Right, fades in 250 to 270, fades out 350 to 380
+    tl.to(".text-step-3", { opacity: 1, y: 0, duration: 20, ease: "power2.out" }, 250);
+    tl.to(".text-step-3", { opacity: 0, y: -30, duration: 30, ease: "power2.in" }, 350);
 
-    // Text 4: Left, frame 270 to 370
-    tl.to(".text-step-4", { opacity: 1, y: 0, duration: 20, ease: "power2.out" }, 270);
-    tl.to(".text-step-4", { opacity: 0, y: -30, duration: 20, ease: "power2.in" }, 350);
+    // Text 4: Left, fades in 390 to 410, fades out 490 to 520
+    tl.to(".text-step-4", { opacity: 1, y: 0, duration: 20, ease: "power2.out" }, 390);
+    tl.to(".text-step-4", { opacity: 0, y: -30, duration: 30, ease: "power2.in" }, 490);
 
-    // Text 5: Right, frame 380 to 460
-    tl.to(".text-step-5", { opacity: 1, y: 0, duration: 20, ease: "power2.out" }, 380);
-    tl.to(".text-step-5", { opacity: 0, y: -30, duration: 20, ease: "power2.in" }, 440);
-
-    // Text 6: Left, frame 470 to 550
-    tl.to(".text-step-6", { opacity: 1, y: 0, duration: 20, ease: "power2.out" }, 470);
-    tl.to(".text-step-6", { opacity: 0, y: -30, duration: 20, ease: "power2.in" }, 530);
-
-    // Text 7: Right, frame 560 to 670
-    tl.to(".text-step-7", { opacity: 1, y: 0, duration: 20, ease: "power2.out" }, 560);
-    tl.to(".text-step-7-bullet-1", { opacity: 1, x: 0, duration: 10, ease: "power2.out" }, 575);
-    tl.to(".text-step-7-bullet-2", { opacity: 1, x: 0, duration: 10, ease: "power2.out" }, 590);
-    tl.to(".text-step-7-bullet-3", { opacity: 1, x: 0, duration: 10, ease: "power2.out" }, 605);
-    tl.to(".text-step-7-bullet-4", { opacity: 1, x: 0, duration: 10, ease: "power2.out" }, 620);
-    tl.to(".text-step-7-bullet-5", { opacity: 1, x: 0, duration: 10, ease: "power2.out" }, 635);
-    tl.to(".text-step-7", { opacity: 0, y: -30, duration: 15, ease: "power2.in" }, 655);
+    // Text 5: Right, fades in 530 to 560, fades out 650 to 680
+    tl.to(".text-step-5", { opacity: 1, y: 0, duration: 30, ease: "power2.out" }, 530);
+    tl.to(".text-step-5", { opacity: 0, y: -30, duration: 30, ease: "power2.in" }, 650);
 
     ScrollTrigger.refresh();
 
