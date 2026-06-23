@@ -284,8 +284,7 @@ export default function EcosystemSection() {
 
     measure();
 
-    const mobileView = window.innerWidth < 768;
-    if (prefersReduced || mobileView) {
+    if (prefersReduced) {
       renderStatic();
     } else {
       st = ScrollTrigger.create({
@@ -324,7 +323,7 @@ export default function EcosystemSection() {
 
     const onResize = () => {
       measure();
-      if (prefersReduced || window.innerWidth < 768) renderStatic();
+      if (prefersReduced) renderStatic();
     };
 
     window.addEventListener("resize", onResize);

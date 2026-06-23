@@ -76,34 +76,34 @@ export default function Sections() {
   // Testimonials content
   const testimonials = [
     {
-      quote: "Predict completely redesigned my approach to recovery. We caught a lateral load imbalance that would have triggered a severe ligament tear inside 6 weeks.",
-      author: "Dr. Vikram Sethi",
-      role: "Sports Medicine Specialist & Athlete Advisor"
+      quote: "MuscleAGE™ is a pathbreaking approach that may redefine how we identify risks associated with aging and chronic disease. We are excited to explore collaborations with PREDICT.",
+      author: "Prof. Prasun Chatterjee, MD",
+      role: "Head, Geriatric Medicine, Apollo Hospitals",
+      image: "/assets/testimonial-1.png"
     },
     {
-      quote: "I thought my aging joints were locked. Predict identified micro-stiffness vectors in my right ankle that, once corrected, restored my mobility index to what it was a decade ago.",
-      author: "Ananya Roy",
-      role: "Hobbyist Runner & Health Advocate, Age 48"
+      quote: "I experienced the MuscleAGE TM ️ assessment first hand and was impressed by both the science and the user journey. They told me a lot of about my macros and aging that I had no ideas about. Wishing Veeky and the PREDICT team success as they go out to build this category.",
+      author: "Arjun Vaidya",
+      role: "Partner, V3 Ventures",
+      image: "/assets/testimonial-2.png"
     },
     {
-      quote: "Movement intelligence is the missing pillar in preventive biohacking. Predict's biomapping datasets are as crucial to structural health as blood panels are to metabolic health.",
-      author: "Kabir Mehta",
-      role: "Longevity Researcher & Wellness Officer"
+      quote: "Longevity is about to get very interesting",
+      author: "Brian Mac Mahon",
+      role: "Co-Founder and Investor in Matchbook AI",
+      image: "/assets/testimonial-3.png"
     },
     {
-      quote: "The predictive gait analysis is unmatched. We adjusted my stride symmetry by just 1.5% and solved a chronic lower back issue that bothered me for years.",
-      author: "Rohan Malhotra",
-      role: "National Decathlon Coach & Bio-analyst"
+      quote: "I underwent the LegAGE™ assessment and was genuinely surprised by how seamlessly complex biomarker science was translated into a consumer experience.",
+      author: "Megha Gupta",
+      role: "Longevity Influencer",
+      image: "/assets/testimonial-4.png"
     },
     {
-      quote: "As a longevity investor, I evaluate clinical tech. Predict is years ahead in converting raw biomechanical mapping into real, actionable preventive protocols.",
-      author: "Dr. Aisha Sen",
-      role: "Ventures Partner & Biotech MD"
-    },
-    {
-      quote: "Our trainers use Predict to assess client mechanical limitations. It removes the guesswork, speeds up rehab, and prevents recurring training strain.",
-      author: "Devendra Singh",
-      role: "Director of Elite Performance, Equinox India"
+      quote: "For years we've measured disease after it appears. Technologies such as MuscleAGE™ may help us think differently—by quantifying biological burden before functional decline becomes apparent.",
+      author: "Dr. Albery Hamiltion",
+      role: "Orthopaedic Surgeon & Research Collaborator, USA",
+      image: "/assets/testimonial-5.png"
     }
   ];
 
@@ -174,7 +174,26 @@ export default function Sections() {
                     &ldquo;{t.quote}&rdquo;
                   </p>
                   <div>
-                    <ProfileMark />
+                    {t.image ? (
+                      <>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img 
+                          src={t.image} 
+                          alt={t.author} 
+                          className="w-[34px] h-[34px] rounded-full object-cover mb-3.5 border border-accent/28 shadow-[0_10px_24px_rgba(124,58,237,0.12)] inline-block"
+                          onError={(e) => {
+                            (e.currentTarget).style.display = 'none';
+                            const sibling = (e.currentTarget).nextElementSibling;
+                            if (sibling) sibling.classList.remove('hidden');
+                          }}
+                        />
+                        <div className="hidden">
+                          <ProfileMark />
+                        </div>
+                      </>
+                    ) : (
+                      <ProfileMark />
+                    )}
                     <h4 className="text-white font-semibold text-sm">{t.author}</h4>
                     <p className="text-primary-400 text-[10px] mt-0.5 font-bold uppercase tracking-wider">{t.role}</p>
                   </div>
@@ -195,7 +214,26 @@ export default function Sections() {
                     &ldquo;{t.quote}&rdquo;
                   </p>
                   <div>
-                    <ProfileMark />
+                    {t.image ? (
+                      <>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img 
+                          src={t.image} 
+                          alt={t.author} 
+                          className="w-[34px] h-[34px] rounded-full object-cover mb-3.5 border border-accent/28 shadow-[0_10px_24px_rgba(124,58,237,0.12)] inline-block"
+                          onError={(e) => {
+                            (e.currentTarget).style.display = 'none';
+                            const sibling = (e.currentTarget).nextElementSibling;
+                            if (sibling) sibling.classList.remove('hidden');
+                          }}
+                        />
+                        <div className="hidden">
+                          <ProfileMark />
+                        </div>
+                      </>
+                    ) : (
+                      <ProfileMark />
+                    )}
                     <h4 className="text-white font-semibold text-sm">{t.author}</h4>
                     <p className="text-primary-400 text-[10px] mt-0.5 font-bold uppercase tracking-wider">{t.role}</p>
                   </div>
@@ -216,7 +254,26 @@ export default function Sections() {
                     &ldquo;{t.quote}&rdquo;
                   </p>
                   <div>
-                    <ProfileMark />
+                    {t.image ? (
+                      <>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img 
+                          src={t.image} 
+                          alt={t.author} 
+                          className="w-[34px] h-[34px] rounded-full object-cover mb-3.5 border border-accent/28 shadow-[0_10px_24px_rgba(124,58,237,0.12)] inline-block"
+                          onError={(e) => {
+                            (e.currentTarget).style.display = 'none';
+                            const sibling = (e.currentTarget).nextElementSibling;
+                            if (sibling) sibling.classList.remove('hidden');
+                          }}
+                        />
+                        <div className="hidden">
+                          <ProfileMark />
+                        </div>
+                      </>
+                    ) : (
+                      <ProfileMark />
+                    )}
                     <h4 className="text-white font-semibold text-sm">{t.author}</h4>
                     <p className="text-primary-400 text-[10px] mt-0.5 font-bold uppercase tracking-wider">{t.role}</p>
                   </div>

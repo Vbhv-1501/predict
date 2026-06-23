@@ -168,7 +168,7 @@ export default function LoadingScreen({ onLoaded }: LoadingScreenProps) {
         {/* Loading text with micro-animation */}
         <div className="flex flex-col items-center gap-3 w-full">
           <p className="text-sm font-medium tracking-widest text-primary-500 uppercase animate-pulse">
-            Loading Movement Intelligence...
+            Loading organ intelligence...
           </p>
 
           {/* Progress Bar Container */}

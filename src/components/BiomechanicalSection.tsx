@@ -3,6 +3,12 @@
 import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, Activity } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 function BiomechanicalLiveStreamCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -140,8 +146,46 @@ function BiomechanicalLiveStreamCanvas() {
 }
 
 export default function BiomechanicalSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const section = sectionRef.current;
+    const card = cardRef.current;
+    if (!section || !card) return;
+
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    const startScale = 0.85;
+    const endScale = isMobile ? 1.0 : 1.08;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(card,
+        {
+          scale: startScale,
+          opacity: 0.85,
+          transformOrigin: "center center"
+        },
+        {
+          scale: endScale,
+          opacity: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 85%",
+            end: "bottom 20%",
+            scrub: true,
+          }
+        }
+      );
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="py-32 relative bg-[#000000] text-white border-y border-white/[0.05] overflow-hidden">
+    <section ref={sectionRef} className="py-32 relative bg-[#000000] text-white border-y border-white/[0.05] overflow-hidden">
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -179,12 +223,9 @@ export default function BiomechanicalSection() {
           </motion.div>
 
           {/* Premium Biomechanical Visualizer Box */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="glass-panel p-8 rounded-3xl relative overflow-hidden border border-white/[0.08] shadow-[0_20px_50px_rgba(124,58,237,0.06)] flex flex-col gap-6"
+          <div
+            ref={cardRef}
+            className="glass-panel p-8 rounded-3xl relative overflow-hidden border border-white/[0.08] shadow-[0_20px_50px_rgba(124,58,237,0.06)] flex flex-col gap-6 will-change-transform"
             style={{ background: "rgba(255,255,255,0.02)" }}
           >
             <div className="flex justify-between items-center border-b border-white/[0.08] pb-4">
@@ -213,7 +254,7 @@ export default function BiomechanicalSection() {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
         </div>
       </div>
