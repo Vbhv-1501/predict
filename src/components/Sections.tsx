@@ -113,7 +113,7 @@ export default function Sections() {
   return (
     <div className="relative w-full bg-[#ffffff] text-foreground">
       
-      {/* SECTION 4: 9000+ DATA POINTS */}
+      {/* SECTION 4: 30,000+ BIOMARKER OBSERVATIONS */}
       <section className="py-24 bg-[#000000] relative overflow-hidden border-y border-white/[0.05]">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(124,58,237,0.08),transparent_60%)] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
@@ -124,13 +124,13 @@ export default function Sections() {
             transition={{ duration: 1 }}
           >
             <div className="text-6xl sm:text-8xl md:text-9xl font-bold font-mono text-gradient-purple mb-4 select-none drop-shadow-[0_0_25px_rgba(124,58,237,0.25)]">
-              <Counter from={0} to={9000} suffix="+" />
+              <Counter from={0} to={30000} suffix="+" />
             </div>
             <h3 className="text-xl md:text-2xl font-bold text-white tracking-wide mb-2">
-              One Revolutionary Assessment.
+              One Assessment. Thousands Of Possibilities. Earlier Answers.
             </h3>
             <p className="text-sm text-white/50">
-              Thousands Of Insights. Fully Mapped In Real Time.
+              Built on 30,000+ biomarker observations.
             </p>
           </motion.div>
         </div>
@@ -151,7 +151,7 @@ export default function Sections() {
             <span className="text-xs uppercase tracking-widest text-primary-400 font-semibold mb-3 block">
               Testimonials
             </span>
-            <h2 className="section-title text-white">Movement Changed Everything.</h2>
+            <h2 className="section-title text-white">MuscleAGE & LegAGE Changed Everything.</h2>
             <p className="text-white/50 max-w-lg mx-auto text-sm mt-4">
               Read how elite athletes, clinical researchers, and preventive health pioneers leverage Predict.
             </p>

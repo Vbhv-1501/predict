@@ -245,28 +245,28 @@ export default function VideoShowcase() {
         >
           {/* Continuous floating animation wrapper */}
           <div className="dashboard-float-wrapper">
-            {/* Floating iPad visual with interactive specular glare and tilt */}
+            {/* Floating visual with interactive specular glare and tilt */}
             <div
               ref={cardRef}
-              className="relative w-full rounded-2xl md:rounded-[32px] overflow-hidden bg-black shadow-[0_45px_100px_rgba(0,0,0,0.12)] border border-black/10 flex items-center justify-center will-change-transform"
+              className="relative w-full flex items-center justify-center will-change-transform filter drop-shadow-[0_30px_60px_rgba(0,0,0,0.15)]"
               style={{ transformStyle: "preserve-3d", backfaceVisibility: "hidden" }}
             >
               {/* Glass reflection layer */}
               <div
                 ref={reflectionRef}
-                className="absolute inset-0 z-20 pointer-events-none transition-opacity duration-300"
+                className="absolute inset-0 z-20 pointer-events-none transition-opacity duration-300 rounded-2xl md:rounded-[32px] overflow-hidden"
                 style={{
                   mixBlendMode: "screen",
                   background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 60%)"
                 }}
               />
 
-              {/* Actual Dashboard Image asset with scale to crop out the white outer bezel */}
+              {/* Actual Dashboard Image asset in its actual size */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/assets/dashboard.png"
                 alt="Predict Clinical Dashboard"
-                className="w-full h-auto object-cover relative z-10 block pointer-events-none scale-[1.13]"
+                className="w-full h-auto object-contain relative z-10 block pointer-events-none scale-100"
               />
             </div>
           </div>

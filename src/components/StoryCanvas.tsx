@@ -29,17 +29,17 @@ const STORY_TEXTS: StoryText[] = [
     align: "center",
     content: (
       <h1 className="font-neue font-medium text-3xl md:text-5xl lg:text-6xl text-white max-w-3xl leading-tight select-none">
-        There is an <span className="font-garamond font-bold italic text-[#7C3AED]">&ldquo;organ&rdquo;</span> that predicts <span className="font-garamond font-bold italic text-[#7C3AED]">&ldquo;everything&rdquo;</span>.
+        There is an <span className="font-garamond font-bold italic text-[#7C3AED]">organ</span> that predicts <span className="font-garamond font-bold italic text-[#7C3AED]">everything</span>.
       </h1>
     ),
   },
   {
     id: 2,
     className: "text-step-2",
-    align: "center",
+    align: "left",
     content: (
       <h2 className="font-neue font-medium text-5xl md:text-7xl lg:text-8xl text-white leading-none">
-        The organ <span className="font-garamond font-bold italic text-[#7C3AED]">&ldquo;Muscle&rdquo;</span>
+        The Organ <span className="font-garamond font-bold italic text-[#7C3AED]">Muscle</span>
       </h2>
     ),
   },
