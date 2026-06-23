@@ -79,38 +79,36 @@ export default function Sections() {
       quote: "MuscleAGE™ is a pathbreaking approach that may redefine how we identify risks associated with aging and chronic disease. We are excited to explore collaborations with PREDICT.",
       author: "Prof. Prasun Chatterjee, MD",
       role: "Head, Geriatric Medicine, Apollo Hospitals",
-      image: "/assets/testimonial-1.png"
+      image: "/assets/prof-prasun.png"
     },
     {
       quote: "I experienced the MuscleAGE TM ️ assessment first hand and was impressed by both the science and the user journey. They told me a lot of about my macros and aging that I had no ideas about. Wishing Veeky and the PREDICT team success as they go out to build this category.",
       author: "Arjun Vaidya",
       role: "Partner, V3 Ventures",
-      image: "/assets/testimonial-2.png"
+      image: "/assets/arjun-vaidya.png"
     },
     {
       quote: "Longevity is about to get very interesting",
       author: "Brian Mac Mahon",
       role: "Co-Founder and Investor in Matchbook AI",
-      image: "/assets/testimonial-3.png"
+      image: "/assets/brian-macmahon.png"
     },
     {
       quote: "I underwent the LegAGE™ assessment and was genuinely surprised by how seamlessly complex biomarker science was translated into a consumer experience.",
       author: "Megha Gupta",
       role: "Longevity Influencer",
-      image: "/assets/testimonial-4.png"
+      image: "/assets/megha-gupta.png"
     },
     {
       quote: "For years we've measured disease after it appears. Technologies such as MuscleAGE™ may help us think differently—by quantifying biological burden before functional decline becomes apparent.",
       author: "Dr. Albery Hamiltion",
       role: "Orthopaedic Surgeon & Research Collaborator, USA",
-      image: "/assets/testimonial-5.png"
+      image: "/assets/dr-albery.png"
     }
   ];
 
   // Infinite Marquee duplicate sets
-  const row1 = [...testimonials, ...testimonials];
-  const row2 = [...testimonials.slice().reverse(), ...testimonials.slice().reverse()];
-  const row3 = [...testimonials.slice(2), ...testimonials.slice(0, 2), ...testimonials.slice(2), ...testimonials.slice(0, 2)];
+  const row1 = [...testimonials, ...testimonials, ...testimonials];
 
   return (
     <div className="relative w-full bg-[#ffffff] text-foreground">
@@ -160,92 +158,11 @@ export default function Sections() {
           </div>
         </div>
 
-        {/* Triple looping horizontal marquee */}
-        <div className="w-full flex flex-col gap-6 py-4 overflow-hidden hover-pause">
-          {/* Row 1 */}
+        {/* Single looping horizontal marquee moving left-to-right */}
+        <div className="w-full py-4 overflow-hidden hover-pause">
           <div className="marquee-container">
-            <div className="marquee-track animate-marquee-normal gap-6 flex">
+            <div className="marquee-track animate-marquee-reverse-normal gap-6 flex">
               {row1.map((t, idx) => (
-                <div
-                  key={idx}
-                  className="testimonial-card w-[420px] shrink-0 p-8 rounded-2xl flex flex-col justify-between hover:border-accent/30 transition-all duration-300"
-                >
-                  <p className="text-white/90 text-[13px] leading-relaxed mb-6 italic">
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
-                  <div>
-                    {t.image ? (
-                      <>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img 
-                          src={t.image} 
-                          alt={t.author} 
-                          className="w-[34px] h-[34px] rounded-full object-cover mb-3.5 border border-accent/28 shadow-[0_10px_24px_rgba(124,58,237,0.12)] inline-block"
-                          onError={(e) => {
-                            (e.currentTarget).style.display = 'none';
-                            const sibling = (e.currentTarget).nextElementSibling;
-                            if (sibling) sibling.classList.remove('hidden');
-                          }}
-                        />
-                        <div className="hidden">
-                          <ProfileMark />
-                        </div>
-                      </>
-                    ) : (
-                      <ProfileMark />
-                    )}
-                    <h4 className="text-white font-semibold text-sm">{t.author}</h4>
-                    <p className="text-primary-400 text-[10px] mt-0.5 font-bold uppercase tracking-wider">{t.role}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Row 2 */}
-          <div className="marquee-container">
-            <div className="marquee-track animate-marquee-reverse-slow gap-6 flex">
-              {row2.map((t, idx) => (
-                <div
-                  key={idx}
-                  className="testimonial-card w-[420px] shrink-0 p-8 rounded-2xl flex flex-col justify-between hover:border-accent/30 transition-all duration-300"
-                >
-                  <p className="text-white/90 text-[13px] leading-relaxed mb-6 italic">
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
-                  <div>
-                    {t.image ? (
-                      <>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img 
-                          src={t.image} 
-                          alt={t.author} 
-                          className="w-[34px] h-[34px] rounded-full object-cover mb-3.5 border border-accent/28 shadow-[0_10px_24px_rgba(124,58,237,0.12)] inline-block"
-                          onError={(e) => {
-                            (e.currentTarget).style.display = 'none';
-                            const sibling = (e.currentTarget).nextElementSibling;
-                            if (sibling) sibling.classList.remove('hidden');
-                          }}
-                        />
-                        <div className="hidden">
-                          <ProfileMark />
-                        </div>
-                      </>
-                    ) : (
-                      <ProfileMark />
-                    )}
-                    <h4 className="text-white font-semibold text-sm">{t.author}</h4>
-                    <p className="text-primary-400 text-[10px] mt-0.5 font-bold uppercase tracking-wider">{t.role}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Row 3 */}
-          <div className="marquee-container">
-            <div className="marquee-track animate-marquee-fast gap-6 flex">
-              {row3.map((t, idx) => (
                 <div
                   key={idx}
                   className="testimonial-card w-[420px] shrink-0 p-8 rounded-2xl flex flex-col justify-between hover:border-accent/30 transition-all duration-300"

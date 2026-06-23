@@ -156,25 +156,24 @@ export default function BiomechanicalSection() {
     const card = cardRef.current;
     if (!section || !card) return;
 
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const startScale = 0.85;
-    const endScale = isMobile ? 1.0 : 1.08;
+    const startScale = 0.05;
+    const endScale = 1.0;
 
     const ctx = gsap.context(() => {
       gsap.fromTo(card,
         {
           scale: startScale,
-          opacity: 0.85,
+          opacity: 0.1,
           transformOrigin: "center center"
         },
         {
           scale: endScale,
           opacity: 1,
-          ease: "none",
+          ease: "power1.out",
           scrollTrigger: {
             trigger: section,
-            start: "top 85%",
-            end: "bottom 20%",
+            start: "top 95%",
+            end: "top 25%",
             scrub: true,
           }
         }
