@@ -40,48 +40,48 @@ interface EcosystemCard {
 
 const CARDS: EcosystemCard[] = [
   // ── NEAR orbit  ·  inner images closer to center, subtle Z depth ──
-  { id:"training",
-    label:"Training",       w:1254, h:1254, size:"sm", tier:"near",
+  { id:"vo2max",
+    label:"VO2 Max",       w:1448, h:1086, size:"sm", tier:"near",
     angleDeg: 315, rScaleX: 0.9, rScaleY: 0.9,
     z: -70, rotX:  10, rotY: -15, rotZ: -3,
     ampX:0, ampY:0, ampZ:0, sp:0, ph:0, rdrift:0,
-    src: "/assets/Training.webp" },
+    src: "/assets/VO2 Max.webp" },
 
-  { id:"prescription",
-    label:"Prescription",   w:1254, h:1254, size:"sm", tier:"near",
+  { id:"bloodtest",
+    label:"Advanced Blood Test",   w:447, h:558, size:"sm", tier:"near",
     angleDeg:  75, rScaleX: 0.9, rScaleY: 0.9,
     z: -80, rotX: -15, rotY: -10, rotZ:  2,
     ampX:0, ampY:0, ampZ:0, sp:0, ph:0, rdrift:0,
-    src: "/assets/Prescription.webp" },
+    src: "/assets/Advanced Blood Test.webp" },
 
-  { id:"dexa",
-    label:"DEXA Scan",      w:1254, h:1254, size:"sm", tier:"near",
+  { id:"insights",
+    label:"Actionable Insights",      w:1122, h:1402, size:"sm", tier:"near",
     angleDeg: 195, rScaleX: 0.9, rScaleY: 0.9,
     z: -70, rotX:  10, rotY:  15, rotZ: -4,
     ampX:0, ampY:0, ampZ:0, sp:0, ph:0, rdrift:0,
-    src: "/assets/DEXA Scan.webp" },
+    src: "/assets/Actionable Insights.webp" },
 
   // ── FAR orbit  ·  outer images placed further out ──
   { id:"hyrox",
-    label:"Hyrox",          w:1254, h:1254, size:"lg", tier:"far",
+    label:"HYROX Training",          w:1651, h:953, size:"lg", tier:"far",
     angleDeg:  15, rScaleX: 1.15, rScaleY: 1.15,
     z:  80, rotX: -5, rotY: -20, rotZ:  4,
     ampX:0, ampY:0, ampZ:0, sp:0, ph:0, rdrift:0,
-    src: "/assets/Hyrox.webp" },
+    src: "/assets/HYROX Training.webp" },
 
   { id:"supplements",
-    label:"Supplements",    w:1254, h:1254, size:"md", tier:"far",
+    label:"Customised Supplements",    w:1086, h:1448, size:"md", tier:"far",
     angleDeg: 135, rScaleX: 1.15, rScaleY: 1.15,
     z:  80, rotX: -15, rotY:  10, rotZ: -2,
     ampX:0, ampY:0, ampZ:0, sp:0, ph:0, rdrift:0,
-    src: "/assets/Supplements.webp" },
+    src: "/assets/Customised Supplements.webp" },
 
   { id:"retreat",
-    label:"Retreat",        w:1122, h:1402, size:"md", tier:"far",
+    label:"Longevity Retreat",        w:1254, h:1254, size:"md", tier:"far",
     angleDeg: 255, rScaleX: 1.15, rScaleY: 1.15,
     z:  80, rotX:  15, rotY:   0, rotZ:  0,
     ampX:0, ampY:0, ampZ:0, sp:0, ph:0, rdrift:0,
-    src: "/assets/Retreat.webp" },
+    src: "/assets/Longevity Retreat.webp" },
 ];
 
 const DRIFT_RATE = 0.010;
