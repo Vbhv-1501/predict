@@ -57,7 +57,9 @@ export default function Home() {
   return (
     <>
       {isLoading ? (
-        <LoadingScreen onLoaded={handleLoaded} />
+        <div className="fixed inset-0 bg-black z-[9998]">
+          <LoadingScreen onLoaded={handleLoaded} />
+        </div>
       ) : (
         <SmoothScroll>
           {/* Global Lenis→ScrollTrigger sync (must be inside SmoothScroll) */}
