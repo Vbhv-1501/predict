@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import WaitlistSection from "./WaitlistSection";
 import ScienceOrbitSection from "./ScienceOrbitSection";
 import { motion } from "framer-motion";
-import { User, Linkedin, Instagram } from "lucide-react";
+import { User } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -290,7 +290,9 @@ export default function Sections() {
                 aria-label="Instagram"
                 className="hover:text-accent transition-colors duration-300 transform hover:scale-110"
               >
-                <Instagram className="w-5 h-5" />
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.01 3.71.054 1.139.052 1.9.232 2.508.469a4.877 4.877 0 011.682 1.096 4.88 4.88 0 011.096 1.682c.237.608.417 1.368.469 2.508.043.926.054 1.28.054 3.71s-.01 2.784-.054 3.71c-.052 1.14-.232 1.9-.469 2.508a4.88 4.88 0 01-1.095 1.682 4.878 4.878 0 01-1.682 1.096c-.608.237-1.368.417-2.508.469-.926.043-1.28.054-3.71.054s-2.784-.01-3.71-.054c-1.139-.052-1.9-.232-2.508-.469a4.88 4.88 0 01-1.682-1.096 4.88 4.88 0 01-1.096-1.682c-.237-.608-.417-1.368-.469-2.508C2.012 14.85 2 14.496 2 12.07s.012-2.784.054-3.71c.052-1.139.232-1.9.469-2.508a4.882 4.882 0 011.096-1.682A4.886 4.886 0 015.68 3.09c.608-.237 1.368-.417 2.508-.469C9.117 2.011 9.471 2 12.07 2h.245zm0 1.8c-2.404 0-2.686.01-3.633.053-.873.04-1.348.186-1.663.308a3.08 3.08 0 00-1.14.742 3.08 3.08 0 00-.743 1.14c-.122.315-.268.79-.308 1.663C4.81 8.984 4.8 9.266 4.8 11.711s.01 2.686.053 3.632c.04.874.186 1.35.308 1.664a3.08 3.08 0 00.742 1.14 3.08 3.08 0 001.14.743c.315.122.79.268 1.663.308.947.043 1.229.053 3.633.053s2.686-.01 3.633-.053c.873-.04 1.348-.186 1.662-.308a3.082 3.082 0 001.14-.743 3.08 3.08 0 00.743-1.14c.122-.315.268-.79.308-1.664.043-.946.053-1.228.053-3.632s-.01-2.686-.053-3.633c-.04-.873-.186-1.348-.308-1.662a3.083 3.083 0 00-.743-1.14 3.08 3.08 0 00-1.14-.743c-.315-.122-.79-.268-1.662-.308C14.714 3.81 14.432 3.8 11.986 3.8h.329zM12 7.778a4.222 4.222 0 100 8.444 4.222 4.222 0 000-8.444zM12 14.4a2.4 2.4 0 110-4.8 2.4 2.4 0 010 4.8zm4.39-7.237a.96.96 0 100-1.92.96.96 0 000 1.92z" clipRule="evenodd" />
+                </svg>
               </a>
               <a
                 href="https://www.linkedin.com/company/predict.fit/"
@@ -299,7 +301,9 @@ export default function Sections() {
                 aria-label="LinkedIn"
                 className="hover:text-accent transition-colors duration-300 transform hover:scale-110"
               >
-                <Linkedin className="w-5 h-5" />
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fillRule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clipRule="evenodd" />
+                </svg>
               </a>
             </div>
           </div>
