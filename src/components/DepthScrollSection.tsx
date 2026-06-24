@@ -33,17 +33,17 @@ const STEPS: StepItem[] = [
   {
     label: "A question",
     headline: "Ask anything.",
-    body: "Predict decodes your biomechanics. No complex charts. Just instant, direct movement answers.",
+    body: "PREDICT answers every question behind your biomarkers—in plain language, instantly.",
   },
   {
     label: "An insight",
     headline: "Kinetics you'd\nnever feel.",
-    body: "Predict tracks load symmetry anomalies, catching potential joint strain before pain strikes.",
+    body: "Biological aging happens silently.",
   },
   {
     label: "An action",
-    headline: "Tell Predict to act.",
-    body: "Order home draws. Deploy gait correctives. Adjust schedules. One line runs your protocol.",
+    headline: "Tell PREDICT to act.",
+    body: "Order blood draws. Decode biomarkers. One question runs your protocol.",
   },
 ];
 
