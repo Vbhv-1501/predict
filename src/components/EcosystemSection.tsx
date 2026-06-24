@@ -132,8 +132,6 @@ export default function EcosystemSection() {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let raf = 0, running = false, scrollProgress = 0;
-    const start = performance.now();
-    let st: ScrollTrigger | null = null;
     let io: IntersectionObserver | null = null;
 
     const L = {
@@ -284,42 +282,44 @@ export default function EcosystemSection() {
 
     measure();
 
-    if (prefersReduced) {
-      renderStatic();
-    } else {
-      st = ScrollTrigger.create({
-        trigger: wrap,
-        start: "top top",
-        end: "+=100%",
-        pin: stage,
-        pinSpacing: true,
-        scrub: true,
-        invalidateOnRefresh: true,
-        refreshPriority: 15,
-        onUpdate: (self) => {
-          scrollProgress = self.progress;
-        },
-      });
+    const ctx = gsap.context(() => {
+      if (prefersReduced) {
+        renderStatic();
+      } else {
+        ScrollTrigger.create({
+          trigger: wrap,
+          start: "top top",
+          end: "+=100%",
+          pin: stage,
+          pinSpacing: true,
+          scrub: true,
+          invalidateOnRefresh: true,
+          refreshPriority: 15,
+          onUpdate: (self) => {
+            scrollProgress = self.progress;
+          },
+        });
 
-      io = new IntersectionObserver(
-        (entries) => {
-          const entry = entries[0];
-          if (entry.isIntersecting) {
-            if (!running) {
-              running = true;
-              raf = requestAnimationFrame(render);
+        io = new IntersectionObserver(
+          (entries) => {
+            const entry = entries[0];
+            if (entry.isIntersecting) {
+              if (!running) {
+                running = true;
+                raf = requestAnimationFrame(render);
+              }
+            } else {
+              // When leaving viewport, immediately cancel RAF and call renderStatic() so the field stays visible
+              running = false;
+              cancelAnimationFrame(raf);
+              renderStatic();
             }
-          } else {
-            // When leaving viewport, immediately cancel RAF and call renderStatic() so the field stays visible
-            running = false;
-            cancelAnimationFrame(raf);
-            renderStatic();
-          }
-        },
-        { threshold: 0.05 }
-      );
-      io.observe(stage);
-    }
+          },
+          { threshold: 0.05 }
+        );
+        io.observe(stage);
+      }
+    }, wrap);
 
     const onResize = () => {
       measure();
@@ -333,7 +333,7 @@ export default function EcosystemSection() {
       cancelAnimationFrame(raf);
       io?.disconnect();
       window.removeEventListener("resize", onResize);
-      st?.kill();
+      ctx.revert();
     };
   }, []);
 

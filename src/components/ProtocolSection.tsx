@@ -340,7 +340,6 @@ export default function ProtocolSection() {
   const pathRef  = useRef<SVGPathElement>(null);
   const dotRefs  = useRef<(HTMLDivElement | null)[]>([]);
   const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const stRef    = useRef<{ kill: () => void } | null>(null);
 
   useEffect(() => {
     const outer = outerRef.current;
@@ -357,48 +356,50 @@ export default function ProtocolSection() {
 
     const isMobile = window.innerWidth <= 640;
 
-    if (!isMobile) {
-      stRef.current = ScrollTrigger.create({
-        trigger: outer,
-        start:   "top top", // Later start so it doesn't steal view or overlap early
-        end:     "bottom bottom",
-        pin: ".proto-sticky",
-        pinSpacing: true,
-        scrub: 0.5,
-        anticipatePin: 0.4, // Between 0.3 and 0.6
-        refreshPriority: 40,
-        invalidateOnRefresh: true,
-        onUpdate(self) {
-          const p = self.progress;
+    const ctx = gsap.context(() => {
+      if (!isMobile) {
+        ScrollTrigger.create({
+          trigger: outer,
+          start:   "top top", // Later start so it doesn't steal view or overlap early
+          end:     "bottom bottom",
+          pin: ".proto-sticky",
+          pinSpacing: true,
+          scrub: 0.5,
+          anticipatePin: 0.4, // Between 0.3 and 0.6
+          refreshPriority: 40,
+          invalidateOnRefresh: true,
+          onUpdate(self) {
+            const p = self.progress;
 
-          /* Draw trail - set visible only when GSAP is actively controlling dashoffset */
-          path.style.visibility = "visible";
-          path.style.strokeDashoffset = String(pLen * (1 - p));
+            /* Draw trail - set visible only when GSAP is actively controlling dashoffset */
+            path.style.visibility = "visible";
+            path.style.strokeDashoffset = String(pLen * (1 - p));
 
-          /* Reveal / retract steps strictly based on progress and thresholds */
-          THRESHOLDS.forEach((t, i) => {
-            const dot  = dotRefs.current[i];
-            const step = stepRefs.current[i];
-            if (p >= t) {
-              dot?.classList.add("lit");
-              step?.classList.add("vis");
-            } else {
-              dot?.classList.remove("lit");
-              step?.classList.remove("vis");
-            }
-          });
-        },
-      });
-      ScrollTrigger.refresh();
-    } else {
-      // On mobile, show steps immediately
-      stepRefs.current.forEach((step) => {
-        step?.classList.add("vis");
-      });
-    }
+            /* Reveal / retract steps strictly based on progress and thresholds */
+            THRESHOLDS.forEach((t, i) => {
+              const dot  = dotRefs.current[i];
+              const step = stepRefs.current[i];
+              if (p >= t) {
+                dot?.classList.add("lit");
+                step?.classList.add("vis");
+              } else {
+                dot?.classList.remove("lit");
+                step?.classList.remove("vis");
+              }
+            });
+          },
+        });
+        ScrollTrigger.refresh();
+      } else {
+        // On mobile, show steps immediately
+        stepRefs.current.forEach((step) => {
+          step?.classList.add("vis");
+        });
+      }
+    }, outer);
 
     return () => {
-      stRef.current?.kill();
+      ctx.revert();
     };
   }, []);
 
