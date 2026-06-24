@@ -38,9 +38,14 @@ const STORY_TEXTS: StoryText[] = [
     className: "text-step-2",
     align: "left",
     content: (
-      <h2 className="font-neue font-medium text-5xl md:text-7xl lg:text-8xl text-white leading-none">
-        The Organ <span className="font-garamond font-bold italic text-[#7C3AED]">Muscle</span>
-      </h2>
+      <div className="flex flex-col gap-2">
+        <span className="font-neue text-[10px] md:text-xs tracking-widest text-neutral-300 uppercase font-bold">
+          The Organ
+        </span>
+        <h2 className="font-garamond font-bold italic text-6xl md:text-7xl lg:text-8xl text-[#7C3AED] leading-none">
+          Muscle
+        </h2>
+      </div>
     ),
   },
   {

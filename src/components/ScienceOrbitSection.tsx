@@ -32,7 +32,7 @@ export default function ScienceOrbitSection() {
           <h2>20 years of R&amp;D.</h2>
 
           <p>
-            Nobody built this faster. The Muscle, Orthos &amp; Leg Age Clock is
+            Some discoveries take decades. This was one of them. The Muscle, Orthos &amp; Leg Age Clock is
             not a wellness product. It is the clinical output of two decades of
             peer-reviewed research, biomarker discovery, and ageing science.
           </p>
