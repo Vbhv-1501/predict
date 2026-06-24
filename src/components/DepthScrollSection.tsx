@@ -50,44 +50,71 @@ const STEPS: StepItem[] = [
 /* ---- Chat thread, in scroll order. Each item carries an `at` value:
  *      the timeline progress (0..1) at which it appears. -------------------- */
 const CHAT: ChatItem[] = [
-  { type: "user", at: 0.01, text: "Why is my left knee aching after my 10k runs?" },
-  { type: "typing", at: 0.06, hideAt: 0.12 },
+  { type: "user", at: 0.01, text: "Why did my Muscle Age improve?" },
   {
     type: "ai",
-    at: 0.12,
+    at: 0.08,
     lines: [
-      { html: "Your gait scan shows left leg landing impact up <b>12%</b> since March." },
-      {
-        html: "Your ground contact time balance is skewed <b>4.2%</b> towards your right side.",
-      },
-      {
-        html: "Both indicate a compensation pattern overloading your left patellar tendon.",
-      },
+      { html: "Lower inflammation and stronger muscle function likely contributed." },
+    ],
+  },
+  { type: "user", at: 0.16, text: "What does IL-6 mean?" },
+  {
+    type: "ai",
+    at: 0.23,
+    lines: [
+      { html: "<b>IL-6</b> is a marker of inflammation and recovery." },
+    ],
+  },
+  { type: "user", at: 0.31, text: "Is my inflammation coming down?" },
+  {
+    type: "ai",
+    at: 0.38,
+    lines: [
+      { html: "Yes, your inflammation markers are trending downward." },
+    ],
+  },
+  { type: "user", at: 0.46, text: "Am I aging faster than I should?" },
+  {
+    type: "ai",
+    at: 0.53,
+    lines: [
+      { html: "Different structures age at different rates, and blood reveals these changes early." },
+    ],
+  },
+  { type: "user", at: 0.61, text: "Why am I losing strength even though I exercise regularly?" },
+  {
+    type: "ai",
+    at: 0.68,
+    lines: [
+      { html: "Strength depends on more than exercise. Recovery, inflammation and metabolism matter too." },
+    ],
+  },
+  { type: "user", at: 0.76, text: "Can my blood reveal changes before my body feels them?" },
+  {
+    type: "ai",
+    at: 0.83,
+    lines: [
+      { html: "Yes, biology leaves clues months or years before symptoms appear." },
+    ],
+  },
+  { type: "user", at: 0.90, text: "Schedule my next blood test." },
+  {
+    type: "ai",
+    at: 0.94,
+    lines: [
+      { html: "Scheduled. Home blood collection on <b>Sunday · 9 AM</b>." },
+      { html: "Please fast for 8–10 hours before your sample is collected." },
+      { html: "Your MuscleAge™ is now <b>2.4 years younger</b> than before." },
+      { html: "This pattern is consistent with lower inflammation and improved muscle resilience." },
     ],
   },
   {
     type: "ai",
-    at: 0.20,
+    at: 0.98,
     accent: true,
     lines: [
-      { html: "Your <b>hs-CRP</b> biomarker is elevated at <b>2.8 mg/L</b> indicating knee inflammation." },
-      {
-        html: "It aligns with the decreased hamstring flexibility in your latest assessment.",
-      },
-      { action: true },
-      {
-        html: 'Add <span class="dx-hl">isometric quad holds</span> and hamstring curls to your routines to rebuild symmetry.',
-      },
-    ],
-  },
-  { type: "user", at: 0.50, text: "Schedule my biomechanics test." },
-  {
-    type: "ai",
-    at: 0.60,
-    lines: [
-      { html: "Scheduled. Physio visits <b>Sunday · 9 AM</b> at your Indiranagar residence." },
-      { html: "We will run the 3D gait scan and check your muscle-tendon load markers." },
-      { html: "Wear your running shoes for the test." },
+      { html: "Increase protein intake to <b>1.2 g/kg</b> and continue resistance training 3 times weekly." },
     ],
   },
 ];
@@ -183,11 +210,9 @@ export default function DepthScrollSection() {
       // Translate the chat thread container upwards as the conversation progresses to keep the active bubbles in view
       if (thread) {
         if (isDesktop) {
-          tl.to(thread, { y: () => getTranslateY(0), duration: 0.05 }, 0.01);
-          tl.to(thread, { y: () => getTranslateY(2), duration: 0.05, ease: "power2.out" }, 0.12);
-          tl.to(thread, { y: () => getTranslateY(3), duration: 0.05, ease: "power2.out" }, 0.20);
-          tl.to(thread, { y: () => getTranslateY(4), duration: 0.05, ease: "power2.out" }, 0.50);
-          tl.to(thread, { y: () => getTranslateY(5), duration: 0.05, ease: "power2.out" }, 0.60);
+          CHAT.forEach((item, idx) => {
+            tl.to(thread, { y: () => getTranslateY(idx), duration: 0.05, ease: "power2.out" }, item.at);
+          });
         } else {
           tl.to(thread, {
             y: () => {
@@ -335,7 +360,7 @@ export default function DepthScrollSection() {
           background:var(--bg); color:var(--ink);
           font-family:var(--font);
           -webkit-font-smoothing:antialiased;
-          height: 265vh; /* Native sticky scroll range */
+          height: 380vh; /* Native sticky scroll range */
         }
         .dx-panel{
           position: sticky;
@@ -462,7 +487,7 @@ export default function DepthScrollSection() {
 
         @media (max-width: 820px) {
           .dx-section {
-            height: 265vh !important;
+            height: 380vh !important;
           }
           .dx-panel {
             position: sticky !important;
