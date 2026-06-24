@@ -37,8 +37,8 @@ const STEPS: StepItem[] = [
   },
   {
     label: "An insight",
-    headline: "Kinetics you'd\nnever feel.",
-    body: "Biological aging happens silently.",
+    headline: "Biological aging\nhappens silently.",
+    body: "",
   },
   {
     label: "An action",
