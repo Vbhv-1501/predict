@@ -1,36 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PREDICT | The Manifesto</title>
   
-  <!-- Brand Fonts from Google Fonts -->
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="PREDICT Manifesto: Know your Muscle Age. The most important health number you don't know. Discover why muscle is the metabolic engine of longevity.">
+  <meta name="keywords" content="PREDICT, Muscle Age, Longevity, Biomarkers, Prevention, Healthspan, Muscle Health">
+  <meta name="author" content="PREDICT">
+  
+  <!-- Fallback & Brand Fonts from Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 
   <style>
-    /* Reset & Base Styles */
+    /* --- FONTS SETUP --- */
+    @font-face {
+      font-family: 'Neue Montreal';
+      src: url('/fonts/NeueMontreal-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Neue Montreal';
+      src: url('/fonts/NeueMontreal-Medium.woff2') format('woff2');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Neue Montreal';
+      src: url('/fonts/NeueMontreal-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* --- THEMES & CSS VARIABLES --- */
+    :root {
+      --font-primary: 'Neue Montreal', 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
+      --font-outfit: 'Outfit', sans-serif;
+      --font-serif: 'DM Serif Display', Georgia, serif;
+      --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      
+      /* Dark Theme (Default) */
+      --bg-color: #000000;
+      --bg-gradient: linear-gradient(180deg, #000000 0%, #0d061a 50%, #1e1035 100%);
+      --card-bg: rgba(18, 18, 22, 0.55);
+      --card-border: rgba(124, 58, 237, 0.15);
+      --card-border-hover: rgba(124, 58, 237, 0.45);
+      --text-main: #EFEFEF;
+      --text-muted: rgba(239, 239, 239, 0.6);
+      --text-ultra-muted: rgba(239, 239, 239, 0.35);
+      --brand-purple: #7C3AED;
+      --brand-accent: #8504FE;
+      --brand-purple-glow: rgba(124, 58, 237, 0.2);
+      --input-bg: rgba(239, 239, 239, 0.05);
+      
+      /* Checklist & timeline styles */
+      --bubble-bg-bot: rgba(255, 255, 255, 0.02);
+      --bubble-border-bot: rgba(255, 255, 255, 0.06);
+      --check-bg: rgba(124, 58, 237, 0.2);
+      --header-bg: rgba(0, 0, 0, 0.75);
+      --logo-invert: 0;
+    }
+
+    [data-theme="light"] {
+      /* Light Theme */
+      --bg-color: #ffffff;
+      --bg-gradient: linear-gradient(180deg, #ffffff 0%, #FAF8FC 60%, #EFEAF7 100%);
+      --card-bg: rgba(239, 239, 239, 0.45);
+      --card-border: rgba(124, 58, 237, 0.08);
+      --card-border-hover: rgba(124, 58, 237, 0.35);
+      --text-main: #111115;
+      --text-muted: #4A475A;
+      --text-ultra-muted: rgba(17, 17, 21, 0.4);
+      --brand-purple: #7C3AED;
+      --brand-accent: #8504FE;
+      --brand-purple-glow: rgba(124, 58, 237, 0.1);
+      --input-bg: rgba(239, 239, 239, 0.6);
+      
+      --bubble-bg-bot: rgba(0, 0, 0, 0.02);
+      --bubble-border-bot: rgba(0, 0, 0, 0.06);
+      --check-bg: rgba(124, 58, 237, 0.12);
+      --header-bg: rgba(255, 255, 255, 0.85);
+      --logo-invert: 1;
+    }
+
+    /* --- BASIC SETUP --- */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    body {
-      background-color: #ffffff;
-      color: #111115;
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      line-height: 1.8;
-      padding: 120px 24px;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+    html {
+      scroll-behavior: smooth;
     }
 
-    .container {
-      max-width: 720px;
-      margin: 0 auto;
+    body {
+      background: var(--bg-color);
+      background-image: var(--bg-gradient);
+      color: var(--text-main);
+      font-family: var(--font-primary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transition: background 0.5s ease, color 0.5s ease;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
     }
 
     /* Apple-style Scroll Animations (will-change for performance) */
@@ -67,371 +148,970 @@
       will-change: opacity, transform;
     }
 
-    /* Typography */
-    .eyebrow {
-      font-family: 'Outfit', sans-serif;
+    /* --- READING PROGRESS BAR --- */
+    .progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      z-index: 1001;
+      background: transparent;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--brand-purple) 0%, var(--brand-accent) 100%);
+      width: 0%;
+      transition: width 0.1s ease-out;
+    }
+
+    /* --- PREMIUM HEADER --- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: var(--header-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--bubble-border-bot);
+      transition: background 0.3s ease;
+    }
+
+    .header-container {
+      max-w: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      height: 28px;
+      width: auto;
+      object-contain: fit;
+      filter: invert(var(--logo-invert)) hue-rotate(180deg) brightness(1.1);
+      transition: filter 0.3s ease;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .cta-btn {
+      padding: 10px 20px;
+      background: var(--brand-purple);
+      color: #ffffff;
+      border: none;
+      border-radius: 99px;
       font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition-smooth);
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15);
+    }
+
+    .cta-btn:hover {
+      background: var(--brand-accent);
+      box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition-smooth);
+    }
+
+    .theme-toggle:hover {
+      background: var(--bubble-bg-bot);
+      border-color: var(--card-border-hover);
+      transform: scale(1.05);
+    }
+
+    /* --- BACKGROUND GLOW ORBS --- */
+    .glow-orb-left {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
+      top: 10%;
+      left: -15%;
+      z-index: -1;
+      pointer-events: none;
+      filter: blur(50px);
+    }
+
+    .glow-orb-right {
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(133, 4, 254, 0.06) 0%, transparent 70%);
+      bottom: 20%;
+      right: -15%;
+      z-index: -1;
+      pointer-events: none;
+      filter: blur(50px);
+    }
+
+    /* --- HERO SECTION --- */
+    .manifesto-hero {
+      padding: 160px 24px 80px;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-outfit);
+      font-size: 13px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.25em;
-      color: #7C3AED;
+      color: var(--brand-purple);
       margin-bottom: 24px;
+      display: inline-block;
+      position: relative;
     }
 
-    h1 {
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(40px, 7vw, 72px);
+    .hero-eyebrow::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 2px;
+      background: var(--brand-purple);
+    }
+
+    .hero-title {
+      font-size: clamp(48px, 7vw, 96px);
       font-weight: 700;
-      line-height: 1.1;
+      line-height: 1.05;
       letter-spacing: -0.03em;
-      color: #111115;
       margin-bottom: 24px;
+      background: linear-gradient(135deg, var(--text-main) 30%, var(--brand-purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .subtitle {
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(20px, 3vw, 28px);
+    .hero-subtitle {
+      font-family: var(--font-outfit);
+      font-size: clamp(20px, 2.5vw, 32px);
       font-weight: 400;
-      line-height: 1.4;
-      color: #4A475A;
-      margin-bottom: 80px;
+      line-height: 1.3;
+      color: var(--text-muted);
+      max-width: 800px;
+      margin: 0 auto;
+      letter-spacing: -0.01em;
     }
 
-    h2 {
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(28px, 4.5vw, 42px);
+    /* --- EDITORIAL ARTICLE LAYOUT --- */
+    .manifesto-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px 100px;
+      position: relative;
+    }
+
+    .editorial-p {
+      font-size: clamp(17px, 2vw, 20px);
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      font-weight: 400;
+    }
+
+    .editorial-p strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .editorial-p.lead {
+      font-size: clamp(20px, 2.3vw, 24px);
+      line-height: 1.6;
+      color: var(--text-main);
+      margin-bottom: 40px;
+      border-left: 3px solid var(--brand-purple);
+      padding-left: 24px;
+    }
+
+    /* --- SECTION DECORATOR --- */
+    .editorial-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--card-border), transparent);
+      margin: 64px 0;
+    }
+
+    .section-heading {
+      font-family: var(--font-outfit);
+      font-size: clamp(32px, 4vw, 48px);
       font-weight: 700;
-      line-height: 1.25;
-      color: #111115;
-      margin-top: 80px;
+      line-height: 1.2;
+      color: var(--text-main);
       margin-bottom: 32px;
       letter-spacing: -0.02em;
     }
 
-    h3 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 22px;
-      font-weight: 700;
-      color: #111115;
-      margin-top: 36px;
-      margin-bottom: 14px;
-      letter-spacing: -0.01em;
-    }
-
-    p {
-      font-size: 17px;
-      color: #4A475A;
-      margin-bottom: 28px;
-      transition: color 0.4s ease;
-    }
-
-    p strong {
-      color: #111115;
-      font-weight: 600;
-    }
-
-    p.highlight {
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(28px, 4vw, 40px);
-      font-weight: 700;
-      color: #7C3AED;
-      margin-top: 48px;
-      margin-bottom: 48px;
-      letter-spacing: -0.02em;
-    }
-
-    /* List styling for "What PREDICT Does" */
-    .feature-list {
-      margin-top: 32px;
-      margin-bottom: 48px;
-      padding-left: 24px;
-    }
-
-    .feature-list li {
-      font-size: 17px;
-      color: #4A475A;
-      margin-bottom: 24px;
-      list-style-type: square;
-    }
-
-    .feature-list li strong {
-      color: #111115;
-      font-size: 19px;
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    /* Persona grid */
-    .persona-section {
+    /* --- GRID CARDS: THIS IS FOR YOU --- */
+    .persona-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
       margin-top: 40px;
       margin-bottom: 40px;
     }
 
-    .persona-block {
-      border-left: 3px solid #7C3AED;
-      padding-left: 24px;
-      margin-bottom: 40px;
-      transition: border-color 0.4s ease;
-    }
-
-    .persona-block:hover {
-      border-color: #8504FE;
-    }
-
-    /* Stats Callout styling */
-    .stats-block {
-      background-color: #f7f7f9;
-      border: 1px solid #eef0f3;
-      padding: 64px 40px;
+    .persona-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
       border-radius: 24px;
+      padding: 36px;
+      transition: var(--transition-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .persona-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 10% 10%, rgba(124, 58, 237, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .persona-card:hover {
+      border-color: var(--card-border-hover);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px -15px var(--brand-purple-glow);
+    }
+
+    .persona-tag {
+      font-family: var(--font-outfit);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--brand-purple);
+      background: var(--check-bg);
+      padding: 4px 12px;
+      border-radius: 8px;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .persona-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .persona-desc {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    /* --- LIST PATTERN: WHAT PREDICT DOES --- */
+    .checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 24px;
+      background: var(--bubble-bg-bot);
+      border: 1px solid var(--bubble-border-bot);
+      border-radius: 20px;
+      transition: var(--transition-smooth);
+    }
+
+    .checklist-item:hover {
+      border-color: var(--card-border);
+      transform: translateX(4px);
+    }
+
+    .check-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--check-bg);
+      border: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand-purple);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .checklist-text h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .checklist-text p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* --- INTERACTIVE STATS / CALLOUT --- */
+    .manifesto-cta {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(133, 4, 254, 0.12) 100%);
+      border: 1px solid var(--card-border);
+      border-radius: 32px;
+      padding: 56px;
       text-align: center;
       margin-top: 80px;
-      margin-bottom: 80px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.2);
+    }
+
+    .manifesto-cta::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: -20%;
+      width: 140%;
+      height: 140%;
+      background: radial-gradient(circle at center, rgba(124, 58, 237, 0.08) 0%, transparent 60%);
+      pointer-events: none;
     }
 
     .stats-number {
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(64px, 10vw, 96px);
+      font-family: var(--font-outfit);
+      font-size: clamp(64px, 8vw, 110px);
       font-weight: 700;
-      color: #7C3AED;
       line-height: 1;
-      margin-bottom: 16px;
+      letter-spacing: -0.04em;
+      color: var(--text-main);
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 0%, var(--brand-purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
     }
 
-    .stats-text {
+    .stats-label {
+      font-family: var(--font-outfit);
       font-size: 18px;
-      color: #111115;
       font-weight: 600;
-      margin-bottom: 0;
-    }
-
-    .footer-brand {
-      margin-top: 80px;
-      padding-top: 40px;
-      border-top: 1px solid #eef0f3;
-      font-family: 'Outfit', sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      color: #7C3AED;
       text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--brand-purple);
+      margin-bottom: 28px;
     }
 
-    /* Responsive */
-    @media (max-width: 600px) {
-      body {
-        padding: 80px 16px;
+    .cta-heading {
+      font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text-main);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .cta-desc {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      max-width: 580px;
+      margin: 0 auto 36px;
+    }
+
+    .big-cta-btn {
+      padding: 16px 36px;
+      font-size: 16px;
+      font-weight: 600;
+      background: var(--brand-purple);
+      color: #ffffff;
+      border: none;
+      border-radius: 99px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: var(--transition-smooth);
+      box-shadow: 0 10px 25px rgba(124, 58, 237, 0.25);
+    }
+
+    .big-cta-btn:hover {
+      background: var(--brand-accent);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(124, 58, 237, 0.4);
+    }
+
+    /* --- PREMIUM FOOTER --- */
+    footer {
+      border-t: 1px solid var(--bubble-border-bot);
+      padding: 64px 24px;
+      background: rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+
+    .footer-container {
+      max-w: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      height: 36px;
+      width: auto;
+      filter: invert(var(--logo-invert)) hue-rotate(180deg) brightness(1.1);
+      opacity: 0.85;
+    }
+
+    .footer-text {
+      font-size: 12px;
+      font-family: monospace;
+      letter-spacing: 0.05em;
+      color: var(--text-ultra-muted);
+      line-height: 1.8;
+      max-width: 600px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      transition: var(--transition-smooth);
+    }
+
+    .footer-links a:hover {
+      color: var(--brand-purple);
+    }
+
+    /* --- RESPONSIVE ADJUSTMENTS --- */
+    @media (max-width: 768px) {
+      .manifesto-hero {
+        padding: 120px 16px 48px;
       }
-      h1 {
-        font-size: 42px;
+      .manifesto-container {
+        padding: 0 16px 64px;
       }
-      .subtitle {
-        font-size: 20px;
-        margin-bottom: 48px;
+      .persona-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
       }
-      .stats-block {
-        padding: 40px 24px;
+      .manifesto-cta {
+        padding: 36px 20px;
       }
     }
   </style>
 </head>
 <body>
 
-  <main class="container">
-    
-    <div class="animate-on-scroll">
-      <div class="eyebrow">The Manifesto</div>
-      <h1>Know Your Muscle Age</h1>
-      <div class="subtitle">The most important health number you don't know.</div>
-    </div>
+  <!-- READING PROGRESS INDICATOR -->
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
 
-    <p class="animate-on-scroll">You know your age. You probably know your cholesterol, your blood pressure, maybe even your blood sugar.</p>
-    
-    <p class="animate-on-scroll">But you almost certainly don't know the age of the organ that drives all of them.</p>
-    
-    <!-- Apple-style Parallax Highlight Text -->
-    <p class="highlight apple-parallax-text">Your muscle.</p>
-    
-    <p class="animate-on-scroll">Not because you ignored it. Because nobody told you to measure it. Because the system was never designed to catch what comes before the crisis.</p>
-    
-    <p class="animate-on-scroll">The system is designed to wait. It waits for diabetes. It waits for heart disease. It waits for frailty, cognitive decline, joint failure, and the moment your body finally forces the conversation.</p>
-    
-    <p class="animate-on-scroll">By the time your doctor has a diagnosis, the biology behind it has been changing for years. Quietly. Measurably. Reversibly — if caught in time.</p>
-    
-    <p class="animate-on-scroll">That is the gap medicine left open.</p>
-    
-    <p class="animate-on-scroll apple-parallax-text" style="font-size: 24px; font-weight: 700; color: #111115; text-align: center; margin: 48px 0;">We built PREDICT to close it.</p>
-
-    <h2 class="animate-on-scroll">Why Muscle Is The Number Nobody Is Watching</h2>
-    
-    <p class="animate-on-scroll">Muscle is not just what moves you.</p>
-    
-    <p class="animate-on-scroll">It is the metabolic engine that regulates your blood sugar. The cardiovascular protector that reduces your heart disease risk. The cognitive anchor that slows neurological decline. The structural foundation that determines whether you stay independent at 70 or start losing that independence at 55.</p>
-    
-    <p class="animate-on-scroll">When muscle declines, the consequences appear everywhere else first — energy, recovery, labs, joints, cognition.</p>
-    
-    <p class="animate-on-scroll">Every chronic disease your doctor is monitoring has muscle decline somewhere in its origin story.</p>
-    
-    <p class="animate-on-scroll" style="border-left: 2px solid #eef0f3; padding-left: 20px; font-style: italic;">Yet in 2026, there is no standard test for it.</p>
-    
-    <p class="animate-on-scroll">No protocol. No number your doctor orders at your annual checkup.</p>
-    
-    <p class="animate-on-scroll">That is not an oversight. That is a flaw in the architecture of modern healthcare. And it is the reason PREDICT exists.</p>
-
-    <h2 class="animate-on-scroll">This Is For You</h2>
-    
-    <div class="persona-section">
-      <div class="persona-block stagger-item">
-        <h3>The 42-Year-Old Founder</h3>
-        <p>You feel fine. Business is growing. Life is full. But recovery takes longer than it used to. Energy isn't quite what it was. What if your muscle is aging nine years faster than you are — and you simply don't know it yet?</p>
-      </div>
-
-      <div class="persona-block stagger-item">
-        <h3>The 55-Year-Old Executive</h3>
-        <p>Your last health report moved in the wrong direction. You don't want another prescription managing a number. You want to understand the biology driving the number. That biology starts with muscle.</p>
-      </div>
-
-      <div class="persona-block stagger-item">
-        <h3>The GLP-1 User</h3>
-        <p>The weight came off. The scale moved. You did what you were supposed to do. But weight loss and muscle preservation are not the same thing. For every ten pounds lost on a GLP-1, four come from muscle and connective tissue. Nobody told you that. Nobody measured it. Nobody built a protocol around it. We did.</p>
-      </div>
-
-      <div class="persona-block stagger-item">
-        <h3>The Optimizer</h3>
-        <p>You track sleep, HRV, glucose, steps, training loads, and supplements. You have optimized almost everything. But you have never measured the biological age of the organ driving every single one of those signals. Until now.</p>
+  <!-- FIXED HEADER -->
+  <header>
+    <div class="header-container">
+      <a href="/" class="logo-link" aria-label="PREDICT Home">
+        <img src="/assets/Predict-Logo.png" alt="PREDICT Logo" class="logo-img">
+      </a>
+      <div class="nav-actions">
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle" id="themeToggler" onclick="toggleTheme()" aria-label="Toggle visual theme">
+          <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Moon icon (default in dark mode) -->
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <a href="/#contact" class="cta-btn">Book Assessment</a>
       </div>
     </div>
+  </header>
 
-    <h2 class="animate-on-scroll">What PREDICT Does</h2>
-    
-    <ul class="feature-list">
-      <li class="stagger-item"><strong>A blood draw at home.</strong>Ten minutes. No clinic visit.</li>
-      <li class="stagger-item"><strong>Your Muscle Age</strong>the age your muscle behaves, not the age on your passport.</li>
-      <li class="stagger-item"><strong>Your downstream risk profile</strong>across metabolic, cardiovascular, neurological, and musculoskeletal health — before symptoms appear.</li>
-      <li class="stagger-item"><strong>A personalized intervention protocol</strong>built on your biomarkers. Not a generic supplement stack. Not a lifestyle PDF. A protocol.</li>
-      <li class="stagger-item"><strong>Continuous AI-led monitoring</strong>so the test becomes daily action. Because measurement without action changes nothing.</li>
-    </ul>
+  <!-- GLOW ORBS -->
+  <div class="glow-orb-left"></div>
+  <div class="glow-orb-right"></div>
 
-    <h2 class="animate-on-scroll">How We Built It</h2>
-    
-    <p class="animate-on-scroll">For 25 years, Dr. Apurba Ganguly treated chronic disease while researching the biology underneath it.</p>
-    
-    <p class="animate-on-scroll">Muscle loss. Joint degeneration. Metabolic failure. Cognitive decline. The same root cause presenting in different organs, treated separately by different specialists.</p>
-    
-    <p class="animate-on-scroll">He built a proprietary biomarker dataset from the ground up. Published peer-reviewed research. Filed patents. Mapped molecular signatures of muscle aging across thousands of patients.</p>
-    
-    <p class="animate-on-scroll">Then a father and son turned that science into a platform. Because prevention only works when decline is measurable before disease begins.</p>
+  <!-- HERO -->
+  <section class="manifesto-hero animate-on-scroll">
+    <span class="hero-eyebrow">The Manifesto</span>
+    <h1 class="hero-title">Know Your Muscle Age</h1>
+    <p class="hero-subtitle">The most important health number you don't know.</p>
+  </section>
 
-    <h2 class="animate-on-scroll">What We Believe</h2>
+  <!-- ARTICLE CONTAINER -->
+  <main class="manifesto-container">
     
-    <p class="animate-on-scroll">Medicine has cholesterol for heart disease, HbA1c for diabetes, blood pressure for cardiovascular risk.</p>
-    
-    <p class="animate-on-scroll" style="border-left: 2px solid #7C3AED; padding-left: 20px; font-style: italic;">Muscle health has no standard of care. No number. No test. No protocol.</p>
-    
-    <p class="animate-on-scroll">We believe that is about to change.</p>
-    
-    <p class="animate-on-scroll">We believe Muscle Age will become as routine as a cholesterol panel. We believe millions of people are living with muscle-driven chronic conditions that have never been connected to their root cause.</p>
-    
-    <p class="animate-on-scroll">And we believe people deserve to know their number before disease decides for them.</p>
+    <p class="editorial-p lead animate-on-scroll">
+      You know your age. You probably know your cholesterol, your blood pressure, maybe even your blood sugar.
+    </p>
 
-    <div class="stats-block animate-on-scroll">
-      <div class="stats-number">172</div>
-      <div class="stats-text">people already know their Muscle Age.</div>
-    </div>
+    <p class="editorial-p animate-on-scroll">
+      But you almost certainly don't know the age of the organ that drives all of them.
+    </p>
 
-    <p class="animate-on-scroll">They know a number their doctor never told them. They have a protocol their annual checkup never produced. They are watching a number move in the right direction for the first time.</p>
-    
-    <p class="animate-on-scroll apple-parallax-text" style="font-size: 22px; font-weight: 700; color: #111115; text-align: center; margin: 48px 0;">You are next.</p>
-    
-    <p class="animate-on-scroll apple-parallax-text" style="font-size: 26px; font-weight: 700; color: #7C3AED; text-align: center; margin: 48px 0;">Know your Muscle Age. Change what comes next.</p>
+    <p class="editorial-p apple-parallax-text" style="font-size: 26px; font-weight: 700; color: var(--brand-purple); letter-spacing: -0.01em;">
+      Your muscle.
+    </p>
 
-    <div class="footer-brand animate-on-scroll">
-      PREDICT — making muscle age measurable.
-    </div>
+    <p class="editorial-p animate-on-scroll">
+      Not because you ignored it. Because nobody told you to measure it. Because the system was never designed to catch what comes before the crisis.
+    </p>
+
+    <p class="editorial-p animate-on-scroll">
+      The system is designed to wait. It waits for diabetes. It waits for heart disease. It waits for frailty, cognitive decline, joint failure, and the moment your body finally forces the conversation.
+    </p>
+
+    <p class="editorial-p animate-on-scroll">
+      By the time your doctor has a diagnosis, the biology behind it has been changing for years. Quietly. Measurably. Reversibly — if caught in time.
+    </p>
+
+    <p class="editorial-p animate-on-scroll" style="font-weight: 600; color: var(--text-main);">
+      That is the gap medicine left open.
+    </p>
+
+    <p class="editorial-p apple-parallax-text" style="font-size: 22px; font-weight: 700; text-align: center; color: var(--text-main); margin: 48px 0; font-family: var(--font-outfit);">
+      We built PREDICT to close it.
+    </p>
+
+    <div class="editorial-divider"></div>
+
+    <!-- WHY SECTION -->
+    <section>
+      <h2 class="section-heading animate-on-scroll">Why Muscle Is The Number Nobody Is Watching</h2>
+      
+      <p class="editorial-p animate-on-scroll">
+        Muscle is not just what moves you.
+      </p>
+
+      <p class="editorial-p animate-on-scroll">
+        It is the <strong>metabolic engine</strong> that regulates your blood sugar. The <strong>cardiovascular protector</strong> that reduces your heart disease risk. The <strong>cognitive anchor</strong> that slows neurological decline. The <strong>structural foundation</strong> that determines whether you stay independent at 70 or start losing that independence at 55.
+      </p>
+
+      <p class="editorial-p animate-on-scroll">
+        When muscle declines, the consequences appear everywhere else first — energy, recovery, labs, joints, cognition.
+      </p>
+
+      <p class="editorial-p animate-on-scroll">
+        Every chronic disease your doctor is monitoring has muscle decline somewhere in its origin story.
+      </p>
+
+      <p class="editorial-p animate-on-scroll" style="border-left: 2px solid var(--card-border); padding-left: 20px; font-style: italic;">
+        Yet in 2026, there is no standard test for it.
+      </p>
+
+      <p class="editorial-p animate-on-scroll">
+        No protocol. No number your doctor orders at your annual checkup.
+      </p>
+
+      <p class="editorial-p animate-on-scroll">
+        That is not an oversight. That is a flaw in the architecture of modern healthcare. And it is the reason PREDICT exists.
+      </p>
+    </section>
+
+    <div class="editorial-divider"></div>
+
+    <!-- PERSONAS SECTION -->
+    <section>
+      <h2 class="section-heading animate-on-scroll">This Is For You</h2>
+      
+      <div class="persona-grid">
+        
+        <!-- Founder -->
+        <div class="persona-card stagger-item">
+          <span class="persona-tag">The Founder</span>
+          <h3 class="persona-title">The 42-Year-Old</h3>
+          <p class="persona-desc">You feel fine. Business is growing. Life is full. But recovery takes longer than it used to. Energy isn't quite what it was. What if your muscle is aging nine years faster than you are — and you simply don't know it yet?</p>
+        </div>
+
+        <!-- Executive -->
+        <div class="persona-card stagger-item">
+          <span class="persona-tag">The Executive</span>
+          <h3 class="persona-title">The 55-Year-Old</h3>
+          <p class="persona-desc">Your last health report moved in the wrong direction. You don't want another prescription managing a number. You want to understand the biology driving the number. That biology starts with muscle.</p>
+        </div>
+
+        <!-- GLP-1 User -->
+        <div class="persona-card stagger-item">
+          <span class="persona-tag">The Preserver</span>
+          <h3 class="persona-title">The GLP-1 User</h3>
+          <p class="persona-desc">The weight came off. The scale moved. You did what you were supposed to do. But weight loss and muscle preservation are not the same thing. For every ten pounds lost on a GLP-1, four come from muscle and connective tissue. Nobody told you that. Nobody measured it. Nobody built a protocol around it. We did.</p>
+        </div>
+
+        <!-- Optimizer -->
+        <div class="persona-card stagger-item">
+          <span class="persona-tag">The Tracker</span>
+          <h3 class="persona-title">The Optimizer</h3>
+          <p class="persona-desc">You track sleep, HRV, glucose, steps, training loads, and supplements. You have optimized almost everything. But you have never measured the biological age of the organ driving every single one of those signals. Until now.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="editorial-divider"></div>
+
+    <!-- WHAT WE DO -->
+    <section>
+      <h2 class="section-heading animate-on-scroll">What PREDICT Does</h2>
+      
+      <div class="checklist">
+        
+        <div class="checklist-item stagger-item">
+          <div class="check-circle">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="checklist-text">
+            <h3>A blood draw at home</h3>
+            <p>Ten minutes. No clinic visit.</p>
+          </div>
+        </div>
+
+        <div class="checklist-item stagger-item">
+          <div class="check-circle">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="checklist-text">
+            <h3>Your Muscle Age</h3>
+            <p>The age your muscle behaves, not the age on your passport.</p>
+          </div>
+        </div>
+
+        <div class="checklist-item stagger-item">
+          <div class="check-circle">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="checklist-text">
+            <h3>Your downstream risk profile</h3>
+            <p>Across metabolic, cardiovascular, neurological, and musculoskeletal health — before symptoms appear.</p>
+          </div>
+        </div>
+
+        <div class="checklist-item stagger-item">
+          <div class="check-circle">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="checklist-text">
+            <h3>A personalized intervention protocol</h3>
+            <p>Built on your biomarkers. Not a generic supplement stack. Not a lifestyle PDF. A protocol.</p>
+          </div>
+        </div>
+
+        <div class="checklist-item stagger-item">
+          <div class="check-circle">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="checklist-text">
+            <h3>Continuous AI-led monitoring</h3>
+            <p>So the test becomes daily action. Because measurement without action changes nothing.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="editorial-divider"></div>
+
+    <!-- HOW WE BUILT IT -->
+    <section>
+      <h2 class="section-heading animate-on-scroll">How We Built It</h2>
+      
+      <p class="editorial-p animate-on-scroll">
+        For 25 years, Dr. Apurba Ganguly treated chronic disease while researching the biology underneath it.
+      </p>
+
+      <p class="editorial-p animate-on-scroll">
+        Muscle loss. Joint degeneration. Metabolic failure. Cognitive decline. The same root cause presenting in different organs, treated separately by different specialists.
+      </p>
+
+      <p class="editorial-p animate-on-scroll">
+        He built a proprietary biomarker dataset from the ground up. Published peer-reviewed research. Filed patents. Mapped molecular signatures of muscle aging across thousands of patients.
+      </p>
+
+      <p class="editorial-p animate-on-scroll">
+        Then a father and son turned that science into a platform. Because prevention only works when decline is measurable before disease begins.
+      </p>
+    </section>
+
+    <div class="editorial-divider"></div>
+
+    <!-- BELIEF -->
+    <section>
+      <h2 class="section-heading animate-on-scroll">What We Believe</h2>
+      
+      <p class="editorial-p animate-on-scroll">
+        Medicine has cholesterol for heart disease, HbA1c for diabetes, blood pressure for cardiovascular risk.
+      </p>
+
+      <p class="editorial-p animate-on-scroll" style="font-size: 22px; color: var(--text-main); font-weight: 500; font-style: italic; line-height: 1.6; margin: 36px 0; border-left: 2px solid var(--brand-purple); padding-left: 20px;">
+        Muscle health has no standard of care. No number. No test. No protocol.
+      </p>
+
+      <p class="editorial-p animate-on-scroll">
+        We believe that is about to change.
+      </p>
+
+      <p class="editorial-p animate-on-scroll">
+        We believe Muscle Age will become as routine as a cholesterol panel. We believe millions of people are living with muscle-driven chronic conditions that have never been connected to their root cause.
+      </p>
+
+      <p class="editorial-p animate-on-scroll">
+        And we believe people deserve to know their number before disease decides for them.
+      </p>
+    </section>
+
+    <!-- CALL TO ACTION (INTERACTIVE COUNTER) -->
+    <section class="manifesto-cta animate-on-scroll">
+      <div class="stats-number" id="statsCounter">172</div>
+      <div class="stats-label">People already know their Muscle Age</div>
+      
+      <h3 class="cta-heading">They know a number their doctor never told them.</h3>
+      <p class="cta-desc">They have a protocol their annual checkup never produced. They are watching a number move in the right direction for the first time. You are next.</p>
+      
+      <h3 class="cta-heading" style="font-size: 22px; color: var(--brand-purple); margin-bottom: 32px;">Know your Muscle Age. Change what comes next.</h3>
+      
+      <a href="/#contact" class="big-cta-btn">Join the Waitlist</a>
+    </section>
 
   </main>
 
-  <!-- IntersectionObserver and Scroll Parallax Scripts -->
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-container">
+      <img src="/assets/Predict-Logo.png" alt="PREDICT Logo" class="footer-logo">
+      <div class="footer-text">
+        PREDICT — making muscle age measurable.<br>
+        © 2025 A brand owned by Control Age Health Pvt. Ltd. All rights reserved.
+      </div>
+      <div class="footer-links">
+        <a href="/#about">About</a>
+        <a href="/#science">Science</a>
+        <a href="/#how-it-works">How It Works</a>
+        <a href="mailto:veeky@predict.fit">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- INTERACTIVE SCRIPTS -->
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // --- INTERSECTION OBSERVER FOR FADE-IN REVEALS ---
-      const revealElements = document.querySelectorAll(".animate-on-scroll");
-      const staggerElements = document.querySelectorAll(".stagger-item");
+    // --- THEME TOGGLER ---
+    function toggleTheme() {
+      const htmlEl = document.documentElement;
+      const currentTheme = htmlEl.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      htmlEl.setAttribute('data-theme', newTheme);
+      localStorage.setItem('predict-theme', newTheme);
+      
+      // Update theme toggle icon
+      const themeIcon = document.getElementById('themeIcon');
+      if (newTheme === 'light') {
+        // Sun Icon SVG
+        themeIcon.innerHTML = `
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        `;
+      } else {
+        // Moon Icon SVG
+        themeIcon.innerHTML = `
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        `;
+      }
+    }
 
-      const revealCallback = (entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("revealed");
-            observer.unobserve(entry.target);
-          }
-        });
-      };
-
-      const revealObserver = new IntersectionObserver(revealCallback, {
-        root: null,
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px"
-      });
-
-      revealElements.forEach(el => revealObserver.observe(el));
-
-      // Stagger observer for list/persona items
-      let staggerDelay = 0;
-      const staggerCallback = (entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            setTimeout(() => {
-              entry.target.classList.add("revealed");
-            }, staggerDelay);
-            staggerDelay += 150; // Stagger reveal times
-            observer.unobserve(entry.target);
-          }
-        });
-        // Reset delay after processing batch
-        setTimeout(() => { staggerDelay = 0; }, 500);
-      };
-
-      const staggerObserver = new IntersectionObserver(staggerCallback, {
-        root: null,
-        threshold: 0.05,
-        rootMargin: "0px 0px -30px 0px"
-      });
-
-      staggerElements.forEach(el => staggerObserver.observe(el));
-
-      // --- APPLE-STYLE CENTER VIEWPORT PARALLAX HIGHLIGHT ---
-      const parallaxTexts = document.querySelectorAll(".apple-parallax-text");
-
-      const handleParallax = () => {
-        const viewportHeight = window.innerHeight;
-        
-        parallaxTexts.forEach(el => {
-          const rect = el.getBoundingClientRect();
-          const elementCenter = rect.top + rect.height / 2;
-          
-          // Calculate element's relative center from screen center
-          const screenCenter = viewportHeight / 2;
-          const distance = elementCenter - screenCenter;
-          const maxDistance = viewportHeight * 0.45; // Range of effect
-          
-          // Calculate opacity: 1.0 when perfectly centered, fading to 0.15 at edges
-          let rawOpacity = 1 - Math.abs(distance) / maxDistance;
-          let opacity = Math.max(0.18, Math.min(1.0, rawOpacity));
-          
-          // Subtly shift translation based on scroll position
-          let rawTranslation = distance * 0.06;
-          let translateY = Math.max(-20, Math.min(20, rawTranslation));
-          
-          el.style.opacity = opacity;
-          el.style.transform = `translateY(${translateY}px)`;
-        });
-      };
-
-      window.addEventListener("scroll", handleParallax, { passive: true });
-      // Call once initially to set starting properties
-      handleParallax();
+    // Set saved theme preference on load
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('predict-theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        if (savedTheme === 'light') {
+          // Initialize icon to Sun
+          const themeIcon = document.getElementById('themeIcon');
+          themeIcon.innerHTML = `
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          `;
+        }
+      }
     });
-  </script>
 
+    // --- READING PROGRESS INDICATOR ---
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progressBar').style.width = scrolled + '%';
+    });
+
+    // --- INTERACTIVE NUMBER COUNTER FOR 172 ---
+    const counterEl = document.getElementById('statsCounter');
+    let hasCounted = false;
+
+    function animateCounter() {
+      if (hasCounted) return;
+      hasCounted = true;
+      
+      const target = 172;
+      const duration = 2000; // 2 seconds
+      const stepTime = Math.abs(Math.floor(duration / target));
+      let current = 0;
+      
+      const timer = setInterval(() => {
+        current += 1;
+        counterEl.textContent = current;
+        if (current === target) {
+          clearInterval(timer);
+        }
+      }, stepTime);
+    }
+
+    // Scroll trigger for the counter animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter();
+        }
+      });
+    }, { threshold: 0.1 });
+
+    observer.observe(counterEl);
+
+    // --- APPLE-STYLE SCROLL REVEAL & PARALLAX HIGHLIGHT ---
+    const revealElements = document.querySelectorAll(".animate-on-scroll");
+    const staggerElements = document.querySelectorAll(".stagger-item");
+    const parallaxTexts = document.querySelectorAll(".apple-parallax-text");
+
+    const revealCallback = (entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("revealed");
+          obs.unobserve(entry.target);
+        }
+      });
+    };
+
+    const revealObserver = new IntersectionObserver(revealCallback, {
+      root: null,
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // Stagger reveal for persona grids and lists
+    let staggerDelay = 0;
+    const staggerCallback = (entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add("revealed");
+          }, staggerDelay);
+          staggerDelay += 150;
+          obs.unobserve(entry.target);
+        }
+      });
+      setTimeout(() => { staggerDelay = 0; }, 500);
+    };
+
+    const staggerObserver = new IntersectionObserver(staggerCallback, {
+      root: null,
+      threshold: 0.05,
+      rootMargin: "0px 0px -30px 0px"
+    });
+
+    staggerElements.forEach(el => staggerObserver.observe(el));
+
+    // Viewport Center Parallax Text Highlight math
+    const handleParallax = () => {
+      const viewportHeight = window.innerHeight;
+      
+      parallaxTexts.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const elementCenter = rect.top + rect.height / 2;
+        const screenCenter = viewportHeight / 2;
+        const distance = elementCenter - screenCenter;
+        const maxDistance = viewportHeight * 0.45;
+        
+        let rawOpacity = 1 - Math.abs(distance) / maxDistance;
+        let opacity = Math.max(0.15, Math.min(1.0, rawOpacity));
+        
+        let rawTranslation = distance * 0.05;
+        let translateY = Math.max(-20, Math.min(20, rawTranslation));
+        
+        el.style.opacity = opacity;
+        el.style.transform = `translateY(${translateY}px)`;
+      });
+    };
+
+    window.addEventListener("scroll", handleParallax, { passive: true });
+    handleParallax();
+  </script>
 </body>
 </html>
