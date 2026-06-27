@@ -2,9 +2,11 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import ManifestoPopup from "./ManifestoPopup";
 
 export default function Navbar() {
   const [visible, setVisible] = useState(true);
+  const [isManifestoOpen, setIsManifestoOpen] = useState(false);
   const lastScrollY = useRef(0);
 
   useEffect(() => {
@@ -56,7 +58,7 @@ export default function Navbar() {
         visible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
-      <div className="absolute inset-0 bg-white/75 backdrop-blur-md -z-10" />
+      <div className="absolute inset-0 bg-white -z-10" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-3">
         {/* Left: Predict Inverted/Dark Logo */}
         <div className="flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
@@ -78,7 +80,7 @@ export default function Navbar() {
               <button
                 key={item}
                 onClick={() => scrollToSection(sectionId)}
-                className="text-sm text-neutral-600 hover:text-neutral-900 hover:font-medium transition-all duration-200 cursor-pointer font-medium tracking-wide"
+                className="text-sm text-black hover:text-[#8504FE] transition-all duration-200 cursor-pointer font-bold tracking-wide"
               >
                 {item}
               </button>
@@ -88,12 +90,14 @@ export default function Navbar() {
 
         {/* Mobile Call to Action Button */}
         <button
-          onClick={() => scrollToSection("contact")}
+          onClick={() => setIsManifestoOpen(true)}
           className="px-4 sm:px-5 py-2 sm:py-2.5 bg-accent hover:bg-accent/90 text-white font-medium rounded-full text-xs sm:text-sm whitespace-nowrap transition-all duration-300 shadow-md shadow-accent/10 hover:shadow-accent/25 cursor-pointer"
         >
-          Book Assessment
+          Our Manifesto
         </button>
       </div>
+
+      <ManifestoPopup isOpen={isManifestoOpen} onClose={() => setIsManifestoOpen(false)} />
     </header>
   );
 }

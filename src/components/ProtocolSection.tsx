@@ -404,7 +404,7 @@ export default function ProtocolSection() {
   }, []);
 
   return (
-    <div ref={outerRef} className="proto-outer">
+    <div id="how-it-works" ref={outerRef} className="proto-outer">
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
 
       <div className="proto-sticky">

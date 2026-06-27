@@ -23,7 +23,7 @@ export default function OurTestsSection({
   image2Alt = "Health test visual 2",
 }: OurTestsSectionProps) {
   return (
-    <section style={s.section}>
+    <section id="assessment" style={s.section}>
       <style>{`
         .ot-image-zone {
           position: relative;

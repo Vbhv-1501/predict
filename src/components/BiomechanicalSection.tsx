@@ -145,6 +145,61 @@ function BiomechanicalLiveStreamCanvas() {
   return <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />;
 }
 
+interface WordRevealProps {
+  text: string;
+  className?: string;
+  delay?: number;
+}
+
+function WordReveal({ text, className = "", delay = 0 }: WordRevealProps) {
+  const words = text.split(" ");
+  
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.03,
+        delayChildren: delay,
+      },
+    },
+  };
+  
+  const wordVariants = {
+    hidden: {
+      opacity: 0.15,
+      y: 6,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.45,
+        ease: [0.16, 1, 0.3, 1], // easeOutQuart
+      },
+    },
+  };
+
+  return (
+    <motion.span
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-10%" }}
+      className={`inline-block ${className}`}
+    >
+      {words.map((word, idx) => (
+        <motion.span
+          key={idx}
+          variants={wordVariants}
+          className="inline-block mr-[0.25em]"
+        >
+          {word}
+        </motion.span>
+      ))}
+    </motion.span>
+  );
+}
+
 export default function BiomechanicalSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -185,42 +240,37 @@ export default function BiomechanicalSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-32 relative bg-[#000000] text-white border-y border-white/[0.05] overflow-hidden">
+    <section id="science" ref={sectionRef} className="py-32 relative bg-[#000000] text-white border-y border-white/[0.05] overflow-hidden">
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
+          <div className="flex flex-col justify-center">
             <span className="text-xs uppercase tracking-widest text-primary-400 font-semibold mb-3 block">
-              Quantified Self
+              <WordReveal text="Quantified Self" />
             </span>
             <h2 className="section-title text-white mb-4">
-              Why We Built Bio-AgeClocks™
+              <WordReveal text="Why We Built Bio-AgeClocks™" />
             </h2>
             <p className="text-[#7C3AED] text-lg font-semibold mb-6">
-              Health should be measured before it is felt.
+              <WordReveal text="Health should be measured before it is felt." delay={0.15} />
             </p>
 
             <div className="flex flex-col gap-5">
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                 <span className="text-sm text-white/85 leading-relaxed">
-                  Muscles, nerves, blood vessels, bones, and joints age together.
+                  <WordReveal text="Muscles, nerves, blood vessels, bones, and joints age together." delay={0.3} />
                 </span>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                 <span className="text-sm text-white/85 leading-relaxed">
-                  Bio-AgeClocks™ decode these hidden signals to measure structural aging and uncover future health risks—years before symptoms appear.
+                  <WordReveal text="Bio-AgeClocks™ decode these hidden signals to measure structural aging and uncover future health risks—years before symptoms appear." delay={0.45} />
                 </span>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Premium Biomechanical Visualizer Box */}
           <div

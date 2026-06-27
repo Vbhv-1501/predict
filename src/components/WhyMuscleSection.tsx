@@ -243,7 +243,7 @@ export default function WhyMuscleSection() {
   }
 
   return (
-    <section className="wmb-section" ref={sectionRef}>
+    <section id="about" className="wmb-section" ref={sectionRef}>
       <svg width="0" height="0" style={{ position: 'absolute' }}>
         <filter id="wmb-goo">
           <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur" />
