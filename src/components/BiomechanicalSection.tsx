@@ -174,7 +174,7 @@ function WordReveal({ text, className = "", delay = 0 }: WordRevealProps) {
       y: 0,
       transition: {
         duration: 0.45,
-        ease: [0.16, 1, 0.3, 1], // easeOutQuart
+        ease: [0.16, 1, 0.3, 1] as const, // easeOutQuart
       },
     },
   };

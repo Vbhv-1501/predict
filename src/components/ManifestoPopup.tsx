@@ -111,7 +111,7 @@ export default function ManifestoPopup({ isOpen, onClose }: ManifestoPopupProps)
                   Know Your Muscle Age
                 </h1>
                 <p className="text-lg md:text-xl text-[#4A475A] font-medium tracking-wide">
-                  The most important health number you don't know.
+                  The most important health number you don&apos;t know.
                 </p>
               </div>
 
@@ -121,7 +121,7 @@ export default function ManifestoPopup({ isOpen, onClose }: ManifestoPopupProps)
               </p>
 
               <p className="text-base md:text-lg leading-relaxed text-[#4A475A] mb-6">
-                But you almost certainly don't know the age of the organ that drives all of them.
+                But you almost certainly don&apos;t know the age of the organ that drives all of them.
               </p>
 
               <p className="text-2xl md:text-3xl font-extrabold text-[#7C3AED] text-center my-8 tracking-tight">
@@ -193,7 +193,7 @@ export default function ManifestoPopup({ isOpen, onClose }: ManifestoPopupProps)
                     </span>
                     <h3 className="text-lg font-bold text-black mb-2">The 42-Year-Old</h3>
                     <p className="text-sm leading-relaxed text-[#4A475A]">
-                      You feel fine. Business is growing. Life is full. But recovery takes longer than it used to. Energy isn't quite what it was. What if your muscle is aging nine years faster than you are — and you simply don't know it yet?
+                      You feel fine. Business is growing. Life is full. But recovery takes longer than it used to. Energy isn&apos;t quite what it was. What if your muscle is aging nine years faster than you are — and you simply don&apos;t know it yet?
                     </p>
                   </div>
 
@@ -204,7 +204,7 @@ export default function ManifestoPopup({ isOpen, onClose }: ManifestoPopupProps)
                     </span>
                     <h3 className="text-lg font-bold text-black mb-2">The 55-Year-Old</h3>
                     <p className="text-sm leading-relaxed text-[#4A475A]">
-                      Your last health report moved in the wrong direction. You don't want another prescription managing a number. You want to understand the biology driving the number. That biology starts with muscle.
+                      Your last health report moved in the wrong direction. You don&apos;t want another prescription managing a number. You want to understand the biology driving the number. That biology starts with muscle.
                     </p>
                   </div>
 
