@@ -71,6 +71,7 @@ export default function ManifestoPopup({ isOpen, onClose }: ManifestoPopupProps)
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
+            data-lenis-prevent
             className="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-pointer"
           />
 
@@ -80,6 +81,7 @@ export default function ManifestoPopup({ isOpen, onClose }: ManifestoPopupProps)
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", duration: 0.5 }}
+            data-lenis-prevent
             className="relative w-[90vw] sm:w-[80vw] max-w-3xl h-[75vh] md:h-[80vh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden z-10 border border-neutral-100"
           >
             {/* Header / Close button (sticky) */}
@@ -99,6 +101,7 @@ export default function ManifestoPopup({ isOpen, onClose }: ManifestoPopupProps)
             {/* Scrollable Content */}
             <div
               ref={scrollContainerRef}
+              data-lenis-prevent
               className="flex-1 overflow-y-auto px-5 sm:px-10 md:px-16 py-8 sm:py-12 text-left text-[#111115] font-sans selection:bg-[#7C3AED]/10 selection:text-[#7C3AED]"
             >
               {/* Hero Section */}
