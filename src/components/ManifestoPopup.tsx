@@ -80,7 +80,7 @@ export default function ManifestoPopup({ isOpen, onClose }: ManifestoPopupProps)
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="relative w-[92vw] md:w-[85vw] max-w-4xl h-[80vh] md:h-[85vh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden z-10 border border-neutral-100"
+            className="relative w-[90vw] sm:w-[80vw] max-w-3xl h-[75vh] md:h-[80vh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden z-10 border border-neutral-100"
           >
             {/* Header / Close button (sticky) */}
             <div className="flex items-center justify-between px-5 md:px-10 py-4 border-b border-neutral-100 bg-white">

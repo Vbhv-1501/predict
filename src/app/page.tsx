@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import LoadingScreen from "@/components/LoadingScreen";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
+import ManifestoPopup from "@/components/ManifestoPopup";
 import StoryCanvas from "@/components/StoryCanvas";
 import VideoShowcase from "@/components/VideoShowcase";
 import WhyMuscleSection from "@/components/WhyMuscleSection";
@@ -26,10 +27,19 @@ function LenisScrollTriggerSync() {
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [preloadedImages, setPreloadedImages] = useState<HTMLImageElement[]>([]);
+  const [isManifestoOpen, setIsManifestoOpen] = useState(false);
 
   const handleLoaded = useCallback((images: HTMLImageElement[]) => {
     setPreloadedImages(images);
     setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    const handleOpenManifesto = () => setIsManifestoOpen(true);
+    window.addEventListener("open-manifesto", handleOpenManifesto);
+    return () => {
+      window.removeEventListener("open-manifesto", handleOpenManifesto);
+    };
   }, []);
 
   useEffect(() => {
@@ -126,6 +136,8 @@ export default function Home() {
               </div>
             </div>
           </main>
+          
+          <ManifestoPopup isOpen={isManifestoOpen} onClose={() => setIsManifestoOpen(false)} />
         </SmoothScroll>
       )}
     </>

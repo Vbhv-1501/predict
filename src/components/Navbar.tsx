@@ -2,20 +2,10 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import ManifestoPopup from "./ManifestoPopup";
 
 export default function Navbar() {
   const [visible, setVisible] = useState(true);
-  const [isManifestoOpen, setIsManifestoOpen] = useState(false);
   const lastScrollY = useRef(0);
-
-  useEffect(() => {
-    const handleOpenManifesto = () => setIsManifestoOpen(true);
-    window.addEventListener("open-manifesto", handleOpenManifesto);
-    return () => {
-      window.removeEventListener("open-manifesto", handleOpenManifesto);
-    };
-  }, []);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
@@ -98,14 +88,12 @@ export default function Navbar() {
 
         {/* Mobile Call to Action Button */}
         <button
-          onClick={() => setIsManifestoOpen(true)}
+          onClick={() => window.dispatchEvent(new CustomEvent("open-manifesto"))}
           className="px-4 sm:px-5 py-2 sm:py-2.5 bg-accent hover:bg-accent/90 text-white font-medium rounded-full text-xs sm:text-sm whitespace-nowrap transition-all duration-300 shadow-md shadow-accent/10 hover:shadow-accent/25 cursor-pointer"
         >
           Our Manifesto
         </button>
       </div>
-
-      <ManifestoPopup isOpen={isManifestoOpen} onClose={() => setIsManifestoOpen(false)} />
     </header>
   );
 }
