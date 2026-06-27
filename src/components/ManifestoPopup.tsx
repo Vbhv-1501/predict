@@ -80,10 +80,10 @@ export default function ManifestoPopup({ isOpen, onClose }: ManifestoPopupProps)
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="relative w-full max-w-4xl h-[90vh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden z-10 m-4 border border-neutral-100"
+            className="relative w-[92vw] md:w-[85vw] max-w-4xl h-[80vh] md:h-[85vh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden z-10 border border-neutral-100"
           >
             {/* Header / Close button (sticky) */}
-            <div className="flex items-center justify-between px-6 md:px-10 py-5 border-b border-neutral-100 bg-white">
+            <div className="flex items-center justify-between px-5 md:px-10 py-4 border-b border-neutral-100 bg-white">
               <span className="text-xs uppercase tracking-widest text-[#7C3AED] font-bold">
                 PREDICT | The Manifesto
               </span>
@@ -99,7 +99,7 @@ export default function ManifestoPopup({ isOpen, onClose }: ManifestoPopupProps)
             {/* Scrollable Content */}
             <div
               ref={scrollContainerRef}
-              className="flex-1 overflow-y-auto px-6 md:px-16 py-10 md:py-16 text-left text-[#111115] font-sans selection:bg-[#7C3AED]/10 selection:text-[#7C3AED]"
+              className="flex-1 overflow-y-auto px-5 sm:px-10 md:px-16 py-8 sm:py-12 text-left text-[#111115] font-sans selection:bg-[#7C3AED]/10 selection:text-[#7C3AED]"
             >
               {/* Hero Section */}
               <div className="text-center mb-12">
@@ -185,7 +185,7 @@ export default function ManifestoPopup({ isOpen, onClose }: ManifestoPopupProps)
                 <h2 className="text-2xl md:text-3xl font-bold text-black mb-6 tracking-tight">
                   This Is For You
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                   {/* Founder */}
                   <div className="p-6 bg-neutral-50 rounded-2xl border border-neutral-100 hover:border-purple-200 hover:shadow-md transition-all duration-300">
                     <span className="text-[10px] font-bold tracking-widest text-[#7C3AED] uppercase bg-[#7C3AED]/10 px-2.5 py-1 rounded-md inline-block mb-4">
@@ -253,7 +253,7 @@ export default function ManifestoPopup({ isOpen, onClose }: ManifestoPopupProps)
                     },
                     { title: "Continuous AI-led monitoring", desc: "So the test becomes daily action. Because measurement without action changes nothing." }
                   ].map((item, idx) => (
-                    <div key={idx} className="flex gap-4 p-4 rounded-xl hover:bg-neutral-50 border border-transparent hover:border-neutral-100 transition-all duration-200">
+                    <div key={idx} className="flex gap-3 md:gap-4 p-3 md:p-4 rounded-xl hover:bg-neutral-50 border border-transparent hover:border-neutral-100 transition-all duration-200">
                       <div className="w-6 h-6 rounded-full bg-[#7C3AED]/10 flex items-center justify-center text-[#7C3AED] shrink-0 mt-0.5">
                         <Check className="w-3.5 h-3.5 stroke-[3]" />
                       </div>
@@ -312,7 +312,7 @@ export default function ManifestoPopup({ isOpen, onClose }: ManifestoPopupProps)
               </div>
 
               {/* CTA Section */}
-              <div className="mt-16 p-8 md:p-12 rounded-3xl bg-gradient-to-br from-[#7C3AED]/5 to-[#8504FE]/10 border border-[#7C3AED]/10 text-center relative overflow-hidden">
+              <div className="mt-12 md:mt-16 p-6 md:p-12 rounded-3xl bg-gradient-to-br from-[#7C3AED]/5 to-[#8504FE]/10 border border-[#7C3AED]/10 text-center relative overflow-hidden">
                 <div className="text-5xl md:text-7xl font-extrabold text-[#7C3AED] tracking-tight mb-2">
                   {count}
                 </div>

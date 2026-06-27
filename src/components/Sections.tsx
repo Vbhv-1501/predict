@@ -267,6 +267,13 @@ export default function Sections() {
                 <a href="tel:+917506009933" className="hover:text-accent transition-colors duration-300">
                   +91 7506 009933
                 </a>
+                <span className="hidden sm:inline text-white/20">|</span>
+                <button
+                  onClick={() => window.dispatchEvent(new CustomEvent("open-manifesto"))}
+                  className="hover:text-accent transition-colors duration-300 cursor-pointer text-left font-sans"
+                >
+                  Our Manifesto
+                </button>
               </div>
               
               {/* Trust Logos */}

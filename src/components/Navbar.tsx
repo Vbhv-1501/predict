@@ -10,6 +10,14 @@ export default function Navbar() {
   const lastScrollY = useRef(0);
 
   useEffect(() => {
+    const handleOpenManifesto = () => setIsManifestoOpen(true);
+    window.addEventListener("open-manifesto", handleOpenManifesto);
+    return () => {
+      window.removeEventListener("open-manifesto", handleOpenManifesto);
+    };
+  }, []);
+
+  useEffect(() => {
     let timeoutId: NodeJS.Timeout;
 
     const handleScroll = () => {
