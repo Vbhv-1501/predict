@@ -196,21 +196,29 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     };
 
-    // ── Resize: fit height of the canvas to fill the viewport and prevent vertical cropping ──
+    const scrollState = { frameIndex: 0 };
+    let canvasHeight = 0;
+
+    // ── Resize: cover-scale the canvas to fill the viewport ─────────────────
     const resize = () => {
       const vw    = window.innerWidth;
       const vh    = window.innerHeight;
-      const scale = vh / 405; // fit height
+      const scale = Math.max(vw / 720, vh / 405); // cover
       const w     = Math.round(720 * scale);
       const h     = Math.round(405 * scale);
+      canvasHeight = h;
 
       canvas.width  = w;
       canvas.height = h;
       canvas.style.position = "absolute";
       canvas.style.left     = Math.round((vw - w) / 2) + "px";
-      canvas.style.top      = Math.round((vh - h) / 2) + "px";
       canvas.style.width    = w + "px";
       canvas.style.height   = h + "px";
+
+      // Dynamically adjust canvas top based on scroll progress to prevent vertical cropping of bottom details
+      const progress = scrollState.frameIndex / (TOTAL_FRAMES - 1);
+      const currentTop = h > vh ? Math.round((vh - h) * (0.5 + 0.5 * progress)) : 0;
+      canvas.style.top      = currentTop + "px";
 
       drawFrame(currentIndexRef.current);
     };
@@ -224,8 +232,6 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
     gsap.set(".text-step", { opacity: 0, y: 30 });
     gsap.set(".text-step-1", { opacity: 1, y: 0 }); // First text starts fully visible at Frame 000
     gsap.set(".text-step-7-bullet-1, .text-step-7-bullet-2, .text-step-7-bullet-3, .text-step-7-bullet-4, .text-step-7-bullet-5", { opacity: 0, x: 20 });
-
-    const scrollState = { frameIndex: 0 };
 
     // Create a master GSAP timeline driven by ScrollTrigger
     const tl = gsap.timeline({
@@ -252,6 +258,16 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
         if (idx === currentIndexRef.current) return;
         currentIndexRef.current = idx;
         drawFrame(idx);
+
+        // Dynamically adjust canvas top to pan/shift bottom into view as we scroll (only if height exceeds viewport)
+        const vh = window.innerHeight;
+        if (canvasHeight > vh) {
+          const progress = idx / (TOTAL_FRAMES - 1);
+          const currentTop = Math.round((vh - canvasHeight) * (0.5 + 0.5 * progress));
+          canvas.style.top = currentTop + "px";
+        } else {
+          canvas.style.top = "0px";
+        }
 
         // Update frame readout directly in DOM for 60fps performance
         if (readoutRef.current) {
