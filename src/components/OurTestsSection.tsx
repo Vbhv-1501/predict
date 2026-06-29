@@ -1,11 +1,4 @@
-"use client";
-import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import React from "react";
 
 const brand = {
   mid:    "#47307D",
@@ -29,124 +22,8 @@ export default function OurTestsSection({
   image2Src,
   image2Alt = "Health test visual 2",
 }: OurTestsSectionProps) {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const card1 = section.querySelector(".ot-img-1") as HTMLElement;
-    const card2 = section.querySelector(".ot-img-2") as HTMLElement;
-    const zone = section.querySelector(".ot-image-zone") as HTMLElement;
-    if (!card1 || !card2 || !zone) return;
-
-    let ctx: gsap.Context | null = null;
-    let resizeTimer: ReturnType<typeof setTimeout>;
-
-    const setupAnimation = () => {
-      if (ctx) {
-        ctx.revert();
-      }
-
-      // Temporarily clear inline styles so we measure the natural CSS positions
-      gsap.set([card1, card2], { clearProps: "all" });
-
-      const rectZone = zone.getBoundingClientRect();
-      const rectCard1 = card1.getBoundingClientRect();
-      const rectCard2 = card2.getBoundingClientRect();
-
-      // The horizontal center of the zone relative to card positions
-      const zoneCenterX = rectZone.left + rectZone.width / 2;
-      const card1CenterX = rectCard1.left + rectCard1.width / 2;
-      const card2CenterX = rectCard2.left + rectCard2.width / 2;
-
-      const offset1 = zoneCenterX - card1CenterX;
-      const offset2 = zoneCenterX - card2CenterX;
-
-      ctx = gsap.context(() => {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: "+=100%",
-            pin: true,
-            pinSpacing: true,
-            scrub: 1,
-            invalidateOnRefresh: true,
-            refreshPriority: 30,
-          }
-        });
-
-        tl.fromTo(
-          card1,
-          {
-            x: offset1,
-            y: 80, // start lower for the "thrown up" effect
-            yPercent: -50,
-            rotation: 3,
-            scale: 0.85,
-            opacity: 0,
-          },
-          {
-            x: 0,
-            y: 0,
-            yPercent: -50,
-            rotation: -7,
-            scale: 1,
-            opacity: 1,
-            ease: "none",
-          },
-          0
-        ).fromTo(
-          card2,
-          {
-            x: offset2,
-            y: 100, // start lower for the "thrown up" effect
-            yPercent: -50,
-            rotation: -3,
-            scale: 0.85,
-            opacity: 0,
-          },
-          {
-            x: 0,
-            y: 0,
-            yPercent: -50,
-            rotation: 7,
-            scale: 1,
-            opacity: 1,
-            ease: "none",
-          },
-          0
-        );
-      }, section);
-    };
-
-    // Run setup after a small delay to ensure DOM styling is fully resolved
-    const initialTimer = setTimeout(() => {
-      setupAnimation();
-    }, 150);
-
-    const handleResize = () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        setupAnimation();
-      }, 200);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      clearTimeout(initialTimer);
-      clearTimeout(resizeTimer);
-      window.removeEventListener("resize", handleResize);
-      if (ctx) {
-        ctx.revert();
-      }
-    };
-  }, []);
-
   return (
-    <section id="assessment" style={s.section} ref={sectionRef}>
+    <section id="assessment" style={s.section}>
       <style>{`
         .ot-image-zone {
           position: relative;
@@ -290,3 +167,14 @@ const s: Record<string, React.CSSProperties> = {
     marginBottom: 12,
   },
 };
+
+/*
+  USAGE
+  ─────
+  <OurTestsSection
+    image1Src="/images/test-01.jpg"
+    image1Alt="Blood biomarker analysis"
+    image2Src="/images/test-02.jpg"
+    image2Alt="Muscle imaging scan"
+  />
+*/

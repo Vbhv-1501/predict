@@ -244,35 +244,35 @@ const CSS = `
     transform: translateY(0);
   }
 
-   .proto-day {
+  .proto-day {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 11px;
+    font-size: 9px;
     letter-spacing: .22em;
     text-transform: uppercase;
-    color: #c084fc;
+    color: #434f5e;
     margin-bottom: 7px;
-    font-weight: 700;
+    font-weight: 500;
   }
-  .proto-bkt { width: 10px; height: 10px; flex-shrink: 0; opacity: .9; }
+  .proto-bkt { width: 10px; height: 10px; flex-shrink: 0; opacity: .7; }
 
   .proto-step-title {
-    font-size: clamp(14px, 1.45vw, 18px);
-    font-weight: 700;
+    font-size: clamp(13px, 1.45vw, 17px);
+    font-weight: 600;
     letter-spacing: -.02em;
     line-height: 1.25;
-    color: #ffffff;
+    color: #dde3ec;
     margin: 0 0 7px;
   }
   .proto-step-body {
-    font-size: clamp(11px, .88vw, 12.5px);
+    font-size: clamp(10px, .88vw, 11.5px);
     line-height: 1.68;
-    color: #d1d5db;
+    color: #4e5c6d;
     margin: 0;
-    font-weight: 600;
+    font-weight: 400;
   }
-  .proto-step-body b { color: #ffffff; font-weight: 800; }
+  .proto-step-body b { color: #838fa0; font-weight: 500; }
 
   /* ── Mobile ─────────────────────────────────────────────────────────────
      SVG + dots hidden. Steps stack as a flex column with left-border
