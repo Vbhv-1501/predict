@@ -8,11 +8,6 @@
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Premium Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
   <!-- GSAP & ScrollTrigger CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -20,20 +15,28 @@
   <!-- Lenis Smooth Scroll -->
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
-            outfit: ['Outfit', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
-
   <style>
+    /* Load site's native Neue Montreal fonts */
+    @font-face {
+      font-family: 'Neue Montreal';
+      src: url('/fonts/NeueMontreal-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Neue Montreal';
+      src: url('/fonts/NeueMontreal-Medium.woff2') format('woff2');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* Reset font to Neue Montreal exclusively */
+    body, html, * {
+      font-family: 'Neue Montreal', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    }
+
     /* Smooth Scrollbar reset */
     html.lenis, html.lenis body {
       height: auto;
@@ -54,25 +57,27 @@
     /* Redesigned Premium Glassmorphism Card System */
     .wmb-card-redesign {
       position: relative;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.05) 100%);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+      background: rgba(18, 22, 30, 0.45);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 24px;
-      box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.7), 
-                  inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      border-radius: 28px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 30px 80px rgba(0, 0, 0, 0.6);
       transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                   box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                   transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       overflow: hidden;
+      transform-style: preserve-3d;
+      perspective: 1000px;
     }
 
+    /* Inner hover glow spotlight effect */
     .wmb-card-redesign::after {
       content: '';
       position: absolute;
       inset: 0;
       background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-                                  var(--glow-color, rgba(124, 58, 237, 0.12)) 0%, 
+                                  var(--glow-color, rgba(124, 58, 237, 0.08)) 0%, 
                                   transparent 60%);
       pointer-events: none;
       opacity: 0;
@@ -85,71 +90,68 @@
 
     .wmb-card-redesign:hover {
       border-color: var(--hover-border, rgba(124, 58, 237, 0.35));
-      box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8),
-                  0 0 40px -10px var(--hover-glow, rgba(124, 58, 237, 0.2)),
-                  inset 0 1px 1px rgba(255, 255, 255, 0.15);
-      transform: translateY(-6px);
+      box-shadow: 0 40px 90px rgba(0, 0, 0, 0.85),
+                  0 0 50px -10px var(--hover-glow, rgba(124, 58, 237, 0.2)),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
 
     /* ──── SVG Biological Visualizations CSS animations ──── */
     
     /* 1. Cardiovascular ECG Line Animation */
-    .ecg-line {
-      stroke-dasharray: 120 280;
-      animation: run-ecg 2.5s linear infinite;
+    .ecg-pulse-anim {
+      stroke-dasharray: 80 220;
+      animation: ecg-flow 2.2s linear infinite;
     }
-    @keyframes run-ecg {
-      from { stroke-dashoffset: 400; }
+    @keyframes ecg-flow {
+      from { stroke-dashoffset: 300; }
       to { stroke-dashoffset: 0; }
     }
 
     /* 2. Metabolism DNA strands animation */
-    .dna-pair {
-      transform-origin: center;
+    .node-a {
+      animation: helix-vertical-a 3.2s ease-in-out infinite alternate;
     }
-    .dna-node-a {
-      animation: helix-a 4s ease-in-out infinite alternate;
+    .node-b {
+      animation: helix-vertical-b 3.2s ease-in-out infinite alternate;
     }
-    .dna-node-b {
-      animation: helix-b 4s ease-in-out infinite alternate;
+    .dna-bar {
+      animation: helix-scale-bar 3.2s ease-in-out infinite alternate;
+      transform-origin: 0px 40px; /* Center of vertical line */
     }
-    .dna-connector {
-      animation: helix-bar 4s ease-in-out infinite alternate;
-      transform-origin: center;
+    @keyframes helix-vertical-a {
+      0% { transform: translateY(0px) scale(0.7); opacity: 0.3; }
+      100% { transform: translateY(80px) scale(1.3); opacity: 1; filter: drop-shadow(0 0 6px rgba(192, 132, 252, 0.8)); }
     }
-    @keyframes helix-a {
-      0% { transform: translateY(-24px) scale(0.75); opacity: 0.3; }
-      100% { transform: translateY(24px) scale(1.25); opacity: 1; }
+    @keyframes helix-vertical-b {
+      0% { transform: translateY(0px) scale(1.3); opacity: 1; filter: drop-shadow(0 0 6px rgba(124, 58, 237, 0.8)); }
+      100% { transform: translateY(-80px) scale(0.7); opacity: 0.3; }
     }
-    @keyframes helix-b {
-      0% { transform: translateY(24px) scale(1.25); opacity: 1; }
-      100% { transform: translateY(-24px) scale(0.75); opacity: 0.3; }
-    }
-    @keyframes helix-bar {
-      0%, 100% { transform: scaleY(0); opacity: 0.1; }
-      50% { transform: scaleY(1); opacity: 0.6; }
+    @keyframes helix-scale-bar {
+      0% { transform: scaleY(-1); opacity: 0.15; }
+      50% { transform: scaleY(0); opacity: 0.05; }
+      100% { transform: scaleY(1); opacity: 0.15; }
     }
 
     /* 3. Bone Hexagonal Grid Animation */
-    .hex-cell {
-      transition: stroke-width 0.3s, opacity 0.3s;
+    .scan-beam-rect {
+      animation: scan-beam 4s ease-in-out infinite alternate;
     }
-    .hex-group:hover .hex-cell {
-      opacity: 0.8;
-      stroke-width: 1.5px;
+    @keyframes scan-beam {
+      0% { x: -250px; }
+      100% { x: 250px; }
     }
 
     /* 4. Cognitive Synapses node pulses */
-    .neuron-node {
-      animation: synapse-fire 3s ease-in-out infinite alternate;
+    .neuron-pulse {
+      animation: cog-pulse 2.4s ease-in-out infinite alternate;
     }
     .synapse-line {
-      stroke-dasharray: 8 16;
-      animation: signal-travel 4s linear infinite;
+      stroke-dasharray: 8 20;
+      animation: signal-travel 3.5s linear infinite;
     }
-    @keyframes synapse-fire {
-      0% { r: 3px; opacity: 0.4; }
-      100% { r: 7px; opacity: 1; }
+    @keyframes cog-pulse {
+      0% { r: 4px; opacity: 0.5; fill: #3B82F6; }
+      100% { r: 7.5px; opacity: 1; fill: #60A5FA; filter: drop-shadow(0 0 5px #60A5FA); }
     }
     @keyframes signal-travel {
       from { stroke-dashoffset: 48; }
@@ -168,14 +170,14 @@
 <body>
 
   <!-- Top spacer to enable scroll initiation -->
-  <section class="h-screen w-full flex items-center justify-center bg-zinc-950 border-b border-zinc-900">
+  <section class="h-[90vh] w-full flex items-center justify-center bg-zinc-950 border-b border-zinc-900/50">
     <div class="text-center px-4">
-      <span class="text-xs uppercase tracking-[0.25em] text-neutral-500 font-outfit mb-3 block">Predict longevity showcase</span>
-      <h1 class="text-3xl md:text-5xl font-outfit font-light text-neutral-200 tracking-tight leading-tight max-w-2xl">
+      <span class="text-[10px] uppercase tracking-[0.25em] text-neutral-500 mb-3 block">Predict longevity showcase</span>
+      <h1 class="text-3xl md:text-5xl font-light text-neutral-200 tracking-tight leading-tight max-w-2xl">
         Scroll Down to Experience the Redesigned Horizontal Section
       </h1>
       <div class="mt-8 flex flex-col items-center gap-2 text-neutral-600 animate-pulse">
-        <span class="text-xs font-mono">SCROLL</span>
+        <span class="text-[10px] tracking-widest">SCROLL TO REDESIGN</span>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
       </div>
     </div>
@@ -192,11 +194,11 @@
         
         <!-- Header Text (Apple-Style Fade Reveal) -->
         <div class="wmb-header text-center px-6 max-w-4xl mx-auto mb-10 md:mb-14 flex-shrink-0">
-          <h2 class="wmb-reveal-title text-4xl md:text-6xl font-sans font-medium tracking-tight text-white mb-4 leading-tight">
-            <span class="reveal-line opacity-100 block">Why muscle -</span>
-            <span class="reveal-line opacity-30 block">and why blood</span>
+          <h2 class="wmb-reveal-title text-4xl md:text-6xl font-medium tracking-tight text-white mb-4 leading-tight">
+            <span class="reveal-line block">Why muscle -</span>
+            <span class="reveal-line block mt-1">and why blood</span>
           </h2>
-          <p class="wmb-reveal-sub text-base md:text-xl text-neutral-400 font-light opacity-30 tracking-wide">
+          <p class="wmb-reveal-sub text-base md:text-xl text-neutral-400 font-light tracking-wide mt-4">
             Muscle doesn't fail in isolation. It takes four systems with it.
           </p>
         </div>
@@ -206,27 +208,39 @@
         <div id="wmb-track" class="flex flex-nowrap gap-6 overflow-x-auto md:overflow-x-hidden scroll-snap-x md:scroll-snap-none pb-8 md:pb-0 px-6 md:px-[8vw] w-full md:w-max">
           
           <!-- CARD 01: CARDIOVASCULAR -->
-          <div class="wmb-card-redesign scroll-snap-align-center flex-shrink-0 w-[86vw] md:w-[600px] h-[580px] md:h-[540px] flex flex-col justify-between p-8 md:p-10 select-none cursor-pointer"
-               style="--glow-color: rgba(239, 68, 68, 0.08); --hover-border: rgba(239, 68, 68, 0.3); --hover-glow: rgba(239, 68, 68, 0.15);"
-               onmousemove="handleCardHover(event, this)">
+          <div class="wmb-card-redesign scroll-snap-align-center flex-shrink-0 w-[86vw] md:w-[620px] h-[560px] md:h-[520px] flex flex-col justify-between p-8 md:p-10 select-none cursor-pointer"
+               style="--glow-color: rgba(255, 45, 85, 0.08); --hover-border: rgba(255, 45, 85, 0.35); --hover-glow: rgba(255, 45, 85, 0.2);"
+               onmousemove="handleCardMove(event, this)"
+               onmouseleave="handleCardLeave(this)">
             
             <!-- Card Header: Diagnostic Visualizer -->
             <div class="w-full h-[180px] flex items-center justify-center border-b border-white/[0.04] pb-6 relative">
-              <span class="absolute top-0 left-0 text-xs font-mono tracking-widest text-red-500/60 uppercase">diagnostic.pulse</span>
+              <span class="absolute top-0 left-0 text-[10px] tracking-widest text-red-500/60 uppercase">diagnostic.pulse</span>
               
               <!-- High-Fidelity ECG/Vascular Radar SVG -->
               <div class="w-full h-full max-w-[320px]">
-                <svg class="w-full h-full" viewBox="0 0 240 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="0 0 300 120" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <!-- Background grid lines -->
-                  <path d="M 0 30 H 240 M 0 60 H 240 M 0 90 H 240 M 40 0 V 120 M 80 0 V 120 M 120 0 V 120 M 160 0 V 120 M 200 0 V 120" stroke="rgba(239, 68, 68, 0.03)" stroke-width="1"></path>
-                  <!-- Static background pulse path -->
-                  <path d="M10 60 H70 L80 40 L90 80 L100 20 L110 100 L120 50 L130 65 L140 60 H230" stroke="rgba(239, 68, 68, 0.1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                  <!-- Animating heart pulse line -->
-                  <path d="M10 60 H70 L80 40 L90 80 L100 20 L110 100 L120 50 L130 65 L140 60 H230" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ecg-line" filter="url(#glow-cardio)"></path>
+                  <g stroke="rgba(255, 45, 85, 0.03)" stroke-width="0.5">
+                    <line x1="0" y1="20" x2="300" y2="20"></line>
+                    <line x1="0" y1="40" x2="300" y2="40"></line>
+                    <line x1="0" y1="60" x2="300" y2="60"></line>
+                    <line x1="0" y1="80" x2="300" y2="80"></line>
+                    <line x1="0" y1="100" x2="300" y2="100"></line>
+                    <line x1="50" y1="0" x2="50" y2="120"></line>
+                    <line x1="100" y1="0" x2="100" y2="120"></line>
+                    <line x1="150" y1="0" x2="150" y2="120"></line>
+                    <line x1="200" y1="0" x2="200" y2="120"></line>
+                    <line x1="250" y1="0" x2="250" y2="120"></line>
+                  </g>
+                  <!-- Background EKG trace -->
+                  <path d="M 0 60 H 90 L 98 45 L 106 75 L 114 15 L 122 105 L 130 50 L 138 65 L 146 60 H 300" stroke="rgba(255, 45, 85, 0.08)" stroke-width="1.5"></path>
+                  <!-- Animating EKG pulse -->
+                  <path d="M 0 60 H 90 L 98 45 L 106 75 L 114 15 L 122 105 L 130 50 L 138 65 L 146 60 H 300" stroke="#FF2D55" stroke-width="2.5" class="ecg-pulse-anim" filter="url(#glow-cardio)"></path>
                   
                   <defs>
                     <filter id="glow-cardio" x="-20%" y="-20%" width="140%" height="140%">
-                      <feGaussianBlur stdDeviation="3" result="blur"></feGaussianBlur>
+                      <feGaussianBlur stdDeviation="4" result="blur"></feGaussianBlur>
                       <feComposite in="SourceGraphic" in2="blur" operator="over"></feComposite>
                     </filter>
                   </defs>
@@ -237,10 +251,10 @@
             <!-- Card Body Content -->
             <div class="flex flex-col gap-4 mt-6">
               <div class="flex justify-between items-baseline">
-                <span class="text-xs font-mono text-neutral-500 uppercase tracking-widest">Panel 01</span>
-                <span class="text-2xl font-outfit font-light text-neutral-600">01</span>
+                <span class="text-[10px] text-neutral-500 uppercase tracking-widest">Panel 01</span>
+                <span class="text-xl text-neutral-600 font-light">01</span>
               </div>
-              <h3 class="text-2xl md:text-3xl font-sans font-bold text-white tracking-tight">Cardiovascular</h3>
+              <h3 class="text-2xl md:text-3xl font-medium text-white tracking-tight">Cardiovascular</h3>
               <p class="text-neutral-400 text-sm md:text-base font-light leading-relaxed">
                 Low muscle mass doubles cardiovascular mortality risk. The signal is present in blood a decade before a cardiac event.
               </p>
@@ -248,58 +262,157 @@
 
             <!-- Card Footer Readout -->
             <div class="border-t border-dashed border-white/10 pt-4 mt-2">
-              <p class="text-xs md:text-sm text-red-400/80 font-mono tracking-wide">
+              <p class="text-xs md:text-sm text-red-400/80 tracking-wide font-medium">
                 → Blood reveals cardiovascular risk long before symptoms appear.
               </p>
             </div>
           </div>
 
           <!-- CARD 02: METABOLISM & INSULIN RESISTANCE -->
-          <div class="wmb-card-redesign scroll-snap-align-center flex-shrink-0 w-[86vw] md:w-[600px] h-[580px] md:h-[540px] flex flex-col justify-between p-8 md:p-10 select-none cursor-pointer"
+          <div class="wmb-card-redesign scroll-snap-align-center flex-shrink-0 w-[86vw] md:w-[620px] h-[560px] md:h-[520px] flex flex-col justify-between p-8 md:p-10 select-none cursor-pointer"
                style="--glow-color: rgba(124, 58, 237, 0.08); --hover-border: rgba(124, 58, 237, 0.35); --hover-glow: rgba(124, 58, 237, 0.2);"
-               onmousemove="handleCardHover(event, this)">
+               onmousemove="handleCardMove(event, this)"
+               onmouseleave="handleCardLeave(this)">
             
             <!-- Card Header: Diagnostic Visualizer -->
             <div class="w-full h-[180px] flex items-center justify-center border-b border-white/[0.04] pb-6 relative">
-              <span class="absolute top-0 left-0 text-xs font-mono tracking-widest text-violet-400/60 uppercase">cellular.density</span>
+              <span class="absolute top-0 left-0 text-[10px] tracking-widest text-violet-400/60 uppercase">cellular.density</span>
               
               <!-- Rotating DNA Double Helix Structure SVG -->
               <div class="w-full h-full max-w-[320px] flex items-center justify-center">
-                <svg class="h-full w-auto" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <!-- DNA helix nodes generated in 6 steps -->
-                  <g class="dna-pair" transform="translate(20, 0)">
-                    <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.1)" stroke-width="1.5" class="dna-connector"></line>
-                    <circle cx="0" cy="20" r="4" fill="#8B5CF6" class="dna-node-a" filter="url(#glow-meta)"></circle>
-                    <circle cx="0" cy="100" r="4" fill="#C084FC" class="dna-node-b" filter="url(#glow-meta)"></circle>
+                <svg viewBox="0 0 300 120" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- DNA helix nodes generated in 8 pairs horizontally -->
+                  <g transform="translate(45, 20)">
+                    <g transform="translate(0, 0)">
+                      <line x1="0" y1="0" x2="0" y2="80" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: 0s;"></line>
+                      <circle cx="0" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: 0s;"></circle>
+                      <circle cx="0" cy="80" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: 0s;"></circle>
+                    </g>
+                    <g transform="translate(30, 0)">
+                      <line x1="0" y1="0" x2="0" y2="80" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -0.4s;"></line>
+                      <circle cx="0" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -0.4s;"></circle>
+                      <circle cx="0" cy="80" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -0.4s;"></circle>
+                    </g>
+                    <g transform="translate(60, 0)">
+                      <line x1="0" y1="0" x2="0" y2="80" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -0.8s;"></line>
+                      <circle cx="0" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -0.8s;"></circle>
+                      <circle cx="0" cy="80" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -0.8s;"></circle>
+                    </g>
+                    <g transform="translate(90, 0)">
+                      <line x1="0" y1="0" x2="0" y2="80" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -1.2s;"></line>
+                      <circle cx="0" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -1.2s;"></circle>
+                      <circle cx="0" cy="80" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -1.2s;"></circle>
+                    </g>
+                    <g transform="translate(120, 0)">
+                      <line x1="0" y1="0" x2="0" y2="80" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -1.6s;"></line>
+                      <circle cx="0" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -1.6s;"></circle>
+                      <circle cx="0" cy="80" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -1.6s;"></circle>
+                    </g>
+                    <g transform="translate(150, 0)">
+                      <line x1="0" y1="0" x2="0" y2="80" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -2s;"></line>
+                      <circle cx="0" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -2s;"></circle>
+                      <circle cx="0" cy="80" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -2s;"></circle>
+                    </g>
+                    <g transform="translate(180, 0)">
+                      <line x1="0" y1="0" x2="0" y2="80" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -2.4s;"></line>
+                      <circle cx="0" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -2.4s;"></circle>
+                      <circle cx="0" cy="80" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -2.4s;"></circle>
+                    </g>
+                    <g transform="translate(210, 0)">
+                      <line x1="0" y1="0" x2="0" y2="80" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -2.8s;"></line>
+                      <circle cx="0" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -2.8s;"></circle>
+                      <circle cx="0" cy="80" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -2.8s;"></circle>
+                    </g>
                   </g>
-                  <g class="dna-pair" transform="translate(45, 0)">
-                    <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.1)" stroke-width="1.5" class="dna-connector" style="animation-delay: -0.6s"></line>
-                    <circle cx="0" cy="20" r="4" fill="#8B5CF6" class="dna-node-a" style="animation-delay: -0.6s" filter="url(#glow-meta)"></circle>
-                    <circle cx="0" cy="100" r="4" fill="#C084FC" class="dna-node-b" style="animation-delay: -0.6s" filter="url(#glow-meta)"></circle>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Card Body Content -->
+            <div class="flex flex-col gap-4 mt-6">
+              <div class="flex justify-between items-baseline">
+                <span class="text-[10px] text-neutral-500 uppercase tracking-widest">Panel 02</span>
+                <span class="text-xl text-neutral-600 font-light">02</span>
+              </div>
+              <h3 class="text-2xl md:text-3xl font-medium text-white tracking-tight">Metabolism & Insulin Resistance</h3>
+              <p class="text-neutral-400 text-sm md:text-base font-light leading-relaxed">
+                Every 10% increase in muscle mass reduces insulin resistance by 11%. Blood tracks this shift in real time across panels.
+              </p>
+            </div>
+
+            <!-- Card Footer Readout -->
+            <div class="border-t border-dashed border-white/10 pt-4 mt-2">
+              <p class="text-xs md:text-sm text-violet-400/80 tracking-wide font-medium">
+                → Metabolic resilience is continuously measurable through biomarkers.
+              </p>
+            </div>
+          </div>
+
+          <!-- CARD 03: BONE & JOINT DENSITY -->
+          <div class="wmb-card-redesign scroll-snap-align-center flex-shrink-0 w-[86vw] md:w-[620px] h-[560px] md:h-[520px] flex flex-col justify-between p-8 md:p-10 select-none cursor-pointer"
+               style="--glow-color: rgba(245, 158, 11, 0.08); --hover-border: rgba(245, 158, 11, 0.35); --hover-glow: rgba(245, 158, 11, 0.2);"
+               onmousemove="handleCardMove(event, this)"
+               onmouseleave="handleCardLeave(this)">
+            
+            <!-- Card Header: Diagnostic Visualizer -->
+            <div class="w-full h-[180px] flex items-center justify-center border-b border-white/[0.04] pb-6 relative">
+              <span class="absolute top-0 left-0 text-[10px] tracking-widest text-amber-500/60 uppercase">structural.integrity</span>
+              
+              <!-- High-Tech Structural Honeycomb Lattice SVG with Radar Scan -->
+              <div class="w-full h-full max-w-[320px] flex items-center justify-center">
+                <svg viewBox="0 0 300 120" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <!-- Scanning gradient mask -->
+                    <linearGradient id="scan-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#fff" stop-opacity="0.15"></stop>
+                      <stop offset="50%" stop-color="#ff8a00" stop-opacity="0.95"></stop>
+                      <stop offset="100%" stop-color="#fff" stop-opacity="0.15"></stop>
+                    </linearGradient>
+                    <mask id="scan-mask">
+                      <rect x="0" y="0" width="300" height="120" fill="url(#scan-grad)" class="scan-beam-rect"></rect>
+                    </mask>
+                  </defs>
+                  
+                  <!-- Background dim hexagonal grid -->
+                  <g stroke="rgba(255, 138, 0, 0.1)" stroke-width="1.2">
+                    <!-- Row 1 -->
+                    <polygon points="30,10 50,21.5 50,44.5 30,56 10,44.5 10,21.5"></polygon>
+                    <polygon points="70,10 90,21.5 90,44.5 70,56 50,44.5 50,21.5"></polygon>
+                    <polygon points="110,10 130,21.5 130,44.5 110,56 90,44.5 90,21.5"></polygon>
+                    <polygon points="150,10 170,21.5 170,44.5 150,56 130,44.5 130,21.5"></polygon>
+                    <polygon points="190,10 210,21.5 210,44.5 190,56 170,44.5 170,21.5"></polygon>
+                    <polygon points="230,10 250,21.5 250,44.5 230,56 210,44.5 210,21.5"></polygon>
+                    <polygon points="270,10 290,21.5 290,44.5 270,56 250,44.5 250,21.5"></polygon>
+
+                    <!-- Row 2 -->
+                    <polygon points="50,44.5 70,56 70,79 50,90.5 30,79 30,44.5"></polygon>
+                    <polygon points="90,44.5 110,56 110,79 90,90.5 70,79 70,44.5"></polygon>
+                    <polygon points="130,44.5 150,56 150,79 130,90.5 110,79 110,44.5"></polygon>
+                    <polygon points="170,44.5 190,56 190,79 170,90.5 150,79 150,44.5"></polygon>
+                    <polygon points="210,44.5 230,56 230,79 210,90.5 190,79 190,44.5"></polygon>
+                    <polygon points="250,44.5 270,56 270,79 250,90.5 230,79 230,44.5"></polygon>
                   </g>
-                  <g class="dna-pair" transform="translate(70, 0)">
-                    <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.1)" stroke-width="1.5" class="dna-connector" style="animation-delay: -1.2s"></line>
-                    <circle cx="0" cy="20" r="4" fill="#8B5CF6" class="dna-node-a" style="animation-delay: -1.2s" filter="url(#glow-meta)"></circle>
-                    <circle cx="0" cy="100" r="4" fill="#C084FC" class="dna-node-b" style="animation-delay: -1.2s" filter="url(#glow-meta)"></circle>
-                  </g>
-                  <g class="dna-pair" transform="translate(95, 0)">
-                    <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.1)" stroke-width="1.5" class="dna-connector" style="animation-delay: -1.8s"></line>
-                    <circle cx="0" cy="20" r="4" fill="#8B5CF6" class="dna-node-a" style="animation-delay: -1.8s" filter="url(#glow-meta)"></circle>
-                    <circle cx="0" cy="100" r="4" fill="#C084FC" class="dna-node-b" style="animation-delay: -1.8s" filter="url(#glow-meta)"></circle>
-                  </g>
-                  <g class="dna-pair" transform="translate(120, 0)">
-                    <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.1)" stroke-width="1.5" class="dna-connector" style="animation-delay: -2.4s"></line>
-                    <circle cx="0" cy="20" r="4" fill="#8B5CF6" class="dna-node-a" style="animation-delay: -2.4s" filter="url(#glow-meta)"></circle>
-                    <circle cx="0" cy="100" r="4" fill="#C084FC" class="dna-node-b" style="animation-delay: -2.4s" filter="url(#glow-meta)"></circle>
-                  </g>
-                  <g class="dna-pair" transform="translate(145, 0)">
-                    <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.1)" stroke-width="1.5" class="dna-connector" style="animation-delay: -3.0s"></line>
-                    <circle cx="0" cy="20" r="4" fill="#8B5CF6" class="dna-node-a" style="animation-delay: -3.0s" filter="url(#glow-meta)"></circle>
-                    <circle cx="0" cy="100" r="4" fill="#C084FC" class="dna-node-b" style="animation-delay: -3.0s" filter="url(#glow-meta)"></circle>
+                  
+                  <!-- Glowing hexagons under the scanning mask -->
+                  <g stroke="#ff8a00" stroke-width="2.5" mask="url(#scan-mask)" filter="url(#glow-bone)">
+                    <polygon points="30,10 50,21.5 50,44.5 30,56 10,44.5 10,21.5"></polygon>
+                    <polygon points="70,10 90,21.5 90,44.5 70,56 50,44.5 50,21.5"></polygon>
+                    <polygon points="110,10 130,21.5 130,44.5 110,56 90,44.5 90,21.5"></polygon>
+                    <polygon points="150,10 170,21.5 170,44.5 150,56 130,44.5 130,21.5"></polygon>
+                    <polygon points="190,10 210,21.5 210,44.5 190,56 170,44.5 170,21.5"></polygon>
+                    <polygon points="230,10 250,21.5 250,44.5 230,56 210,44.5 210,21.5"></polygon>
+                    <polygon points="270,10 290,21.5 290,44.5 270,56 250,44.5 250,21.5"></polygon>
+                    
+                    <polygon points="50,44.5 70,56 70,79 50,90.5 30,79 30,44.5"></polygon>
+                    <polygon points="90,44.5 110,56 110,79 90,90.5 70,79 70,44.5"></polygon>
+                    <polygon points="130,44.5 150,56 150,79 130,90.5 110,79 110,44.5"></polygon>
+                    <polygon points="170,44.5 190,56 190,79 170,90.5 150,79 150,44.5"></polygon>
+                    <polygon points="210,44.5 230,56 230,79 210,90.5 190,79 190,44.5"></polygon>
+                    <polygon points="250,44.5 270,56 270,79 250,90.5 230,79 230,44.5"></polygon>
                   </g>
                   <defs>
-                    <filter id="glow-meta" x="-30%" y="-30%" width="160%" height="160%">
-                      <feGaussianBlur stdDeviation="3" result="blur"></feGaussianBlur>
+                    <filter id="glow-bone" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="3.5" result="blur"></feGaussianBlur>
                       <feComposite in="SourceGraphic" in2="blur" operator="over"></feComposite>
                     </filter>
                   </defs>
@@ -310,73 +423,10 @@
             <!-- Card Body Content -->
             <div class="flex flex-col gap-4 mt-6">
               <div class="flex justify-between items-baseline">
-                <span class="text-xs font-mono text-neutral-500 uppercase tracking-widest">Panel 02</span>
-                <span class="text-2xl font-outfit font-light text-neutral-600">02</span>
+                <span class="text-[10px] text-neutral-500 uppercase tracking-widest">Panel 03</span>
+                <span class="text-xl text-neutral-600 font-light">03</span>
               </div>
-              <h3 class="text-2xl md:text-3xl font-sans font-bold text-white tracking-tight">Metabolism & Insulin Resistance</h3>
-              <p class="text-neutral-400 text-sm md:text-base font-light leading-relaxed">
-                Every 10% increase in muscle mass reduces insulin resistance by 11%. Blood tracks this shift in real time across panels.
-              </p>
-            </div>
-
-            <!-- Card Footer Readout -->
-            <div class="border-t border-dashed border-white/10 pt-4 mt-2">
-              <p class="text-xs md:text-sm text-violet-400/80 font-mono tracking-wide">
-                → Metabolic resilience is continuously measurable through biomarkers.
-              </p>
-            </div>
-          </div>
-
-          <!-- CARD 03: BONE & JOINT DENSITY -->
-          <div class="wmb-card-redesign scroll-snap-align-center flex-shrink-0 w-[86vw] md:w-[600px] h-[580px] md:h-[540px] flex flex-col justify-between p-8 md:p-10 select-none cursor-pointer"
-               style="--glow-color: rgba(245, 158, 11, 0.08); --hover-border: rgba(245, 158, 11, 0.35); --hover-glow: rgba(245, 158, 11, 0.2);"
-               onmousemove="handleCardHover(event, this)">
-            
-            <!-- Card Header: Diagnostic Visualizer -->
-            <div class="w-full h-[180px] flex items-center justify-center border-b border-white/[0.04] pb-6 relative">
-              <span class="absolute top-0 left-0 text-xs font-mono tracking-widest text-amber-500/60 uppercase">structural.integrity</span>
-              
-              <!-- High-Tech Structural Honeycomb Lattice SVG -->
-              <div class="w-full h-full max-w-[320px] flex items-center justify-center">
-                <svg class="h-full w-auto" viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg" fill="none">
-                  <!-- Honeycomb cells with different animation delays -->
-                  <g transform="translate(10, 10)">
-                    <!-- Row 1 -->
-                    <polygon points="30,0 50,11.5 50,34.5 30,46 10,34.5 10,11.5" class="hex-cell stroke-amber-500/20" style="animation: hex-glow 4s ease-in-out infinite; animation-delay: 0s"></polygon>
-                    <polygon points="70,0 90,11.5 90,34.5 70,46 50,34.5 50,11.5" class="hex-cell stroke-amber-500/20" style="animation: hex-glow 4s ease-in-out infinite; animation-delay: 0.3s"></polygon>
-                    <polygon points="110,0 130,11.5 130,34.5 110,46 90,34.5 90,11.5" class="hex-cell stroke-amber-500/20" style="animation: hex-glow 4s ease-in-out infinite; animation-delay: 0.6s"></polygon>
-                    
-                    <!-- Row 2 -->
-                    <polygon points="50,34.5 70,46 70,69 50,80.5 30,69 30,46" class="hex-cell stroke-amber-500/20" style="animation: hex-glow 4s ease-in-out infinite; animation-delay: 0.2s"></polygon>
-                    <polygon points="90,34.5 110,46 110,69 90,80.5 70,69 70,46" class="hex-cell stroke-amber-500/20" style="animation: hex-glow 4s ease-in-out infinite; animation-delay: 0.5s"></polygon>
-                    <polygon points="130,34.5 150,46 150,69 130,80.5 110,69 110,46" class="hex-cell stroke-amber-500/20" style="animation: hex-glow 4s ease-in-out infinite; animation-delay: 0.8s"></polygon>
-                    
-                    <!-- Row 3 -->
-                    <polygon points="30,69 50,80.5 50,103.5 30,115 10,103.5 10,80.5" class="hex-cell stroke-amber-500/20" style="animation: hex-glow 4s ease-in-out infinite; animation-delay: 0.4s"></polygon>
-                    <polygon points="70,69 90,80.5 90,103.5 70,115 50,103.5 50,80.5" class="hex-cell stroke-amber-500/20" style="animation: hex-glow 4s ease-in-out infinite; animation-delay: 0.7s"></polygon>
-                    <polygon points="110,69 130,80.5 130,103.5 110,115 90,103.5 90,80.5" class="hex-cell stroke-amber-500/20" style="animation: hex-glow 4s ease-in-out infinite; animation-delay: 1.0s"></polygon>
-                  </g>
-                  
-                  <style>
-                    .hex-cell {
-                      stroke-width: 1;
-                    }
-                    @keyframes hex-glow {
-                      0%, 100% { stroke: rgba(245, 158, 11, 0.15); fill: rgba(245, 158, 11, 0.01); }
-                      50% { stroke: rgba(245, 158, 11, 0.7); fill: rgba(245, 158, 11, 0.07); }
-                    }
-                  </style>
-                </svg>
-              </div>
-            </div>
-
-            <!-- Card Body Content -->
-            <div class="flex flex-col gap-4 mt-6">
-              <div class="flex justify-between items-baseline">
-                <span class="text-xs font-mono text-neutral-500 uppercase tracking-widest">Panel 03</span>
-                <span class="text-2xl font-outfit font-light text-neutral-600">03</span>
-              </div>
-              <h3 class="text-2xl md:text-3xl font-sans font-bold text-white tracking-tight">Bone & Joint Density</h3>
+              <h3 class="text-2xl md:text-3xl font-medium text-white tracking-tight">Bone & Joint Density</h3>
               <p class="text-neutral-400 text-sm md:text-base font-light leading-relaxed">
                 Muscle weakness is the #1 predictor of fracture risk in adults over 40. Bone decline starts at 45. Screening starts at 65.
               </p>
@@ -384,45 +434,51 @@
 
             <!-- Card Footer Readout -->
             <div class="border-t border-dashed border-white/10 pt-4 mt-2">
-              <p class="text-xs md:text-sm text-amber-400/80 font-mono tracking-wide">
+              <p class="text-xs md:text-sm text-amber-400/80 tracking-wide font-medium">
                 → Muscle and bone age together and blood sees both.
               </p>
             </div>
           </div>
 
           <!-- CARD 04: COGNITIVE HEALTH -->
-          <div class="wmb-card-redesign scroll-snap-align-center flex-shrink-0 w-[86vw] md:w-[600px] h-[580px] md:h-[540px] flex flex-col justify-between p-8 md:p-10 select-none cursor-pointer"
+          <div class="wmb-card-redesign scroll-snap-align-center flex-shrink-0 w-[86vw] md:w-[620px] h-[560px] md:h-[520px] flex flex-col justify-between p-8 md:p-10 select-none cursor-pointer"
                style="--glow-color: rgba(59, 130, 246, 0.08); --hover-border: rgba(59, 130, 246, 0.35); --hover-glow: rgba(59, 130, 246, 0.2);"
-               onmousemove="handleCardHover(event, this)">
+               onmousemove="handleCardMove(event, this)"
+               onmouseleave="handleCardLeave(this)">
             
             <!-- Card Header: Diagnostic Visualizer -->
             <div class="w-full h-[180px] flex items-center justify-center border-b border-white/[0.04] pb-6 relative">
-              <span class="absolute top-0 left-0 text-xs font-mono tracking-widest text-blue-500/60 uppercase">synapse.monitoring</span>
+              <span class="absolute top-0 left-0 text-[10px] tracking-widest text-blue-500/60 uppercase">synapse.monitoring</span>
               
-              <!-- High-Tech Neural Network Connections SVG -->
+              <!-- High-Tech Neural Network Connections SVG with Active Synapse Motion -->
               <div class="w-full h-full max-w-[320px] flex items-center justify-center">
-                <svg class="w-full h-full" viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg" fill="none">
-                  <!-- Connection pathways -->
-                  <path d="M40 30 L100 50 M100 50 L140 25 M100 50 L120 90 M120 90 L180 80 M140 25 L200 40 M140 25 L180 80" stroke="rgba(59, 130, 246, 0.06)" stroke-width="1.5"></path>
+                <svg viewBox="0 0 300 120" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Connection pathways (dim background lines) -->
+                  <path d="M 30 30 Q 100 15 150 60 T 270 90" stroke="rgba(59, 130, 246, 0.08)" stroke-width="1.5"></path>
+                  <path d="M 40 90 Q 120 100 180 50 T 260 30" stroke="rgba(59, 130, 246, 0.08)" stroke-width="1.5"></path>
                   
-                  <!-- Traveling signals -->
-                  <path d="M40 30 L100 50 L140 25 L200 40" stroke="url(#blue-grad)" stroke-width="2" stroke-linecap="round" class="synapse-line"></path>
-                  <path d="M100 50 L120 90 L180 80" stroke="url(#blue-grad)" stroke-width="2" stroke-linecap="round" class="synapse-line" style="animation-delay: -2s; animation-duration: 3s"></path>
+                  <!-- Traveling synapse signals using SMIL animateMotion -->
+                  <circle r="3.5" fill="#60A5FA" filter="url(#glow-cog)">
+                    <animateMotion dur="3.2s" repeatCount="indefinite" path="M 30 30 Q 100 15 150 60 T 270 90"></animateMotion>
+                  </circle>
+                  <circle r="3.5" fill="#3B82F6" filter="url(#glow-cog)">
+                    <animateMotion dur="4.0s" repeatCount="indefinite" path="M 40 90 Q 120 100 180 50 T 260 30" begin="0.6s"></animateMotion>
+                  </circle>
                   
-                  <!-- Glowing neuron circles -->
-                  <circle cx="40" cy="30" r="4.5" fill="#3B82F6" class="neuron-node"></circle>
-                  <circle cx="100" cy="50" r="6" fill="#60A5FA" class="neuron-node" style="animation-delay: -0.4s"></circle>
-                  <circle cx="140" cy="25" r="5.5" fill="#3B82F6" class="neuron-node" style="animation-delay: -0.8s"></circle>
-                  <circle cx="120" cy="90" r="5" fill="#3B82F6" class="neuron-node" style="animation-delay: -1.2s"></circle>
-                  <circle cx="180" cy="80" r="5.5" fill="#60A5FA" class="neuron-node" style="animation-delay: -1.6s"></circle>
-                  <circle cx="200" cy="40" r="4.5" fill="#3B82F6" class="neuron-node" style="animation-delay: -2.0s"></circle>
+                  <!-- Glowing neuron circles that pulse organic -->
+                  <circle cx="30" cy="30" r="5" fill="#3B82F6" class="neuron-pulse"></circle>
+                  <circle cx="150" cy="60" r="7" fill="#60A5FA" class="neuron-pulse" style="animation-delay: -0.5s;"></circle>
+                  <circle cx="270" cy="90" r="5" fill="#3B82F6" class="neuron-pulse" style="animation-delay: -1.0s;"></circle>
+                  
+                  <circle cx="40" cy="90" r="5" fill="#3B82F6" class="neuron-pulse" style="animation-delay: -0.3s;"></circle>
+                  <circle cx="180" cy="50" r="6.5" fill="#60A5FA" class="neuron-pulse" style="animation-delay: -0.8s;"></circle>
+                  <circle cx="260" cy="30" r="5" fill="#3B82F6" class="neuron-pulse" style="animation-delay: -1.5s;"></circle>
 
                   <defs>
-                    <linearGradient id="blue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0"></stop>
-                      <stop offset="50%" stop-color="#60A5FA" stop-opacity="1"></stop>
-                      <stop offset="100%" stop-color="#93C5FD" stop-opacity="0"></stop>
-                    </linearGradient>
+                    <filter id="glow-cog" x="-25%" y="-25%" width="150%" height="150%">
+                      <feGaussianBlur stdDeviation="3.5" result="blur"></feGaussianBlur>
+                      <feComposite in="SourceGraphic" in2="blur" operator="over"></feComposite>
+                    </filter>
                   </defs>
                 </svg>
               </div>
@@ -431,10 +487,10 @@
             <!-- Card Body Content -->
             <div class="flex flex-col gap-4 mt-6">
               <div class="flex justify-between items-baseline">
-                <span class="text-xs font-mono text-neutral-500 uppercase tracking-widest">Panel 04</span>
-                <span class="text-2xl font-outfit font-light text-neutral-600">04</span>
+                <span class="text-[10px] text-neutral-500 uppercase tracking-widest">Panel 04</span>
+                <span class="text-xl text-neutral-600 font-light">04</span>
               </div>
-              <h3 class="text-2xl md:text-3xl font-sans font-bold text-white tracking-tight">Cognitive Health</h3>
+              <h3 class="text-2xl md:text-3xl font-medium text-white tracking-tight">Cognitive Health</h3>
               <p class="text-neutral-400 text-sm md:text-base font-light leading-relaxed">
                 Brain function declines with muscle through inflammation, IGF-1, and insulin sensitivity — all readable in a single blood panel.
               </p>
@@ -442,7 +498,7 @@
 
             <!-- Card Footer Readout -->
             <div class="border-t border-dashed border-white/10 pt-4 mt-2">
-              <p class="text-xs md:text-sm text-blue-400/80 font-mono tracking-wide">
+              <p class="text-xs md:text-sm text-blue-400/80 tracking-wide font-medium">
                 → The brain and muscle are connected through shared pathways.
               </p>
             </div>
@@ -464,10 +520,10 @@
   </section>
 
   <!-- Bottom spacer to verify unpin and scrolling -->
-  <section class="h-screen w-full flex items-center justify-center bg-zinc-950 border-t border-zinc-900">
+  <section class="h-[90vh] w-full flex items-center justify-center bg-zinc-950 border-t border-zinc-900/50">
     <div class="text-center px-4">
-      <span class="text-xs uppercase tracking-[0.25em] text-neutral-500 font-outfit mb-3 block font-medium">end of section</span>
-      <h2 class="text-3xl md:text-4xl font-outfit font-light text-neutral-300 tracking-tight leading-tight max-w-lg mx-auto">
+      <span class="text-[10px] uppercase tracking-[0.25em] text-neutral-500 font-medium">end of section</span>
+      <h2 class="text-3xl md:text-4xl font-light text-neutral-300 tracking-tight leading-tight max-w-lg mx-auto mt-3">
         Next Section Slides Up Smoothly
       </h2>
     </div>
@@ -495,16 +551,38 @@
     // Sync GSAP with Lenis scroll updates
     lenis.on('scroll', ScrollTrigger.update);
 
-    // 2. Interactive Spotlight Glow on Hover (Mouse coordinates)
-    function handleCardHover(e, card) {
+    // 2. Premium 3D Tilt Card Hover Effect (Matches React client moving boundary)
+    const DESKTOP_QUERY = '(min-width: 768px)';
+    const mq = window.matchMedia(DESKTOP_QUERY);
+
+    function handleCardMove(e, card) {
+      if (!mq.matches) return;
       const rect = card.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      card.style.setProperty('--mouse-x', `${x}%`);
-      card.style.setProperty('--mouse-y', `${y}%`);
+      const w = rect.width;
+      const h = rect.height;
+      const x = e.clientX - rect.left - w / 2;
+      const y = e.clientY - rect.top - h / 2;
+
+      // Spotlight coordinates
+      const spotX = ((e.clientX - rect.left) / w) * 100;
+      const spotY = ((e.clientY - rect.top) / h) * 100;
+      card.style.setProperty('--mouse-x', `${spotX}%`);
+      card.style.setProperty('--mouse-y', `${spotY}%`);
+
+      // 3D Tilt matrix calculation
+      const rotateY = x * 0.024;
+      const rotateX = -y * 0.024;
+      const translateValX = x * 0.015;
+      const translateValY = y * 0.015;
+
+      card.style.transform = `translate3d(${translateValX}px, ${translateValY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     }
 
-    // 3. GSAP ScrollTrigger Horizontal Pinning setup (Desktop)
+    function handleCardLeave(card) {
+      card.style.transform = '';
+    }
+
+    // 3. GSAP ScrollTrigger Horizontal Pinning & Apple Reveal Text Setup
     gsap.registerPlugin(ScrollTrigger);
 
     const wrap = document.getElementById('wmb-wrap');
@@ -512,10 +590,6 @@
     const track = document.getElementById('wmb-track');
     const revealTitle = document.querySelector('.wmb-reveal-title');
     const revealSub = document.querySelector('.wmb-reveal-sub');
-
-    // Media query matching React component
-    const DESKTOP_QUERY = '(min-width: 768px)';
-    const mq = window.matchMedia(DESKTOP_QUERY);
 
     let scrollTriggerInstance = null;
 
@@ -560,18 +634,36 @@
           duration: 1
         }, 0);
 
-        // 2. Apple-style reveal text animation
-        const titleLines = revealTitle.querySelectorAll('.reveal-line');
-        if (titleLines.length >= 2) {
-          // Line 1 is already lit, line 2 lights up, line 1 dims out slightly
-          tl.to(titleLines[0], { opacity: 0.35, ease: "none", duration: 0.3 }, 0)
-            .to(titleLines[1], { opacity: 1, ease: "none", duration: 0.5 }, 0.1)
-            .to(revealSub, { opacity: 1, ease: "none", duration: 0.4 }, 0.2);
-        }
-
-        // 3. Keep cards fully translated at the end of the scroll (Hold frame)
-        // Adding empty buffer segment in timeline corresponding to extra hold height
+        // 2. Keep cards fully translated at the end of the scroll (Hold frame)
         tl.to({}, { duration: 0.4 });
+      }
+
+      // 4. Apple-style line-by-line reveal animation (triggers as soon as header enters viewport)
+      const lines = revealTitle.querySelectorAll('.reveal-line');
+      
+      // Clear previous ScrollTriggers for reveal text if any
+      ScrollTrigger.getAll().forEach(st => {
+        if (st.trigger === revealTitle) st.kill();
+      });
+
+      const revealTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: revealTitle,
+          start: "top 85%",
+          end: "bottom 55%",
+          scrub: true,
+        }
+      });
+
+      if (lines.length >= 2) {
+        // Initially set opacity for reveal text to match original code
+        gsap.set(lines[0], { opacity: 0.15 });
+        gsap.set(lines[1], { opacity: 0.15 });
+        gsap.set(revealSub, { opacity: 0.15 });
+
+        revealTimeline.to(lines[0], { opacity: 1, duration: 1, ease: "none" })
+                      .to(lines[1], { opacity: 1, duration: 1, ease: "none" }, 0.5)
+                      .to(revealSub, { opacity: 1, duration: 1, ease: "none" }, 1.0);
       }
     }
 
@@ -590,7 +682,7 @@
       ScrollTrigger.refresh();
     });
 
-    // 4. Mobile Dot indicators scroll-link
+    // 5. Mobile Dot indicators scroll-link
     if (!mq.matches) {
       const dots = document.querySelectorAll('.md\\:hidden span');
       track.addEventListener('scroll', () => {
