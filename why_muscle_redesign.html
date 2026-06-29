@@ -109,7 +109,7 @@
       height: 700px;
       scroll-snap-align: center;
       position: relative;
-      background: rgba(18, 22, 30, 0.45);
+      background: rgba(10, 12, 16, 0.6);
       backdrop-filter: blur(30px);
       -webkit-backdrop-filter: blur(30px);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -148,7 +148,7 @@
     .wmb-card-redesign:hover {
       border-color: var(--hover-border, rgba(124, 58, 237, 0.35));
       box-shadow: 0 40px 90px rgba(0, 0, 0, 0.85),
-                  0 0 50px -10px var(--hover-glow, rgba(124, 58, 237, 0.2)),
+                  0 0 50px -10px var(--hover-glow, rgba(124, 58, 237, 0.25)),
                   inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
 
@@ -321,20 +321,20 @@
 
     /* 3. Bone Hexagonal Radar Scanning Animation (Wide 300x120) */
     .scan-beam-rect {
-      animation: scan-beam 4s ease-in-out infinite alternate;
+      animation: scan-beam 4.5s ease-in-out infinite alternate;
     }
     @keyframes scan-beam {
-      0% { x: -220px; }
-      100% { x: 220px; }
+      0% { x: -250px; }
+      100% { x: 250px; }
     }
 
     /* 4. Cognitive Synapses node pulses (Wide 300x120) */
     .neuron-pulse {
-      animation: cog-pulse 2.4s ease-in-out infinite alternate;
+      animation: cog-pulse 2s ease-in-out infinite alternate;
     }
     @keyframes cog-pulse {
-      0% { r: 4px; opacity: 0.5; fill: #3B82F6; }
-      100% { r: 7.5px; opacity: 1; fill: #60A5FA; filter: drop-shadow(0 0 5px #60A5FA); }
+      0% { r: 3.5px; opacity: 0.4; fill: #1d4ed8; }
+      100% { r: 7.5px; opacity: 1; fill: #60a5fa; filter: drop-shadow(0 0 8px rgba(96,165,250,0.85)); }
     }
   </style>
 </head>
@@ -376,16 +376,17 @@
           
           <!-- CARD 01: CARDIOVASCULAR -->
           <div class="wmb-card-redesign scroll-snap-align-center"
-               style="--glow-color: rgba(255, 45, 85, 0.08); --hover-border: rgba(255, 45, 85, 0.35); --hover-glow: rgba(255, 45, 85, 0.2);"
+               style="--glow-color: rgba(255, 45, 85, 0.06); --hover-border: rgba(255, 45, 85, 0.3); --hover-glow: rgba(255, 45, 85, 0.2);"
                onmousemove="handleCardMove(event, this)"
                onmouseleave="handleCardLeave(this)">
             
-            <div class="wmb-orb-redesign border-b border-white/[0.04] pb-6 relative">
-              <span class="absolute top-0 left-0 text-[10px] tracking-widest text-red-500/60 uppercase">[diagnostic.pulse]</span>
+            <div class="wmb-orb-redesign border-b border-white/[0.03] pb-6 relative">
+              <span class="absolute top-0 left-0 text-[10px] tracking-widest text-red-500/50 uppercase">[diagnostic.pulse]</span>
               <!-- High-Fidelity ECG/Vascular Radar SVG -->
               <div class="w-full h-full max-w-[320px]">
                 <svg viewBox="0 0 300 120" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g stroke="rgba(255, 45, 85, 0.03)" stroke-width="0.5">
+                  <!-- Muted background grid for high contrast -->
+                  <g stroke="rgba(255, 45, 85, 0.02)" stroke-width="0.5">
                     <line x1="0" y1="20" x2="300" y2="20"></line>
                     <line x1="0" y1="40" x2="300" y2="40"></line>
                     <line x1="0" y1="60" x2="300" y2="60"></line>
@@ -397,11 +398,11 @@
                     <line x1="200" y1="0" x2="200" y2="120"></line>
                     <line x1="250" y1="0" x2="250" y2="120"></line>
                   </g>
-                  <path d="M 0 60 H 90 L 98 45 L 106 75 L 114 15 L 122 105 L 130 50 L 138 65 L 146 60 H 300" stroke="rgba(255, 45, 85, 0.08)" stroke-width="1.5"></path>
-                  <path d="M 0 60 H 90 L 98 45 L 106 75 L 114 15 L 122 105 L 130 50 L 138 65 L 146 60 H 300" stroke="#FF2D55" stroke-width="2.5" class="ecg-line" filter="url(#glow-cardio)"></path>
+                  <path d="M 0 60 H 90 L 98 45 L 106 75 L 114 15 L 122 105 L 130 50 L 138 65 L 146 60 H 300" stroke="rgba(255, 45, 85, 0.05)" stroke-width="1"></path>
+                  <path d="M 0 60 H 90 L 98 45 L 106 75 L 114 15 L 122 105 L 130 50 L 138 65 L 146 60 H 300" stroke="#EF4444" stroke-width="2" class="ecg-line" filter="url(#glow-cardio)"></path>
                   <defs>
                     <filter id="glow-cardio" x="-20%" y="-20%" width="140%" height="140%">
-                      <feGaussianBlur stdDeviation="4" result="blur"></feGaussianBlur>
+                      <feGaussianBlur stdDeviation="5" result="blur"></feGaussianBlur>
                       <feComposite in="SourceGraphic" in2="blur" operator="over"></feComposite>
                     </filter>
                   </defs>
@@ -419,55 +420,55 @@
 
           <!-- CARD 02: METABOLISM & INSULIN RESISTANCE -->
           <div class="wmb-card-redesign scroll-snap-align-center"
-               style="--glow-color: rgba(124, 58, 237, 0.08); --hover-border: rgba(124, 58, 237, 0.35); --hover-glow: rgba(124, 58, 237, 0.2);"
+               style="--glow-color: rgba(124, 58, 237, 0.06); --hover-border: rgba(124, 58, 237, 0.3); --hover-glow: rgba(124, 58, 237, 0.2);"
                onmousemove="handleCardMove(event, this)"
                onmouseleave="handleCardLeave(this)">
             
-            <div class="wmb-orb-redesign border-b border-white/[0.04] pb-6 relative">
-              <span class="absolute top-0 left-0 text-[10px] tracking-widest text-violet-400/60 uppercase">[cellular.density]</span>
+            <div class="wmb-orb-redesign border-b border-white/[0.03] pb-6 relative">
+              <span class="absolute top-0 left-0 text-[10px] tracking-widest text-violet-400/50 uppercase">[cellular.density]</span>
               <div class="w-full h-full max-w-[320px] flex items-center justify-center">
                 <svg viewBox="0 0 300 120" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g transform="translate(25, 0)">
                     <!-- DNA helix segments -->
                     <g class="dna-pair" transform="translate(20, 0)">
-                      <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.1)" stroke-width="1.5" class="dna-connector"></line>
-                      <circle cx="0" cy="20" r="4" fill="#8B5CF6" class="dna-node-a" filter="url(#glow-meta)"></circle>
-                      <circle cx="0" cy="100" r="4" fill="#C084FC" class="dna-node-b" filter="url(#glow-meta)"></circle>
+                      <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.05)" stroke-width="1" class="dna-connector"></line>
+                      <circle cx="0" cy="20" r="4" fill="#7C3AED" class="dna-node-a" filter="url(#glow-meta)"></circle>
+                      <circle cx="0" cy="100" r="4" fill="#A78BFA" class="dna-node-b" filter="url(#glow-meta)"></circle>
                     </g>
                     <g class="dna-pair" transform="translate(55, 0)">
-                      <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.1)" stroke-width="1.5" class="dna-connector" style="animation-delay: -0.5s"></line>
-                      <circle cx="0" cy="20" r="4" fill="#8B5CF6" class="dna-node-a" style="animation-delay: -0.5s" filter="url(#glow-meta)"></circle>
-                      <circle cx="0" cy="100" r="4" fill="#C084FC" class="dna-node-b" style="animation-delay: -0.5s" filter="url(#glow-meta)"></circle>
+                      <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.05)" stroke-width="1" class="dna-connector" style="animation-delay: -0.5s"></line>
+                      <circle cx="0" cy="20" r="4" fill="#7C3AED" class="dna-node-a" style="animation-delay: -0.5s" filter="url(#glow-meta)"></circle>
+                      <circle cx="0" cy="100" r="4" fill="#A78BFA" class="dna-node-b" style="animation-delay: -0.5s" filter="url(#glow-meta)"></circle>
                     </g>
                     <g class="dna-pair" transform="translate(90, 0)">
-                      <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.1)" stroke-width="1.5" class="dna-connector" style="animation-delay: -1.0s"></line>
-                      <circle cx="0" cy="20" r="4" fill="#8B5CF6" class="dna-node-a" style="animation-delay: -1.0s" filter="url(#glow-meta)"></circle>
-                      <circle cx="0" cy="100" r="4" fill="#C084FC" class="dna-node-b" style="animation-delay: -1.0s" filter="url(#glow-meta)"></circle>
+                      <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.05)" stroke-width="1" class="dna-connector" style="animation-delay: -1.0s"></line>
+                      <circle cx="0" cy="20" r="4" fill="#7C3AED" class="dna-node-a" style="animation-delay: -1.0s" filter="url(#glow-meta)"></circle>
+                      <circle cx="0" cy="100" r="4" fill="#A78BFA" class="dna-node-b" style="animation-delay: -1.0s" filter="url(#glow-meta)"></circle>
                     </g>
                     <g class="dna-pair" transform="translate(125, 0)">
-                      <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.1)" stroke-width="1.5" class="dna-connector" style="animation-delay: -1.5s"></line>
-                      <circle cx="0" cy="20" r="4" fill="#8B5CF6" class="dna-node-a" style="animation-delay: -1.5s" filter="url(#glow-meta)"></circle>
-                      <circle cx="0" cy="100" r="4" fill="#C084FC" class="dna-node-b" style="animation-delay: -1.5s" filter="url(#glow-meta)"></circle>
+                      <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.05)" stroke-width="1" class="dna-connector" style="animation-delay: -1.5s"></line>
+                      <circle cx="0" cy="20" r="4" fill="#7C3AED" class="dna-node-a" style="animation-delay: -1.5s" filter="url(#glow-meta)"></circle>
+                      <circle cx="0" cy="100" r="4" fill="#A78BFA" class="dna-node-b" style="animation-delay: -1.5s" filter="url(#glow-meta)"></circle>
                     </g>
                     <g class="dna-pair" transform="translate(160, 0)">
-                      <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.1)" stroke-width="1.5" class="dna-connector" style="animation-delay: -2.0s"></line>
-                      <circle cx="0" cy="20" r="4" fill="#8B5CF6" class="dna-node-a" style="animation-delay: -2.0s" filter="url(#glow-meta)"></circle>
-                      <circle cx="0" cy="100" r="4" fill="#C084FC" class="dna-node-b" style="animation-delay: -2.0s" filter="url(#glow-meta)"></circle>
+                      <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.05)" stroke-width="1" class="dna-connector" style="animation-delay: -2.0s"></line>
+                      <circle cx="0" cy="20" r="4" fill="#7C3AED" class="dna-node-a" style="animation-delay: -2.0s" filter="url(#glow-meta)"></circle>
+                      <circle cx="0" cy="100" r="4" fill="#A78BFA" class="dna-node-b" style="animation-delay: -2.0s" filter="url(#glow-meta)"></circle>
                     </g>
                     <g class="dna-pair" transform="translate(195, 0)">
-                      <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.1)" stroke-width="1.5" class="dna-connector" style="animation-delay: -2.5s"></line>
-                      <circle cx="0" cy="20" r="4" fill="#8B5CF6" class="dna-node-a" style="animation-delay: -2.5s" filter="url(#glow-meta)"></circle>
-                      <circle cx="0" cy="100" r="4" fill="#C084FC" class="dna-node-b" style="animation-delay: -2.5s" filter="url(#glow-meta)"></circle>
+                      <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.05)" stroke-width="1" class="dna-connector" style="animation-delay: -2.5s"></line>
+                      <circle cx="0" cy="20" r="4" fill="#7C3AED" class="dna-node-a" style="animation-delay: -2.5s" filter="url(#glow-meta)"></circle>
+                      <circle cx="0" cy="100" r="4" fill="#A78BFA" class="dna-node-b" style="animation-delay: -2.5s" filter="url(#glow-meta)"></circle>
                     </g>
                     <g class="dna-pair" transform="translate(230, 0)">
-                      <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.1)" stroke-width="1.5" class="dna-connector" style="animation-delay: -3.0s"></line>
-                      <circle cx="0" cy="20" r="4" fill="#8B5CF6" class="dna-node-a" style="animation-delay: -3.0s" filter="url(#glow-meta)"></circle>
-                      <circle cx="0" cy="100" r="4" fill="#C084FC" class="dna-node-b" style="animation-delay: -3.0s" filter="url(#glow-meta)"></circle>
+                      <line x1="0" y1="20" x2="0" y2="100" stroke="rgba(124, 58, 237, 0.05)" stroke-width="1" class="dna-connector" style="animation-delay: -3.0s"></line>
+                      <circle cx="0" cy="20" r="4" fill="#7C3AED" class="dna-node-a" style="animation-delay: -3.0s" filter="url(#glow-meta)"></circle>
+                      <circle cx="0" cy="100" r="4" fill="#A78BFA" class="dna-node-b" style="animation-delay: -3.0s" filter="url(#glow-meta)"></circle>
                     </g>
                   </g>
                   <defs>
                     <filter id="glow-meta" x="-30%" y="-30%" width="160%" height="160%">
-                      <feGaussianBlur stdDeviation="3.5" result="blur"></feGaussianBlur>
+                      <feGaussianBlur stdDeviation="4" result="blur"></feGaussianBlur>
                       <feComposite in="SourceGraphic" in2="blur" operator="over"></feComposite>
                     </filter>
                   </defs>
@@ -485,30 +486,34 @@
 
           <!-- CARD 03: BONE & JOINT DENSITY -->
           <div class="wmb-card-redesign scroll-snap-align-center"
-               style="--glow-color: rgba(245, 158, 11, 0.08); --hover-border: rgba(245, 158, 11, 0.35); --hover-glow: rgba(245, 158, 11, 0.2);"
+               style="--glow-color: rgba(217, 119, 6, 0.06); --hover-border: rgba(217, 119, 6, 0.3); --hover-glow: rgba(217, 119, 6, 0.2);"
                onmousemove="handleCardMove(event, this)"
                onmouseleave="handleCardLeave(this)">
             
-            <div class="wmb-orb-redesign border-b border-white/[0.04] pb-6 relative">
-              <span class="absolute top-0 left-0 text-[10px] tracking-widest text-amber-500/60 uppercase">[structural.integrity]</span>
-              <!-- Upgraded Wide Hexagonal Scanner Animation -->
+            <div class="wmb-orb-redesign border-b border-white/[0.03] pb-6 relative">
+              <span class="absolute top-0 left-0 text-[10px] tracking-widest text-amber-500/50 uppercase">[structural.integrity]</span>
+              <!-- Upgraded & Mathematically Correct Hexagonal Density Scan (Wide 300x120) -->
               <div class="w-full h-full">
                 <svg viewBox="0 0 300 120" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <defs>
                     <!-- Scanning gradient mask -->
                     <linearGradient id="scan-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stop-color="#fff" stop-opacity="0.1"></stop>
-                      <stop offset="50%" stop-color="#ff8a00" stop-opacity="0.95"></stop>
-                      <stop offset="100%" stop-color="#fff" stop-opacity="0.1"></stop>
+                      <stop offset="0%" stop-color="#fff" stop-opacity="0.05"></stop>
+                      <stop offset="50%" stop-color="#d97706" stop-opacity="0.95"></stop>
+                      <stop offset="100%" stop-color="#fff" stop-opacity="0.05"></stop>
                     </linearGradient>
                     <mask id="scan-mask">
                       <rect x="0" y="0" width="300" height="120" fill="url(#scan-grad)" class="scan-beam-rect"></rect>
                     </mask>
+                    <filter id="glow-bone" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="4" result="blur"></feGaussianBlur>
+                      <feComposite in="SourceGraphic" in2="blur" operator="over"></feComposite>
+                    </filter>
                   </defs>
                   
-                  <!-- Background lattice (dim hexagons) -->
-                  <g stroke="rgba(255, 138, 0, 0.1)" stroke-width="1.2">
-                    <!-- Row 1 -->
+                  <!-- Muted background lattice structure (darker stroke for high contrast) -->
+                  <g stroke="rgba(217, 119, 6, 0.08)" stroke-width="1.0">
+                    <!-- Row 1 (Center Y = 33) -->
                     <polygon points="30,10 50,21.5 50,44.5 30,56 10,44.5 10,21.5"></polygon>
                     <polygon points="70,10 90,21.5 90,44.5 70,56 50,44.5 50,21.5"></polygon>
                     <polygon points="110,10 130,21.5 130,44.5 110,56 90,44.5 90,21.5"></polygon>
@@ -517,17 +522,18 @@
                     <polygon points="230,10 250,21.5 250,44.5 230,56 210,44.5 210,21.5"></polygon>
                     <polygon points="270,10 290,21.5 290,44.5 270,56 250,44.5 250,21.5"></polygon>
 
-                    <!-- Row 2 -->
-                    <polygon points="50,44.5 70,56 70,79 50,90.5 30,79 30,44.5"></polygon>
-                    <polygon points="90,44.5 110,56 110,79 90,90.5 70,79 70,44.5"></polygon>
-                    <polygon points="130,44.5 150,56 150,79 130,90.5 110,79 110,44.5"></polygon>
-                    <polygon points="170,44.5 190,56 190,79 170,90.5 150,79 150,44.5"></polygon>
-                    <polygon points="210,44.5 230,56 230,79 210,90.5 190,79 190,44.5"></polygon>
-                    <polygon points="250,44.5 270,56 270,79 250,90.5 230,79 230,44.5"></polygon>
+                    <!-- Row 2 (Center Y = 67.5 — mathematically shifted & nested) -->
+                    <polygon points="50,44.5 70,56 70,79 50,90.5 30,79 30,56"></polygon>
+                    <polygon points="90,44.5 110,56 110,79 90,90.5 70,79 70,56"></polygon>
+                    <polygon points="130,44.5 150,56 150,79 130,90.5 110,79 110,56"></polygon>
+                    <polygon points="170,44.5 190,56 190,79 170,90.5 150,79 150,56"></polygon>
+                    <polygon points="210,44.5 230,56 230,79 210,90.5 190,79 190,56"></polygon>
+                    <polygon points="250,44.5 270,56 270,79 250,90.5 230,79 230,56"></polygon>
+                    <polygon points="290,44.5 310,56 310,79 290,90.5 270,79 270,56"></polygon>
                   </g>
                   
-                  <!-- Glowing active scanner hexagons -->
-                  <g stroke="#ff8a00" stroke-width="2.5" mask="url(#scan-mask)" filter="url(#glow-bone)">
+                  <!-- Glowing active scanner hexagons (high contrast) -->
+                  <g stroke="#D97706" stroke-width="2.2" mask="url(#scan-mask)" filter="url(#glow-bone)">
                     <polygon points="30,10 50,21.5 50,44.5 30,56 10,44.5 10,21.5"></polygon>
                     <polygon points="70,10 90,21.5 90,44.5 70,56 50,44.5 50,21.5"></polygon>
                     <polygon points="110,10 130,21.5 130,44.5 110,56 90,44.5 90,21.5"></polygon>
@@ -536,19 +542,14 @@
                     <polygon points="230,10 250,21.5 250,44.5 230,56 210,44.5 210,21.5"></polygon>
                     <polygon points="270,10 290,21.5 290,44.5 270,56 250,44.5 250,21.5"></polygon>
                     
-                    <polygon points="50,44.5 70,56 70,79 50,90.5 30,79 30,44.5"></polygon>
-                    <polygon points="90,44.5 110,56 110,79 90,90.5 70,79 70,44.5"></polygon>
-                    <polygon points="130,44.5 150,56 150,79 130,90.5 110,79 110,44.5"></polygon>
-                    <polygon points="170,44.5 190,56 190,79 170,90.5 150,79 150,44.5"></polygon>
-                    <polygon points="210,44.5 230,56 230,79 210,90.5 190,79 190,44.5"></polygon>
-                    <polygon points="250,44.5 270,56 270,79 250,90.5 230,79 230,44.5"></polygon>
+                    <polygon points="50,44.5 70,56 70,79 50,90.5 30,79 30,56"></polygon>
+                    <polygon points="90,44.5 110,56 110,79 90,90.5 70,79 70,56"></polygon>
+                    <polygon points="130,44.5 150,56 150,79 130,90.5 110,79 110,56"></polygon>
+                    <polygon points="170,44.5 190,56 190,79 170,90.5 150,79 150,56"></polygon>
+                    <polygon points="210,44.5 230,56 230,79 210,90.5 190,79 190,56"></polygon>
+                    <polygon points="250,44.5 270,56 270,79 250,90.5 230,79 230,56"></polygon>
+                    <polygon points="290,44.5 310,56 310,79 290,90.5 270,79 270,56"></polygon>
                   </g>
-                  <defs>
-                    <filter id="glow-bone" x="-20%" y="-20%" width="140%" height="140%">
-                      <feGaussianBlur stdDeviation="3.5" result="blur"></feGaussianBlur>
-                      <feComposite in="SourceGraphic" in2="blur" operator="over"></feComposite>
-                    </filter>
-                  </defs>
                 </svg>
               </div>
             </div>
@@ -563,49 +564,70 @@
 
           <!-- CARD 04: COGNITIVE HEALTH -->
           <div class="wmb-card-redesign scroll-snap-align-center"
-               style="--glow-color: rgba(59, 130, 246, 0.08); --hover-border: rgba(59, 130, 246, 0.35); --hover-glow: rgba(59, 130, 246, 0.2);"
+               style="--glow-color: rgba(59, 130, 246, 0.06); --hover-border: rgba(59, 130, 246, 0.3); --hover-glow: rgba(59, 130, 246, 0.2);"
                onmousemove="handleCardMove(event, this)"
                onmouseleave="handleCardLeave(this)">
             
-            <div class="wmb-orb-redesign border-b border-white/[0.04] pb-6 relative">
-              <span class="absolute top-0 left-0 text-[10px] tracking-widest text-blue-500/60 uppercase">[synapse.monitoring]</span>
-              <!-- Upgraded Curved Wide Neural Synapse Network -->
+            <div class="wmb-orb-redesign border-b border-white/[0.03] pb-6 relative">
+              <span class="absolute top-0 left-0 text-[10px] tracking-widest text-blue-500/50 uppercase">[synapse.monitoring]</span>
+              <!-- Upgraded Symmetrical Connected Mesh Animation (Wide 300x120) -->
               <div class="w-full h-full">
                 <svg viewBox="0 0 300 120" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Symmetrical, clean, darker network pathways for high contrast -->
+                  <g stroke="rgba(59, 130, 246, 0.08)" stroke-width="1.0">
+                    <!-- Connections -->
+                    <line x1="40" y1="40" x2="110" y2="30"></line>
+                    <line x1="40" y1="40" x2="110" y2="90"></line>
+                    <line x1="40" y1="80" x2="110" y2="30"></line>
+                    <line x1="40" y1="80" x2="110" y2="90"></line>
+                    
+                    <line x1="110" y1="30" x2="190" y2="30"></line>
+                    <line x1="110" y1="90" x2="190" y2="90"></line>
+                    <line x1="110" y1="30" x2="190" y2="90"></line>
+                    <line x1="110" y1="90" x2="190" y2="30"></line>
+                    
+                    <line x1="190" y1="30" x2="260" y2="40"></line>
+                    <line x1="190" y1="30" x2="260" y2="80"></line>
+                    <line x1="190" y1="90" x2="260" y2="40"></line>
+                    <line x1="190" y1="90" x2="260" y2="80"></line>
+                  </g>
+                  
+                  <!-- Traveling signal particles (traveling exactly along the paths) -->
+                  <circle r="3.5" fill="#60A5FA" filter="url(#glow-cog)">
+                    <animateMotion dur="2.4s" repeatCount="indefinite" path="M 40 40 L 110 30"></animateMotion>
+                  </circle>
+                  <circle r="3.5" fill="#3B82F6" filter="url(#glow-cog)">
+                    <animateMotion dur="2.8s" repeatCount="indefinite" path="M 40 80 L 110 90" begin="0.4s"></animateMotion>
+                  </circle>
+                  <circle r="3" fill="#60A5FA" filter="url(#glow-cog)">
+                    <animateMotion dur="3.0s" repeatCount="indefinite" path="M 110 30 L 190 90" begin="0.8s"></animateMotion>
+                  </circle>
+                  <circle r="3" fill="#3B82F6" filter="url(#glow-cog)">
+                    <animateMotion dur="2.6s" repeatCount="indefinite" path="M 110 90 L 190 30" begin="1.2s"></animateMotion>
+                  </circle>
+                  <circle r="3.5" fill="#60A5FA" filter="url(#glow-cog)">
+                    <animateMotion dur="2.2s" repeatCount="indefinite" path="M 190 30 L 260 80" begin="1.6s"></animateMotion>
+                  </circle>
+                  <circle r="3.5" fill="#3B82F6" filter="url(#glow-cog)">
+                    <animateMotion dur="2.5s" repeatCount="indefinite" path="M 190 90 L 260 40" begin="2.0s"></animateMotion>
+                  </circle>
+
+                  <!-- Synapse nodes (pulsing glowing circles) -->
+                  <circle cx="40" cy="40" r="5.5" class="neuron-pulse" style="animation-delay: 0s;"></circle>
+                  <circle cx="40" cy="80" r="5.5" class="neuron-pulse" style="animation-delay: -0.3s;"></circle>
+                  <circle cx="110" cy="30" r="6" class="neuron-pulse" style="animation-delay: -0.6s;"></circle>
+                  <circle cx="110" cy="90" r="6" class="neuron-pulse" style="animation-delay: -0.9s;"></circle>
+                  <circle cx="190" cy="30" r="6" class="neuron-pulse" style="animation-delay: -1.2s;"></circle>
+                  <circle cx="190" cy="90" r="6" class="neuron-pulse" style="animation-delay: -1.5s;"></circle>
+                  <circle cx="260" cy="40" r="5.5" class="neuron-pulse" style="animation-delay: -1.8s;"></circle>
+                  <circle cx="260" cy="80" r="5.5" class="neuron-pulse" style="animation-delay: -2.1s;"></circle>
+
                   <defs>
-                    <filter id="glow-cog" x="-20%" y="-20%" width="140%" height="140%">
+                    <filter id="glow-cog" x="-25%" y="-25%" width="150%" height="150%">
                       <feGaussianBlur stdDeviation="3.5" result="blur"></feGaussianBlur>
                       <feComposite in="SourceGraphic" in2="blur" operator="over"></feComposite>
                     </filter>
                   </defs>
-                  <!-- Symmetrical curved neural paths -->
-                  <g stroke="rgba(59, 130, 246, 0.12)" stroke-width="1.2">
-                    <path id="cog-p1" d="M 20 60 Q 90 20 150 70 T 280 40"></path>
-                    <path id="cog-p2" d="M 30 100 Q 100 110 170 50 T 270 90"></path>
-                    <path id="cog-p3" d="M 10 30 Q 80 80 150 60 T 290 80"></path>
-                    <!-- Core vertical/horizontal axon connects -->
-                    <line x1="90" y1="40" x2="100" y2="90"></line>
-                    <line x1="150" y1="60" x2="170" y2="50"></line>
-                    <line x1="220" y1="50" x2="210" y2="85"></line>
-                  </g>
-                  
-                  <!-- Traveling active synapse particles along curves -->
-                  <circle r="3.5" fill="#60A5FA" filter="url(#glow-cog)">
-                    <animateMotion dur="3.5s" repeatCount="indefinite" path="M 20 60 Q 90 20 150 70 T 280 40"></animateMotion>
-                  </circle>
-                  <circle r="3.5" fill="#3B82F6" filter="url(#glow-cog)">
-                    <animateMotion dur="4.2s" repeatCount="indefinite" path="M 30 100 Q 100 110 170 50 T 270 90" begin="0.8s"></animateMotion>
-                  </circle>
-                  <circle r="3" fill="#60A5FA" filter="url(#glow-cog)">
-                    <animateMotion dur="3.8s" repeatCount="indefinite" path="M 10 30 Q 80 80 150 60 T 290 80" begin="1.6s"></animateMotion>
-                  </circle>
-
-                  <!-- Synapse intersections (pulsing neurons) -->
-                  <circle cx="90" cy="40" r="5" fill="#3B82F6" class="neuron-pulse"></circle>
-                  <circle cx="150" cy="60" r="6.5" fill="#60A5FA" class="neuron-pulse" style="animation-delay: -0.6s;"></circle>
-                  <circle cx="220" cy="50" r="5" fill="#3B82F6" class="neuron-pulse" style="animation-delay: -1.2s;"></circle>
-                  <circle cx="100" cy="90" r="5.5" fill="#3B82F6" class="neuron-pulse" style="animation-delay: -1.8s;"></circle>
-                  <circle cx="270" cy="90" r="5" fill="#3B82F6" class="neuron-pulse" style="animation-delay: -2.4s;"></circle>
                 </svg>
               </div>
             </div>
