@@ -30,10 +30,12 @@ export default function OurTestsSection({
   image2Alt = "Health test visual 2",
 }: OurTestsSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
-    if (!section) return;
+    const sticky = stickyRef.current;
+    if (!section || !sticky) return;
 
     const card1 = section.querySelector(".ot-img-1") as HTMLElement;
     const card2 = section.querySelector(".ot-img-2") as HTMLElement;
@@ -64,57 +66,125 @@ export default function OurTestsSection({
       const offset2 = zoneCenterX - card2CenterX;
 
       ctx = gsap.context(() => {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: "top 95%",
-            end: "center 45%",
-            scrub: 1.2,
-            invalidateOnRefresh: true,
-          }
+        const mm = gsap.matchMedia();
+
+        // Desktop Layout (>= 768px): Cinematic Pinning + Scroll Hold
+        mm.add("(min-width: 768px)", () => {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: section,
+              pin: sticky,
+              pinSpacing: true,
+              start: "top top",
+              end: "+=85%", // scroll budget for pinning
+              scrub: 1,
+              invalidateOnRefresh: true,
+            }
+          });
+
+          // Disperse cards during first 60% of scroll
+          tl.fromTo(
+            card1,
+            {
+              x: offset1,
+              y: 80,
+              yPercent: -50,
+              rotation: 3,
+              scale: 0.85,
+              opacity: 0,
+            },
+            {
+              x: 0,
+              y: 0,
+              yPercent: -50,
+              rotation: -7,
+              scale: 1,
+              opacity: 1,
+              duration: 0.6,
+              ease: "none",
+            },
+            0
+          ).fromTo(
+            card2,
+            {
+              x: offset2,
+              y: 100,
+              yPercent: -50,
+              rotation: -3,
+              scale: 0.85,
+              opacity: 0,
+            },
+            {
+              x: 0,
+              y: 0,
+              yPercent: -50,
+              rotation: 7,
+              scale: 1,
+              opacity: 1,
+              duration: 0.6,
+              ease: "none",
+            },
+            0
+          );
+
+          // Hold cards in fully dispersed state for remaining 40% of scroll
+          tl.to({}, { duration: 0.4 }, 0.6);
         });
 
-        tl.fromTo(
-          card1,
-          {
-            x: offset1,
-            y: 80, // start lower for the "thrown up" effect
-            yPercent: -50,
-            rotation: 3,
-            scale: 0.85,
-            opacity: 0,
-          },
-          {
-            x: 0,
-            y: 0,
-            yPercent: -50,
-            rotation: -7,
-            scale: 1,
-            opacity: 1,
-            ease: "none",
-          },
-          0
-        ).fromTo(
-          card2,
-          {
-            x: offset2,
-            y: 100, // start lower for the "thrown up" effect
-            yPercent: -50,
-            rotation: -3,
-            scale: 0.85,
-            opacity: 0,
-          },
-          {
-            x: 0,
-            y: 0,
-            yPercent: -50,
-            rotation: 7,
-            scale: 1,
-            opacity: 1,
-            ease: "none",
-          },
-          0
-        );
+        // Mobile Layout (< 768px): Smooth Scroll-Through Dispersion (No Pinning)
+        mm.add("(max-width: 767px)", () => {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: section,
+              start: "top 95%",
+              end: "bottom 35%",
+              scrub: 1.2,
+              invalidateOnRefresh: true,
+            }
+          });
+
+          tl.fromTo(
+            card1,
+            {
+              x: offset1,
+              y: 40,
+              yPercent: -50,
+              rotation: 3,
+              scale: 0.85,
+              opacity: 0,
+            },
+            {
+              x: 0,
+              y: 0,
+              yPercent: -50,
+              rotation: -7,
+              scale: 1,
+              opacity: 1,
+              ease: "none",
+            },
+            0
+          ).fromTo(
+            card2,
+            {
+              x: offset2,
+              y: 50,
+              yPercent: -50,
+              rotation: -3,
+              scale: 0.85,
+              opacity: 0,
+            },
+            {
+              x: 0,
+              y: 0,
+              yPercent: -50,
+              rotation: 7,
+              scale: 1,
+              opacity: 1,
+              ease: "none",
+            },
+            0
+          );
+        });
       }, section);
     };
 
@@ -143,8 +213,33 @@ export default function OurTestsSection({
   }, []);
 
   return (
-    <section id="assessment" style={s.section} ref={sectionRef}>
+    <section id="assessment" className="ot-outer" ref={sectionRef}>
       <style>{`
+        .ot-outer {
+          position: relative;
+          width: 100%;
+          background: #ffffff;
+          font-family: 'Neue Montreal', 'Inter', sans-serif;
+          overflow: visible;
+        }
+        @media (min-width: 768px) {
+          .ot-outer {
+            height: 185vh; /* Extends section height on desktop to enable stable pinning */
+          }
+        }
+        .ot-sticky {
+          position: relative;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+        @media (min-width: 768px) {
+          .ot-sticky {
+            height: 100vh;
+            overflow: hidden;
+            justify-content: center;
+          }
+        }
         .ot-image-zone {
           position: relative;
           width: 100%;
@@ -209,31 +304,33 @@ export default function OurTestsSection({
         }
       `}</style>
 
-      {/* TOP 2/3 — images */}
-      <div className="ot-image-zone">
-        <div style={s.halo} aria-hidden="true" />
+      <div className="ot-sticky" ref={stickyRef}>
+        {/* TOP 2/3 — images */}
+        <div className="ot-image-zone">
+          <div style={s.halo} aria-hidden="true" />
 
-        <div className="ot-img-1">
-          {image1Src
-            ? <img src={image1Src} alt={image1Alt} style={s.img} />
-            : <Placeholder from={brand.mid} to={brand.accent} label="Image 01" />
-          }
+          <div className="ot-img-1">
+            {image1Src
+              ? <img src={image1Src} alt={image1Alt} style={s.img} />
+              : <Placeholder from={brand.mid} to={brand.accent} label="Image 01" />
+            }
+          </div>
+
+          <div className="ot-img-2">
+            {image2Src
+              ? <img src={image2Src} alt={image2Alt} style={s.img} />
+              : <Placeholder from={brand.base} to={brand.light} label="Image 02" />
+            }
+          </div>
         </div>
 
-        <div className="ot-img-2">
-          {image2Src
-            ? <img src={image2Src} alt={image2Alt} style={s.img} />
-            : <Placeholder from={brand.base} to={brand.light} label="Image 02" />
-          }
+        {/* BOTTOM 1/3 — 3 lines total */}
+        <div className="ot-copy-zone">
+          <p style={s.eyebrow}>Our Tests</p>
+          <p className="ot-body">
+            Both tests read the same underlying system&nbsp;&mdash; muscle&nbsp;&mdash; through the only medium that sees everything: blood.
+          </p>
         </div>
-      </div>
-
-      {/* BOTTOM 1/3 — 3 lines total */}
-      <div className="ot-copy-zone">
-        <p style={s.eyebrow}>Our Tests</p>
-        <p className="ot-body">
-          Both tests read the same underlying system&nbsp;&mdash; muscle&nbsp;&mdash; through the only medium that sees everything: blood.
-        </p>
       </div>
     </section>
   );
@@ -255,15 +352,6 @@ function Placeholder({ from, to, label }: { from: string; to: string; label: str
 }
 
 const s: Record<string, React.CSSProperties> = {
-  section: {
-    position: "relative",
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    overflow: "hidden",
-    background: "#ffffff",
-    fontFamily: "'Neue Montreal', 'Inter', sans-serif",
-  },
   halo: {
     position: "absolute",
     width: "50%",
