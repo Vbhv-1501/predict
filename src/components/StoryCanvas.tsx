@@ -196,11 +196,11 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     };
 
-    // ── Resize: cover-scale the canvas to fill the viewport ─────────────────
+    // ── Resize: fit height of the canvas to fill the viewport and prevent vertical cropping ──
     const resize = () => {
       const vw    = window.innerWidth;
       const vh    = window.innerHeight;
-      const scale = Math.max(vw / 720, vh / 405); // cover
+      const scale = vh / 405; // fit height
       const w     = Math.round(720 * scale);
       const h     = Math.round(405 * scale);
 
@@ -322,7 +322,7 @@ export default function StoryCanvas({ preloadedImages }: StoryCanvasProps) {
           width:    "100vw",
           height:   "100vh",
           overflow: "hidden",
-          background: "#080A09",
+          background: "#000000",
           backgroundImage: preloadedImages.length === 0 ? "url('/assets/hero-fallback.jpg')" : "none",
           backgroundSize: "cover",
           backgroundPosition: "center",
