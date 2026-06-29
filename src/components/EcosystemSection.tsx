@@ -252,7 +252,9 @@ export default function EcosystemSection() {
         const sc     = baseSc + (1 - baseSc) * dispersion;
 
         applyTransform(c, el, x, y, z, 0, 0, sc);
-        el.style.opacity = (0.20 + 0.80 * clamp(dispersion * 1.5, 0, 1)).toFixed(3);
+        // Start opacity at 0 when scrollProgress is 0, fading in as dispersion starts
+        const opacityVal = clamp(scrollProgress / 0.35, 0, 1);
+        el.style.opacity = opacityVal.toFixed(3);
       }
 
       if (running) raf = requestAnimationFrame(render);
