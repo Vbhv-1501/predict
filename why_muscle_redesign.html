@@ -54,21 +54,70 @@
       overflow-x: hidden;
     }
 
-    /* Redesigned Premium Glassmorphism Card System */
+    /* ──── Exact Copy of Original Section Layout & Sizing ──── */
+    .wmb-section {
+      background: #000000;
+      overflow: hidden;
+      color: #fff;
+    }
+    .wmb-header { 
+      text-align: center; 
+      padding: 100px 20px 60px; 
+      max-width: 1000px; 
+      margin: auto; 
+    }
+    .wmb-header h2 { 
+      font-size: clamp(36px, 4.5vw, 56px); 
+      font-weight: 500; 
+      margin: 0; 
+    }
+    .wmb-reveal-sub { 
+      font-size: clamp(16px, 1.8vw, 20px); 
+      color: #b9c0ce; 
+      margin-top: 16px; 
+    }
+
+    .wmb-wrap { 
+      position: relative; 
+    }
+    .wmb-sticky { 
+      position: relative; 
+      height: auto; 
+    }
+    .wmb-track {
+      display: flex;
+      gap: 32px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 20px;
+      scrollbar-width: none;
+    }
+    .wmb-track::-webkit-scrollbar { 
+      display: none; 
+    }
+
+    /* Redesigned Premium Glassmorphism Card System (Dimensions Match Original Section Exactly) */
     .wmb-card-redesign {
+      flex: none;
+      width: 88vw;
+      min-width: 88vw;
+      height: 700px;
+      scroll-snap-align: center;
       position: relative;
+      overflow: hidden;
+      border-radius: 36px;
       background: rgba(18, 22, 30, 0.45);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(28px);
+      backdrop-filter: blur(28px);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 28px;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 30px 80px rgba(0, 0, 0, 0.6);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 30px 100px rgba(0, 0, 0, 0.45);
       transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                   box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                   transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      overflow: hidden;
       transform-style: preserve-3d;
       perspective: 1000px;
+      cursor: pointer;
     }
 
     /* Inner hover glow spotlight effect */
@@ -95,7 +144,145 @@
                   inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
 
-    /* ──── SVG Biological Visualizations CSS animations ──── */
+    /* Exact layout bounds of visual and content */
+    .wmb-orb { 
+      position: absolute; 
+      top: 50px; 
+      left: 40px; 
+      width: 190px; 
+      height: 190px; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .wmb-content { 
+      position: absolute; 
+      left: 42px; 
+      right: 42px; 
+      bottom: 42px; 
+    }
+    .wmb-num { 
+      font-size: 14px; 
+      color: #aaa; 
+      margin-bottom: 16px; 
+    }
+    .wmb-content h3 { 
+      font-size: 34px; 
+      line-height: 1.05; 
+      margin-bottom: 22px; 
+      font-weight: 500; 
+      letter-spacing: -0.02em;
+    }
+    .wmb-content p { 
+      font-size: 18px; 
+      line-height: 1.55; 
+      color: #d7deea; 
+      margin: 0; 
+      font-weight: 300;
+    }
+    .wmb-line { 
+      margin-top: 28px; 
+      padding-top: 18px; 
+      border-top: 1px dashed rgba(255, 255, 255, 0.15); 
+      font-size: 18px; 
+      color: #c2c9d5; 
+    }
+
+    /* ---- desktop only layout override (Matches Original Section exactly) ---- */
+    @media (min-width: 900px) {
+      .wmb-sticky { 
+        position: relative; 
+        top: auto; 
+        height: 100vh; 
+        display: flex; 
+        align-items: center; 
+        overflow: hidden; 
+        width: 100%; 
+        background: #000000; 
+      }
+      .wmb-track {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        width: max-content !important;
+        overflow-x: hidden !important;
+        scroll-snap-type: none !important;
+        padding: 0 8vw !important;
+        will-change: transform !important;
+        position: relative !important;
+        flex-shrink: 0 !important;
+      }
+      .wmb-card-redesign {
+        width: 620px !important;
+        min-width: 620px !important;
+        height: min(640px, 70vh) !important;
+        scroll-snap-align: unset !important;
+      }
+      .wmb-content h3 { font-size: 42px; }
+      .wmb-content p { font-size: 24px; }
+      .wmb-dots { display: flex; opacity: 0; }
+      
+      /* Responsive layout scales for shorter viewports to prevent layout shifts */
+      @media (max-height: 850px) {
+        .wmb-card-redesign {
+          height: min(560px, 72vh) !important;
+        }
+        .wmb-orb {
+          top: 30px;
+          left: 30px;
+          width: 140px;
+          height: 140px;
+        }
+        .wmb-content {
+          left: 32px;
+          right: 32px;
+          bottom: 32px;
+        }
+        .wmb-content h3 {
+          font-size: 32px;
+          margin-bottom: 12px;
+        }
+        .wmb-content p {
+          font-size: 18px;
+        }
+        .wmb-line {
+          margin-top: 16px;
+          padding-top: 12px;
+          font-size: 16px;
+        }
+      }
+
+      @media (max-height: 700px) {
+        .wmb-card-redesign {
+          height: min(460px, 72vh) !important;
+        }
+        .wmb-orb {
+          top: 20px;
+          left: 24px;
+          width: 110px;
+          height: 110px;
+        }
+        .wmb-content {
+          left: 24px;
+          right: 24px;
+          bottom: 24px;
+        }
+        .wmb-content h3 {
+          font-size: 24px;
+          margin-bottom: 8px;
+        }
+        .wmb-content p {
+          font-size: 15px;
+          line-height: 1.45;
+        }
+        .wmb-line {
+          margin-top: 10px;
+          padding-top: 8px;
+          font-size: 14px;
+        }
+      }
+    }
+
+    /* ──── SVG Biological Visualizations CSS animations (1:1 Aspect Ratio) ──── */
     
     /* 1. Cardiovascular ECG Line Animation */
     .ecg-pulse-anim {
@@ -116,29 +303,29 @@
     }
     .dna-bar {
       animation: helix-scale-bar 3.2s ease-in-out infinite alternate;
-      transform-origin: 0px 40px; /* Center of vertical line */
+      transform-origin: 0px 0px; /* Center of horizontal line */
     }
     @keyframes helix-vertical-a {
-      0% { transform: translateY(0px) scale(0.7); opacity: 0.3; }
-      100% { transform: translateY(80px) scale(1.3); opacity: 1; filter: drop-shadow(0 0 6px rgba(192, 132, 252, 0.8)); }
+      0% { transform: translateX(0px) scale(0.7); opacity: 0.3; }
+      100% { transform: translateX(60px) scale(1.3); opacity: 1; filter: drop-shadow(0 0 6px rgba(192, 132, 252, 0.8)); }
     }
     @keyframes helix-vertical-b {
-      0% { transform: translateY(0px) scale(1.3); opacity: 1; filter: drop-shadow(0 0 6px rgba(124, 58, 237, 0.8)); }
-      100% { transform: translateY(-80px) scale(0.7); opacity: 0.3; }
+      0% { transform: translateX(0px) scale(1.3); opacity: 1; filter: drop-shadow(0 0 6px rgba(124, 58, 237, 0.8)); }
+      100% { transform: translateX(-60px) scale(0.7); opacity: 0.3; }
     }
     @keyframes helix-scale-bar {
-      0% { transform: scaleY(-1); opacity: 0.15; }
-      50% { transform: scaleY(0); opacity: 0.05; }
-      100% { transform: scaleY(1); opacity: 0.15; }
+      0% { transform: scaleX(-1); opacity: 0.15; }
+      50% { transform: scaleX(0); opacity: 0.05; }
+      100% { transform: scaleX(1); opacity: 0.15; }
     }
 
     /* 3. Bone Hexagonal Grid Animation */
-    .scan-beam-rect {
-      animation: scan-beam 4s ease-in-out infinite alternate;
+    .bone-scan-rect {
+      animation: bone-scan 3.5s ease-in-out infinite alternate;
     }
-    @keyframes scan-beam {
-      0% { x: -250px; }
-      100% { x: 250px; }
+    @keyframes bone-scan {
+      0% { y: -180px; }
+      100% { y: 180px; }
     }
 
     /* 4. Cognitive Synapses node pulses */
@@ -165,6 +352,14 @@
     .scroll-snap-align-center {
       scroll-snap-align: center;
     }
+
+    .wmb-dots {
+      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 10px; z-index: 20;
+      opacity: 1; pointer-events: none; transition: opacity 0.3s ease;
+    }
+    .wmb-dot { width: 10px; height: 10px; border-radius: 50%; background: #444; }
+    .wmb-dot.active { background: #6e3bff; }
   </style>
 </head>
 <body>
@@ -177,341 +372,268 @@
         Scroll Down to Experience the Redesigned Horizontal Section
       </h1>
       <div class="mt-8 flex flex-col items-center gap-2 text-neutral-600 animate-pulse">
-        <span class="text-[10px] tracking-widest">SCROLL TO REDESIGN</span>
+        <span class="text-[10px] tracking-widest font-medium">SCROLL TO REDESIGN</span>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
       </div>
     </div>
   </section>
 
   <!-- ──── REDESIGNED HORIZONTAL SECTION ──── -->
-  <section id="about" class="relative w-full overflow-hidden bg-black py-0">
+  <section id="about" class="wmb-section">
     
     <!-- Outer wrap that GSAP uses to pin -->
-    <div id="wmb-wrap" class="relative">
+    <div id="wmb-wrap" class="wmb-wrap">
       
       <!-- Inner sticky container -->
-      <div id="wmb-sticky" class="relative md:h-screen w-full flex flex-col md:justify-center overflow-hidden py-16 md:py-0">
+      <div id="wmb-sticky" class="wmb-sticky">
         
         <!-- Header Text (Apple-Style Fade Reveal) -->
-        <div class="wmb-header text-center px-6 max-w-4xl mx-auto mb-10 md:mb-14 flex-shrink-0">
-          <h2 class="wmb-reveal-title text-4xl md:text-6xl font-medium tracking-tight text-white mb-4 leading-tight">
-            <span class="reveal-line block">Why muscle -</span>
-            <span class="reveal-line block mt-1">and why blood</span>
+        <div class="wmb-header">
+          <h2 class="wmb-reveal-title">
+            <span class="reveal-line block opacity-15">Why muscle -</span>
+            <span class="reveal-line block opacity-0 mt-1">and why blood</span>
           </h2>
-          <p class="wmb-reveal-sub text-base md:text-xl text-neutral-400 font-light tracking-wide mt-4">
+          <p class="wmb-reveal-sub opacity-30">
             Muscle doesn't fail in isolation. It takes four systems with it.
           </p>
         </div>
 
         <!-- Cards horizontal track -->
         <!-- Desktop: moves horizontally via GSAP | Mobile: normal swipe-snapping container -->
-        <div id="wmb-track" class="flex flex-nowrap gap-6 overflow-x-auto md:overflow-x-hidden scroll-snap-x md:scroll-snap-none pb-8 md:pb-0 px-6 md:px-[8vw] w-full md:w-max">
+        <div id="wmb-track" class="wmb-track">
           
           <!-- CARD 01: CARDIOVASCULAR -->
-          <div class="wmb-card-redesign scroll-snap-align-center flex-shrink-0 w-[86vw] md:w-[620px] h-[560px] md:h-[520px] flex flex-col justify-between p-8 md:p-10 select-none cursor-pointer"
+          <div class="wmb-card-redesign scroll-snap-align-center"
                style="--glow-color: rgba(255, 45, 85, 0.08); --hover-border: rgba(255, 45, 85, 0.35); --hover-glow: rgba(255, 45, 85, 0.2);"
                onmousemove="handleCardMove(event, this)"
                onmouseleave="handleCardLeave(this)">
             
-            <!-- Card Header: Diagnostic Visualizer -->
-            <div class="w-full h-[180px] flex items-center justify-center border-b border-white/[0.04] pb-6 relative">
-              <span class="absolute top-0 left-0 text-[10px] tracking-widest text-red-500/60 uppercase">diagnostic.pulse</span>
-              
-              <!-- High-Fidelity ECG/Vascular Radar SVG -->
-              <div class="w-full h-full max-w-[320px]">
-                <svg viewBox="0 0 300 120" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <!-- Background grid lines -->
-                  <g stroke="rgba(255, 45, 85, 0.03)" stroke-width="0.5">
-                    <line x1="0" y1="20" x2="300" y2="20"></line>
-                    <line x1="0" y1="40" x2="300" y2="40"></line>
-                    <line x1="0" y1="60" x2="300" y2="60"></line>
-                    <line x1="0" y1="80" x2="300" y2="80"></line>
-                    <line x1="0" y1="100" x2="300" y2="100"></line>
-                    <line x1="50" y1="0" x2="50" y2="120"></line>
-                    <line x1="100" y1="0" x2="100" y2="120"></line>
-                    <line x1="150" y1="0" x2="150" y2="120"></line>
-                    <line x1="200" y1="0" x2="200" y2="120"></line>
-                    <line x1="250" y1="0" x2="250" y2="120"></line>
-                  </g>
-                  <!-- Background EKG trace -->
-                  <path d="M 0 60 H 90 L 98 45 L 106 75 L 114 15 L 122 105 L 130 50 L 138 65 L 146 60 H 300" stroke="rgba(255, 45, 85, 0.08)" stroke-width="1.5"></path>
-                  <!-- Animating EKG pulse -->
-                  <path d="M 0 60 H 90 L 98 45 L 106 75 L 114 15 L 122 105 L 130 50 L 138 65 L 146 60 H 300" stroke="#FF2D55" stroke-width="2.5" class="ecg-pulse-anim" filter="url(#glow-cardio)"></path>
-                  
-                  <defs>
-                    <filter id="glow-cardio" x="-20%" y="-20%" width="140%" height="140%">
-                      <feGaussianBlur stdDeviation="4" result="blur"></feGaussianBlur>
-                      <feComposite in="SourceGraphic" in2="blur" operator="over"></feComposite>
-                    </filter>
-                  </defs>
-                </svg>
-              </div>
+            <!-- Exact Original Placement Bounds for Visualizer -->
+            <div class="wmb-orb border border-white/[0.04] rounded-2xl bg-white/[0.01] p-3">
+              <svg viewBox="0 0 160 160" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Circular scanning layout -->
+                <circle cx="80" cy="80" r="70" stroke="rgba(255, 45, 85, 0.12)" stroke-width="1" stroke-dasharray="3 3"></circle>
+                <circle cx="80" cy="80" r="74" stroke="rgba(255, 45, 85, 0.04)" stroke-width="1"></circle>
+                <!-- Background Grid -->
+                <path d="M 20 80 H 140 M 80 20 V 140 M 50 50 L 110 110 M 110 50 L 50 110" stroke="rgba(255, 45, 85, 0.02)" stroke-width="0.8"></path>
+                <!-- Static background EKG path -->
+                <path d="M 20 80 H 55 L 62 65 L 69 95 L 76 35 L 83 125 L 90 70 L 97 85 L 104 80 H 140" stroke="rgba(255, 45, 85, 0.06)" stroke-width="1.5"></path>
+                <!-- Active EKG pulse -->
+                <path d="M 20 80 H 55 L 62 65 L 69 95 L 76 35 L 83 125 L 90 70 L 97 85 L 104 80 H 140" stroke="#FF2D55" stroke-width="2.5" class="ecg-pulse-anim" filter="url(#glow-cardio)"></path>
+                
+                <defs>
+                  <filter id="glow-cardio" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="3.5" result="blur"></feGaussianBlur>
+                    <feComposite in="SourceGraphic" in2="blur" operator="over"></feComposite>
+                  </filter>
+                </defs>
+              </svg>
             </div>
 
-            <!-- Card Body Content -->
-            <div class="flex flex-col gap-4 mt-6">
-              <div class="flex justify-between items-baseline">
-                <span class="text-[10px] text-neutral-500 uppercase tracking-widest">Panel 01</span>
-                <span class="text-xl text-neutral-600 font-light">01</span>
-              </div>
-              <h3 class="text-2xl md:text-3xl font-medium text-white tracking-tight">Cardiovascular</h3>
-              <p class="text-neutral-400 text-sm md:text-base font-light leading-relaxed">
-                Low muscle mass doubles cardiovascular mortality risk. The signal is present in blood a decade before a cardiac event.
-              </p>
-            </div>
-
-            <!-- Card Footer Readout -->
-            <div class="border-t border-dashed border-white/10 pt-4 mt-2">
-              <p class="text-xs md:text-sm text-red-400/80 tracking-wide font-medium">
-                → Blood reveals cardiovascular risk long before symptoms appear.
-              </p>
+            <!-- Exact Original Placement Bounds for Content -->
+            <div class="wmb-content">
+              <div class="wmb-num">01</div>
+              <h3>Cardiovascular</h3>
+              <p>Low muscle mass doubles cardiovascular mortality risk. The signal is present in blood a decade before a cardiac event.</p>
+              <div class="wmb-line">Blood reveals cardiovascular risk long before symptoms appear.</div>
             </div>
           </div>
 
           <!-- CARD 02: METABOLISM & INSULIN RESISTANCE -->
-          <div class="wmb-card-redesign scroll-snap-align-center flex-shrink-0 w-[86vw] md:w-[620px] h-[560px] md:h-[520px] flex flex-col justify-between p-8 md:p-10 select-none cursor-pointer"
+          <div class="wmb-card-redesign scroll-snap-align-center"
                style="--glow-color: rgba(124, 58, 237, 0.08); --hover-border: rgba(124, 58, 237, 0.35); --hover-glow: rgba(124, 58, 237, 0.2);"
                onmousemove="handleCardMove(event, this)"
                onmouseleave="handleCardLeave(this)">
             
-            <!-- Card Header: Diagnostic Visualizer -->
-            <div class="w-full h-[180px] flex items-center justify-center border-b border-white/[0.04] pb-6 relative">
-              <span class="absolute top-0 left-0 text-[10px] tracking-widest text-violet-400/60 uppercase">cellular.density</span>
-              
-              <!-- Rotating DNA Double Helix Structure SVG -->
-              <div class="w-full h-full max-w-[320px] flex items-center justify-center">
-                <svg viewBox="0 0 300 120" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <!-- DNA helix nodes generated in 8 pairs horizontally -->
-                  <g transform="translate(45, 20)">
-                    <g transform="translate(0, 0)">
-                      <line x1="0" y1="0" x2="0" y2="80" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: 0s;"></line>
-                      <circle cx="0" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: 0s;"></circle>
-                      <circle cx="0" cy="80" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: 0s;"></circle>
-                    </g>
-                    <g transform="translate(30, 0)">
-                      <line x1="0" y1="0" x2="0" y2="80" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -0.4s;"></line>
-                      <circle cx="0" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -0.4s;"></circle>
-                      <circle cx="0" cy="80" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -0.4s;"></circle>
-                    </g>
-                    <g transform="translate(60, 0)">
-                      <line x1="0" y1="0" x2="0" y2="80" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -0.8s;"></line>
-                      <circle cx="0" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -0.8s;"></circle>
-                      <circle cx="0" cy="80" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -0.8s;"></circle>
-                    </g>
-                    <g transform="translate(90, 0)">
-                      <line x1="0" y1="0" x2="0" y2="80" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -1.2s;"></line>
-                      <circle cx="0" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -1.2s;"></circle>
-                      <circle cx="0" cy="80" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -1.2s;"></circle>
-                    </g>
-                    <g transform="translate(120, 0)">
-                      <line x1="0" y1="0" x2="0" y2="80" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -1.6s;"></line>
-                      <circle cx="0" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -1.6s;"></circle>
-                      <circle cx="0" cy="80" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -1.6s;"></circle>
-                    </g>
-                    <g transform="translate(150, 0)">
-                      <line x1="0" y1="0" x2="0" y2="80" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -2s;"></line>
-                      <circle cx="0" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -2s;"></circle>
-                      <circle cx="0" cy="80" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -2s;"></circle>
-                    </g>
-                    <g transform="translate(180, 0)">
-                      <line x1="0" y1="0" x2="0" y2="80" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -2.4s;"></line>
-                      <circle cx="0" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -2.4s;"></circle>
-                      <circle cx="0" cy="80" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -2.4s;"></circle>
-                    </g>
-                    <g transform="translate(210, 0)">
-                      <line x1="0" y1="0" x2="0" y2="80" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -2.8s;"></line>
-                      <circle cx="0" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -2.8s;"></circle>
-                      <circle cx="0" cy="80" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -2.8s;"></circle>
-                    </g>
+            <!-- Exact Original Placement Bounds for Visualizer -->
+            <div class="wmb-orb border border-white/[0.04] rounded-2xl bg-white/[0.01] p-3">
+              <svg viewBox="0 0 160 160" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Circular scanning boundary -->
+                <circle cx="80" cy="80" r="70" stroke="rgba(124, 90, 248, 0.1)" stroke-width="1" stroke-dasharray="3 3"></circle>
+                <!-- DNA helix nodes generated vertically -->
+                <g transform="translate(80, 20)">
+                  <g>
+                    <line x1="-30" y1="0" x2="30" y2="0" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: 0s;"></line>
+                    <circle cx="-30" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: 0s;"></circle>
+                    <circle cx="30" cy="0" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: 0s;"></circle>
                   </g>
-                </svg>
-              </div>
+                  <g transform="translate(0, 24)">
+                    <line x1="-30" y1="0" x2="30" y2="0" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -0.5s;"></line>
+                    <circle cx="-30" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -0.5s;"></circle>
+                    <circle cx="30" cy="0" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -0.5s;"></circle>
+                  </g>
+                  <g transform="translate(0, 48)">
+                    <line x1="-30" y1="0" x2="30" y2="0" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -1.0s;"></line>
+                    <circle cx="-30" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -1.0s;"></circle>
+                    <circle cx="30" cy="0" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -1.0s;"></circle>
+                  </g>
+                  <g transform="translate(0, 72)">
+                    <line x1="-30" y1="0" x2="30" y2="0" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -1.5s;"></line>
+                    <circle cx="-30" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -1.5s;"></circle>
+                    <circle cx="30" cy="0" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -1.5s;"></circle>
+                  </g>
+                  <g transform="translate(0, 96)">
+                    <line x1="-30" y1="0" x2="30" y2="0" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -2.0s;"></line>
+                    <circle cx="-30" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -2.0s;"></circle>
+                    <circle cx="30" cy="0" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -2.0s;"></circle>
+                  </g>
+                  <g transform="translate(0, 120)">
+                    <line x1="-30" y1="0" x2="30" y2="0" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -2.5s;"></line>
+                    <circle cx="-30" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -2.5s;"></circle>
+                    <circle cx="30" cy="0" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -2.5s;"></circle>
+                  </g>
+                </g>
+              </svg>
             </div>
 
-            <!-- Card Body Content -->
-            <div class="flex flex-col gap-4 mt-6">
-              <div class="flex justify-between items-baseline">
-                <span class="text-[10px] text-neutral-500 uppercase tracking-widest">Panel 02</span>
-                <span class="text-xl text-neutral-600 font-light">02</span>
-              </div>
-              <h3 class="text-2xl md:text-3xl font-medium text-white tracking-tight">Metabolism & Insulin Resistance</h3>
-              <p class="text-neutral-400 text-sm md:text-base font-light leading-relaxed">
-                Every 10% increase in muscle mass reduces insulin resistance by 11%. Blood tracks this shift in real time across panels.
-              </p>
-            </div>
-
-            <!-- Card Footer Readout -->
-            <div class="border-t border-dashed border-white/10 pt-4 mt-2">
-              <p class="text-xs md:text-sm text-violet-400/80 tracking-wide font-medium">
-                → Metabolic resilience is continuously measurable through biomarkers.
-              </p>
+            <!-- Exact Original Placement Bounds for Content -->
+            <div class="wmb-content">
+              <div class="wmb-num">02</div>
+              <h3>Metabolism & Insulin Resistance</h3>
+              <p>Every 10% increase in muscle mass reduces insulin resistance by 11%. Blood tracks this shift in real time across panels.</p>
+              <div class="wmb-line">Metabolic resilience is continuously measurable through biomarkers.</div>
             </div>
           </div>
 
           <!-- CARD 03: BONE & JOINT DENSITY -->
-          <div class="wmb-card-redesign scroll-snap-align-center flex-shrink-0 w-[86vw] md:w-[620px] h-[560px] md:h-[520px] flex flex-col justify-between p-8 md:p-10 select-none cursor-pointer"
+          <div class="wmb-card-redesign scroll-snap-align-center"
                style="--glow-color: rgba(245, 158, 11, 0.08); --hover-border: rgba(245, 158, 11, 0.35); --hover-glow: rgba(245, 158, 11, 0.2);"
                onmousemove="handleCardMove(event, this)"
                onmouseleave="handleCardLeave(this)">
             
-            <!-- Card Header: Diagnostic Visualizer -->
-            <div class="w-full h-[180px] flex items-center justify-center border-b border-white/[0.04] pb-6 relative">
-              <span class="absolute top-0 left-0 text-[10px] tracking-widest text-amber-500/60 uppercase">structural.integrity</span>
-              
-              <!-- High-Tech Structural Honeycomb Lattice SVG with Radar Scan -->
-              <div class="w-full h-full max-w-[320px] flex items-center justify-center">
-                <svg viewBox="0 0 300 120" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <!-- Scanning gradient mask -->
-                    <linearGradient id="scan-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stop-color="#fff" stop-opacity="0.15"></stop>
-                      <stop offset="50%" stop-color="#ff8a00" stop-opacity="0.95"></stop>
-                      <stop offset="100%" stop-color="#fff" stop-opacity="0.15"></stop>
-                    </linearGradient>
-                    <mask id="scan-mask">
-                      <rect x="0" y="0" width="300" height="120" fill="url(#scan-grad)" class="scan-beam-rect"></rect>
-                    </mask>
-                  </defs>
-                  
-                  <!-- Background dim hexagonal grid -->
-                  <g stroke="rgba(255, 138, 0, 0.1)" stroke-width="1.2">
-                    <!-- Row 1 -->
-                    <polygon points="30,10 50,21.5 50,44.5 30,56 10,44.5 10,21.5"></polygon>
-                    <polygon points="70,10 90,21.5 90,44.5 70,56 50,44.5 50,21.5"></polygon>
-                    <polygon points="110,10 130,21.5 130,44.5 110,56 90,44.5 90,21.5"></polygon>
-                    <polygon points="150,10 170,21.5 170,44.5 150,56 130,44.5 130,21.5"></polygon>
-                    <polygon points="190,10 210,21.5 210,44.5 190,56 170,44.5 170,21.5"></polygon>
-                    <polygon points="230,10 250,21.5 250,44.5 230,56 210,44.5 210,21.5"></polygon>
-                    <polygon points="270,10 290,21.5 290,44.5 270,56 250,44.5 250,21.5"></polygon>
-
-                    <!-- Row 2 -->
-                    <polygon points="50,44.5 70,56 70,79 50,90.5 30,79 30,44.5"></polygon>
-                    <polygon points="90,44.5 110,56 110,79 90,90.5 70,79 70,44.5"></polygon>
-                    <polygon points="130,44.5 150,56 150,79 130,90.5 110,79 110,44.5"></polygon>
-                    <polygon points="170,44.5 190,56 190,79 170,90.5 150,79 150,44.5"></polygon>
-                    <polygon points="210,44.5 230,56 230,79 210,90.5 190,79 190,44.5"></polygon>
-                    <polygon points="250,44.5 270,56 270,79 250,90.5 230,79 230,44.5"></polygon>
-                  </g>
-                  
-                  <!-- Glowing hexagons under the scanning mask -->
-                  <g stroke="#ff8a00" stroke-width="2.5" mask="url(#scan-mask)" filter="url(#glow-bone)">
-                    <polygon points="30,10 50,21.5 50,44.5 30,56 10,44.5 10,21.5"></polygon>
-                    <polygon points="70,10 90,21.5 90,44.5 70,56 50,44.5 50,21.5"></polygon>
-                    <polygon points="110,10 130,21.5 130,44.5 110,56 90,44.5 90,21.5"></polygon>
-                    <polygon points="150,10 170,21.5 170,44.5 150,56 130,44.5 130,21.5"></polygon>
-                    <polygon points="190,10 210,21.5 210,44.5 190,56 170,44.5 170,21.5"></polygon>
-                    <polygon points="230,10 250,21.5 250,44.5 230,56 210,44.5 210,21.5"></polygon>
-                    <polygon points="270,10 290,21.5 290,44.5 270,56 250,44.5 250,21.5"></polygon>
-                    
-                    <polygon points="50,44.5 70,56 70,79 50,90.5 30,79 30,44.5"></polygon>
-                    <polygon points="90,44.5 110,56 110,79 90,90.5 70,79 70,44.5"></polygon>
-                    <polygon points="130,44.5 150,56 150,79 130,90.5 110,79 110,44.5"></polygon>
-                    <polygon points="170,44.5 190,56 190,79 170,90.5 150,79 150,44.5"></polygon>
-                    <polygon points="210,44.5 230,56 230,79 210,90.5 190,79 190,44.5"></polygon>
-                    <polygon points="250,44.5 270,56 270,79 250,90.5 230,79 230,44.5"></polygon>
-                  </g>
-                  <defs>
-                    <filter id="glow-bone" x="-20%" y="-20%" width="140%" height="140%">
-                      <feGaussianBlur stdDeviation="3.5" result="blur"></feGaussianBlur>
-                      <feComposite in="SourceGraphic" in2="blur" operator="over"></feComposite>
-                    </filter>
-                  </defs>
-                </svg>
-              </div>
+            <!-- Exact Original Placement Bounds for Visualizer -->
+            <div class="wmb-orb border border-white/[0.04] rounded-2xl bg-white/[0.01] p-3">
+              <svg viewBox="0 0 160 160" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <!-- Scanning gradient mask -->
+                  <linearGradient id="bone-scan-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#ff8a00" stop-opacity="0.15"></stop>
+                    <stop offset="50%" stop-color="#ff8a00" stop-opacity="0.95"></stop>
+                    <stop offset="100%" stop-color="#ff8a00" stop-opacity="0.15"></stop>
+                  </linearGradient>
+                  <mask id="bone-scan-mask">
+                    <rect x="0" y="0" width="160" height="160" fill="url(#bone-scan-grad)" class="bone-scan-rect"></rect>
+                  </mask>
+                </defs>
+                
+                <!-- Circular scanning boundary grid -->
+                <circle cx="80" cy="80" r="70" stroke="rgba(245, 158, 11, 0.1)" stroke-width="1" stroke-dasharray="3 3"></circle>
+                
+                <!-- Background symmetric hexagon cluster (Fits 160x160 perfectly) -->
+                <g stroke="rgba(245, 158, 11, 0.15)" stroke-width="1.2">
+                  <polygon points="80,60 97.3,70 97.3,90 80,100 62.7,90 62.7,70"></polygon>
+                  <polygon points="80,25.4 97.3,35.4 97.3,55.4 80,65.4 62.7,55.4 62.7,35.4"></polygon>
+                  <polygon points="110,42.7 127.3,52.7 127.3,72.7 110,82.7 92.7,72.7 92.7,52.7"></polygon>
+                  <polygon points="110,77.3 127.3,87.3 127.3,107.3 110,117.3 92.7,107.3 92.7,87.3"></polygon>
+                  <polygon points="80,94.6 97.3,104.6 97.3,124.6 80,134.6 62.7,124.6 62.7,104.6"></polygon>
+                  <polygon points="50,77.3 67.3,87.3 67.3,107.3 50,117.3 32.7,107.3 32.7,87.3"></polygon>
+                  <polygon points="50,42.7 67.3,52.7 67.3,72.7 50,82.7 32.7,72.7 32.7,52.7"></polygon>
+                </g>
+                
+                <!-- Scanning sweeping glow -->
+                <g stroke="#ff8a00" stroke-width="2.5" mask="url(#bone-scan-mask)" filter="url(#glow-bone)">
+                  <polygon points="80,60 97.3,70 97.3,90 80,100 62.7,90 62.7,70"></polygon>
+                  <polygon points="80,25.4 97.3,35.4 97.3,55.4 80,65.4 62.7,55.4 62.7,35.4"></polygon>
+                  <polygon points="110,42.7 127.3,52.7 127.3,72.7 110,82.7 92.7,72.7 92.7,52.7"></polygon>
+                  <polygon points="110,77.3 127.3,87.3 127.3,107.3 110,117.3 92.7,107.3 92.7,87.3"></polygon>
+                  <polygon points="80,94.6 97.3,104.6 97.3,124.6 80,134.6 62.7,124.6 62.7,104.6"></polygon>
+                  <polygon points="50,77.3 67.3,87.3 67.3,107.3 50,117.3 32.7,107.3 32.7,87.3"></polygon>
+                  <polygon points="50,42.7 67.3,52.7 67.3,72.7 50,82.7 32.7,72.7 32.7,52.7"></polygon>
+                </g>
+                <defs>
+                  <filter id="glow-bone" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="3.5" result="blur"></feGaussianBlur>
+                    <feComposite in="SourceGraphic" in2="blur" operator="over"></feComposite>
+                  </filter>
+                </defs>
+              </svg>
             </div>
 
-            <!-- Card Body Content -->
-            <div class="flex flex-col gap-4 mt-6">
-              <div class="flex justify-between items-baseline">
-                <span class="text-[10px] text-neutral-500 uppercase tracking-widest">Panel 03</span>
-                <span class="text-xl text-neutral-600 font-light">03</span>
-              </div>
-              <h3 class="text-2xl md:text-3xl font-medium text-white tracking-tight">Bone & Joint Density</h3>
-              <p class="text-neutral-400 text-sm md:text-base font-light leading-relaxed">
-                Muscle weakness is the #1 predictor of fracture risk in adults over 40. Bone decline starts at 45. Screening starts at 65.
-              </p>
-            </div>
-
-            <!-- Card Footer Readout -->
-            <div class="border-t border-dashed border-white/10 pt-4 mt-2">
-              <p class="text-xs md:text-sm text-amber-400/80 tracking-wide font-medium">
-                → Muscle and bone age together and blood sees both.
-              </p>
+            <!-- Exact Original Placement Bounds for Content -->
+            <div class="wmb-content">
+              <div class="wmb-num">03</div>
+              <h3>Bone & Joint Density</h3>
+              <p>Muscle weakness is the #1 predictor of fracture risk in adults over 40. Bone decline starts at 45. Screening starts at 65.</p>
+              <div class="wmb-line">Muscle and bone age together and blood sees both.</div>
             </div>
           </div>
 
           <!-- CARD 04: COGNITIVE HEALTH -->
-          <div class="wmb-card-redesign scroll-snap-align-center flex-shrink-0 w-[86vw] md:w-[620px] h-[560px] md:h-[520px] flex flex-col justify-between p-8 md:p-10 select-none cursor-pointer"
+          <div class="wmb-card-redesign scroll-snap-align-center"
                style="--glow-color: rgba(59, 130, 246, 0.08); --hover-border: rgba(59, 130, 246, 0.35); --hover-glow: rgba(59, 130, 246, 0.2);"
                onmousemove="handleCardMove(event, this)"
                onmouseleave="handleCardLeave(this)">
             
-            <!-- Card Header: Diagnostic Visualizer -->
-            <div class="w-full h-[180px] flex items-center justify-center border-b border-white/[0.04] pb-6 relative">
-              <span class="absolute top-0 left-0 text-[10px] tracking-widest text-blue-500/60 uppercase">synapse.monitoring</span>
-              
-              <!-- High-Tech Neural Network Connections SVG with Active Synapse Motion -->
-              <div class="w-full h-full max-w-[320px] flex items-center justify-center">
-                <svg viewBox="0 0 300 120" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <!-- Connection pathways (dim background lines) -->
-                  <path d="M 30 30 Q 100 15 150 60 T 270 90" stroke="rgba(59, 130, 246, 0.08)" stroke-width="1.5"></path>
-                  <path d="M 40 90 Q 120 100 180 50 T 260 30" stroke="rgba(59, 130, 246, 0.08)" stroke-width="1.5"></path>
+            <!-- Exact Original Placement Bounds for Visualizer -->
+            <div class="wmb-orb border border-white/[0.04] rounded-2xl bg-white/[0.01] p-3">
+              <svg viewBox="0 0 160 160" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Circular scanning boundary grid -->
+                <circle cx="80" cy="80" r="70" stroke="rgba(59, 130, 246, 0.1)" stroke-width="1" stroke-dasharray="3 3"></circle>
+                
+                <!-- Symmetrical Neural Network pathways (Centered 160x160 perfectly) -->
+                <g stroke="rgba(59, 130, 246, 0.15)" stroke-width="1.2">
+                  <line x1="80" y1="80" x2="80" y2="30"></line>
+                  <line x1="80" y1="80" x2="125" y2="55"></line>
+                  <line x1="80" y1="80" x2="110" y2="115"></line>
+                  <line x1="80" y1="80" x2="50" y2="115"></line>
+                  <line x1="80" y1="80" x2="35" y2="55"></line>
                   
-                  <!-- Traveling synapse signals using SMIL animateMotion -->
-                  <circle r="3.5" fill="#60A5FA" filter="url(#glow-cog)">
-                    <animateMotion dur="3.2s" repeatCount="indefinite" path="M 30 30 Q 100 15 150 60 T 270 90"></animateMotion>
-                  </circle>
-                  <circle r="3.5" fill="#3B82F6" filter="url(#glow-cog)">
-                    <animateMotion dur="4.0s" repeatCount="indefinite" path="M 40 90 Q 120 100 180 50 T 260 30" begin="0.6s"></animateMotion>
-                  </circle>
-                  
-                  <!-- Glowing neuron circles that pulse organic -->
-                  <circle cx="30" cy="30" r="5" fill="#3B82F6" class="neuron-pulse"></circle>
-                  <circle cx="150" cy="60" r="7" fill="#60A5FA" class="neuron-pulse" style="animation-delay: -0.5s;"></circle>
-                  <circle cx="270" cy="90" r="5" fill="#3B82F6" class="neuron-pulse" style="animation-delay: -1.0s;"></circle>
-                  
-                  <circle cx="40" cy="90" r="5" fill="#3B82F6" class="neuron-pulse" style="animation-delay: -0.3s;"></circle>
-                  <circle cx="180" cy="50" r="6.5" fill="#60A5FA" class="neuron-pulse" style="animation-delay: -0.8s;"></circle>
-                  <circle cx="260" cy="30" r="5" fill="#3B82F6" class="neuron-pulse" style="animation-delay: -1.5s;"></circle>
+                  <line x1="80" y1="30" x2="125" y2="55"></line>
+                  <line x1="35" y1="55" x2="80" y2="30"></line>
+                  <line x1="50" y1="115" x2="110" y2="115"></line>
+                </g>
+                
+                <!-- Traveling synapse signal packets using SMIL animateMotion -->
+                <circle r="3.5" fill="#60A5FA" filter="url(#glow-cog)">
+                  <animateMotion dur="2.8s" repeatCount="indefinite" path="M 80 80 L 80 30"></animateMotion>
+                </circle>
+                <circle r="3.5" fill="#3B82F6" filter="url(#glow-cog)">
+                  <animateMotion dur="3.2s" repeatCount="indefinite" path="M 80 80 L 125 55" begin="0.4s"></animateMotion>
+                </circle>
+                <circle r="3.5" fill="#60A5FA" filter="url(#glow-cog)">
+                  <animateMotion dur="3.5s" repeatCount="indefinite" path="M 80 80 L 110 115" begin="0.8s"></animateMotion>
+                </circle>
+                <circle r="3.5" fill="#3B82F6" filter="url(#glow-cog)">
+                  <animateMotion dur="3.0s" repeatCount="indefinite" path="M 80 80 L 50 115" begin="1.2s"></animateMotion>
+                </circle>
+                <circle r="3.5" fill="#60A5FA" filter="url(#glow-cog)">
+                  <animateMotion dur="2.5s" repeatCount="indefinite" path="M 80 80 L 35 55" begin="1.6s"></animateMotion>
+                </circle>
 
-                  <defs>
-                    <filter id="glow-cog" x="-25%" y="-25%" width="150%" height="150%">
-                      <feGaussianBlur stdDeviation="3.5" result="blur"></feGaussianBlur>
-                      <feComposite in="SourceGraphic" in2="blur" operator="over"></feComposite>
-                    </filter>
-                  </defs>
-                </svg>
-              </div>
+                <!-- Pulsing synapse nodes -->
+                <circle cx="80" cy="80" r="7" fill="#60A5FA" class="neuron-pulse"></circle>
+                <circle cx="80" cy="30" r="5" fill="#3B82F6" class="neuron-pulse" style="animation-delay: -0.4s;"></circle>
+                <circle cx="125" cy="55" r="5" fill="#3B82F6" class="neuron-pulse" style="animation-delay: -0.8s;"></circle>
+                <circle cx="110" cy="115" r="5" fill="#3B82F6" class="neuron-pulse" style="animation-delay: -1.2s;"></circle>
+                <circle cx="50" cy="115" r="5" fill="#3B82F6" class="neuron-pulse" style="animation-delay: -1.6s;"></circle>
+                <circle cx="35" cy="55" r="5" fill="#3B82F6" class="neuron-pulse" style="animation-delay: -2.0s;"></circle>
+
+                <defs>
+                  <filter id="glow-cog" x="-25%" y="-25%" width="150%" height="150%">
+                    <feGaussianBlur stdDeviation="3" result="blur"></feGaussianBlur>
+                    <feComposite in="SourceGraphic" in2="blur" operator="over"></feComposite>
+                  </filter>
+                </defs>
+              </svg>
             </div>
 
-            <!-- Card Body Content -->
-            <div class="flex flex-col gap-4 mt-6">
-              <div class="flex justify-between items-baseline">
-                <span class="text-[10px] text-neutral-500 uppercase tracking-widest">Panel 04</span>
-                <span class="text-xl text-neutral-600 font-light">04</span>
-              </div>
-              <h3 class="text-2xl md:text-3xl font-medium text-white tracking-tight">Cognitive Health</h3>
-              <p class="text-neutral-400 text-sm md:text-base font-light leading-relaxed">
-                Brain function declines with muscle through inflammation, IGF-1, and insulin sensitivity — all readable in a single blood panel.
-              </p>
-            </div>
-
-            <!-- Card Footer Readout -->
-            <div class="border-t border-dashed border-white/10 pt-4 mt-2">
-              <p class="text-xs md:text-sm text-blue-400/80 tracking-wide font-medium">
-                → The brain and muscle are connected through shared pathways.
-              </p>
+            <!-- Exact Original Placement Bounds for Content -->
+            <div class="wmb-content">
+              <div class="wmb-num">04</div>
+              <h3>Cognitive Health</h3>
+              <p>Brain function declines with muscle through inflammation, IGF-1, and insulin sensitivity — all readable in a single blood panel.</p>
+              <div class="wmb-line">The brain and muscle are connected through shared pathways.</div>
             </div>
           </div>
 
         </div>
 
-        <!-- Scroll Dots & Indicator (Mobile view only) -->
-        <div class="md:hidden flex justify-center gap-2 mt-4">
-          <span class="w-2 h-2 rounded-full bg-neutral-800 active-dot" id="dot-0"></span>
-          <span class="w-2 h-2 rounded-full bg-neutral-800" id="dot-1"></span>
-          <span class="w-2 h-2 rounded-full bg-neutral-800" id="dot-2"></span>
-          <span class="w-2 h-2 rounded-full bg-neutral-800" id="dot-3"></span>
+        <!-- Scroll Dots & Indicator (Desktop: GSAP driven | Mobile: CSS scroll driven) -->
+        <div class="wmb-dots">
+          <span class="wmb-dot active"></span>
+          <span class="wmb-dot"></span>
+          <span class="wmb-dot"></span>
+          <span class="wmb-dot"></span>
         </div>
 
       </div>
@@ -552,7 +674,7 @@
     lenis.on('scroll', ScrollTrigger.update);
 
     // 2. Premium 3D Tilt Card Hover Effect (Matches React client moving boundary)
-    const DESKTOP_QUERY = '(min-width: 768px)';
+    const DESKTOP_QUERY = '(min-width: 900px)'; // Match original section break-point
     const mq = window.matchMedia(DESKTOP_QUERY);
 
     function handleCardMove(e, card) {
@@ -590,6 +712,8 @@
     const track = document.getElementById('wmb-track');
     const revealTitle = document.querySelector('.wmb-reveal-title');
     const revealSub = document.querySelector('.wmb-reveal-sub');
+    const dotsEl = document.querySelector('.wmb-dots');
+    const dots = dotsEl.querySelectorAll('.wmb-dot');
 
     let scrollTriggerInstance = null;
 
@@ -599,7 +723,7 @@
       }
 
       if (mq.matches) {
-        // Desktop Pin-Scroll Track offset calculation
+        // Desktop Pin-Scroll Track offset calculation (exact same logic as original section)
         const maxScroll = () => {
           const cards = track.querySelectorAll('.wmb-card-redesign');
           const lastCard = cards[cards.length - 1];
@@ -619,10 +743,17 @@
             pinSpacing: true,
             start: "top top",
             end: () => `+=${maxScroll() + window.innerHeight * 0.5}`, // 50% hold height at the end
-            scrub: 1,
+            scrub: true,
             invalidateOnRefresh: true,
+            onEnter: () => dotsEl.style.opacity = '1',
+            onEnterBack: () => dotsEl.style.opacity = '1',
+            onLeave: () => dotsEl.style.opacity = '0',
+            onLeaveBack: () => dotsEl.style.opacity = '0',
             onUpdate: (self) => {
               scrollTriggerInstance = self;
+              const cardsCount = track.querySelectorAll('.wmb-card-redesign').length;
+              const idx = Math.min(cardsCount - 1, Math.floor(self.progress * cardsCount));
+              dots.forEach((d, i) => d.classList.toggle('active', i === idx));
             }
           }
         });
@@ -684,20 +815,13 @@
 
     // 5. Mobile Dot indicators scroll-link
     if (!mq.matches) {
-      const dots = document.querySelectorAll('.md\\:hidden span');
       track.addEventListener('scroll', () => {
-        const cardWidth = track.querySelector('.wmb-card-redesign').offsetWidth + 24;
+        const cardWidth = track.querySelector('.wmb-card-redesign').offsetWidth + 32;
         const scrollLeft = track.scrollLeft;
         const activeIndex = Math.min(dots.length - 1, Math.round(scrollLeft / cardWidth));
         
         dots.forEach((dot, idx) => {
-          if (idx === activeIndex) {
-            dot.classList.add('bg-violet-500');
-            dot.classList.remove('bg-neutral-800');
-          } else {
-            dot.classList.remove('bg-violet-500');
-            dot.classList.add('bg-neutral-800');
-          }
+          dot.classList.toggle('active', idx === activeIndex);
         });
       }, { passive: true });
     }
