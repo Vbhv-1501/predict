@@ -128,16 +128,55 @@
       padding: 42px;
     }
 
+    /* Subtle theme-colored background gradients to fill empty card space */
+    .wmb-card-redesign::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.75;
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .wmb-card-redesign:hover::before {
+      opacity: 1.0;
+    }
+
+    /* Specific corner radial fills for each card theme */
+    .wmb-c1::before {
+      background: radial-gradient(circle at 100% 0%, rgba(255, 45, 85, 0.12) 0%, rgba(10, 12, 16, 0) 65%),
+                  linear-gradient(180deg, rgba(255, 45, 85, 0.02) 0%, rgba(10, 12, 16, 0) 100%);
+    }
+    .wmb-c2::before {
+      background: radial-gradient(circle at 100% 0%, rgba(124, 58, 237, 0.12) 0%, rgba(10, 12, 16, 0) 65%),
+                  linear-gradient(180deg, rgba(124, 58, 237, 0.02) 0%, rgba(10, 12, 16, 0) 100%);
+    }
+    .wmb-c3::before {
+      background: radial-gradient(circle at 100% 0%, rgba(217, 119, 6, 0.12) 0%, rgba(10, 12, 16, 0) 65%),
+                  linear-gradient(180deg, rgba(217, 119, 6, 0.02) 0%, rgba(10, 12, 16, 0) 100%);
+    }
+    .wmb-c4::before {
+      background: radial-gradient(circle at 100% 0%, rgba(59, 130, 246, 0.12) 0%, rgba(10, 12, 16, 0) 65%),
+                  linear-gradient(180deg, rgba(59, 130, 246, 0.02) 0%, rgba(10, 12, 16, 0) 100%);
+    }
+
+    /* Ensure card elements stack above background gradient */
+    .wmb-orb-redesign, .wmb-content-redesign {
+      position: relative;
+      z-index: 10;
+    }
+
     /* High-contrast spotlight hover glow effect */
     .wmb-card-redesign::after {
       content: '';
       position: absolute;
       inset: 0;
       background: radial-gradient(circle 180px at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-                                  var(--glow-color, rgba(124, 58, 237, 0.25)) 0%, 
+                                  var(--glow-color, rgba(124, 58, 237, 0.22)) 0%, 
                                   transparent 100%);
       pointer-events: none;
       opacity: 0;
+      z-index: 5;
       transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -375,7 +414,7 @@
         <div id="wmb-track" class="wmb-track">
           
           <!-- CARD 01: CARDIOVASCULAR -->
-          <div class="wmb-card-redesign scroll-snap-align-center"
+          <div class="wmb-card-redesign wmb-c1 scroll-snap-align-center"
                style="--glow-color: rgba(255, 45, 85, 0.22); --hover-border: rgba(255, 45, 85, 0.5); --hover-glow: rgba(255, 45, 85, 0.45);"
                onmousemove="handleCardMove(event, this)"
                onmouseleave="handleCardLeave(this)">
@@ -419,7 +458,7 @@
           </div>
 
           <!-- CARD 02: METABOLISM & INSULIN RESISTANCE -->
-          <div class="wmb-card-redesign scroll-snap-align-center"
+          <div class="wmb-card-redesign wmb-c2 scroll-snap-align-center"
                style="--glow-color: rgba(124, 58, 237, 0.22); --hover-border: rgba(124, 58, 237, 0.5); --hover-glow: rgba(124, 58, 237, 0.45);"
                onmousemove="handleCardMove(event, this)"
                onmouseleave="handleCardLeave(this)">
@@ -485,7 +524,7 @@
           </div>
 
           <!-- CARD 03: BONE & JOINT DENSITY -->
-          <div class="wmb-card-redesign scroll-snap-align-center"
+          <div class="wmb-card-redesign wmb-c3 scroll-snap-align-center"
                style="--glow-color: rgba(217, 119, 6, 0.22); --hover-border: rgba(217, 119, 6, 0.5); --hover-glow: rgba(217, 119, 6, 0.45);"
                onmousemove="handleCardMove(event, this)"
                onmouseleave="handleCardLeave(this)">
@@ -563,7 +602,7 @@
           </div>
 
           <!-- CARD 04: COGNITIVE HEALTH -->
-          <div class="wmb-card-redesign scroll-snap-align-center"
+          <div class="wmb-card-redesign wmb-c4 scroll-snap-align-center"
                style="--glow-color: rgba(59, 130, 246, 0.22); --hover-border: rgba(59, 130, 246, 0.5); --hover-glow: rgba(59, 130, 246, 0.45);"
                onmousemove="handleCardMove(event, this)"
                onmouseleave="handleCardLeave(this)">
