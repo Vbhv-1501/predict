@@ -54,11 +54,12 @@
       overflow-x: hidden;
     }
 
-    /* ──── Exact Copy of Original Section Layout & Sizing ──── */
+    /* ──── Exact Copy of Original Section Styles ──── */
     .wmb-section {
       background: #000000;
       overflow: hidden;
       color: #fff;
+      font-family: 'Neue Montreal', sans-serif;
     }
     .wmb-header { 
       text-align: center; 
@@ -66,7 +67,7 @@
       max-width: 1000px; 
       margin: auto; 
     }
-    .wmb-header h2 { 
+    .wmb-header h2, .wmb-reveal-title { 
       font-size: clamp(36px, 4.5vw, 56px); 
       font-weight: 500; 
       margin: 0; 
@@ -75,11 +76,14 @@
       font-size: clamp(16px, 1.8vw, 20px); 
       color: #b9c0ce; 
       margin-top: 16px; 
+      transition: opacity 0.3s ease; 
     }
 
     .wmb-wrap { 
       position: relative; 
     }
+
+    /* ---- mobile + tablet (default): plain native swipe ---- */
     .wmb-sticky { 
       position: relative; 
       height: auto; 
@@ -97,8 +101,7 @@
       display: none; 
     }
 
-    /* Redesigned Premium Glassmorphism Card System (Dimensions Match Original Section Exactly) */
-    .wmb-card-redesign {
+    .wmb-card {
       flex: none;
       width: 88vw;
       min-width: 88vw;
@@ -110,51 +113,53 @@
       background: rgba(18, 22, 30, 0.45);
       -webkit-backdrop-filter: blur(28px);
       backdrop-filter: blur(28px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 30px 100px rgba(0, 0, 0, 0.45);
-      transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                  box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      transform-style: preserve-3d;
-      perspective: 1000px;
-      cursor: pointer;
+      transition: transform 0.25s ease;
     }
-
-    /* Inner hover glow spotlight effect */
-    .wmb-card-redesign::after {
+    .wmb-card::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-                                  var(--glow-color, rgba(124, 58, 237, 0.08)) 0%, 
-                                  transparent 60%);
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.5s ease;
+      inset: -35%;
+      filter: blur(120px);
+      opacity: 0.9;
     }
+    .wmb-c1::before { background: radial-gradient(circle, #ff2d55 0, transparent 50%); }
+    .wmb-c2::before { background: radial-gradient(circle, #6e3bff 0, transparent 50%); }
+    .wmb-c3::before { background: radial-gradient(circle, #ff8a00 0, transparent 50%); }
+    .wmb-c4::before { background: radial-gradient(circle, #2979ff 0, transparent 50%); }
 
-    .wmb-card-redesign:hover::after {
-      opacity: 1;
-    }
-
-    .wmb-card-redesign:hover {
-      border-color: var(--hover-border, rgba(124, 58, 237, 0.35));
-      box-shadow: 0 40px 90px rgba(0, 0, 0, 0.85),
-                  0 0 50px -10px var(--hover-glow, rgba(124, 58, 237, 0.2)),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    }
-
-    /* Exact layout bounds of visual and content */
     .wmb-orb { 
       position: absolute; 
       top: 50px; 
       left: 40px; 
       width: 190px; 
       height: 190px; 
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
+    .wmb-gooey { 
+      width: 100%; 
+      height: 100%; 
+      filter: url(#wmb-goo); 
+    }
+    .wmb-blob { 
+      position: absolute; 
+      border-radius: 50%; 
+      mix-blend-mode: screen; 
+    }
+    
+    /* Blob colors */
+    .wmb-c1 .wmb-b1 { background: #ff2d55; } 
+    .wmb-c1 .wmb-b2 { background: #ff7d95; } 
+    .wmb-c1 .wmb-b3 { background: #ffd0da; }
+    
+    .wmb-c2 .wmb-b1 { background: #6e3bff; } 
+    .wmb-c2 .wmb-b2 { background: #b88cff; } 
+    .wmb-c2 .wmb-b3 { background: #ead8ff; }
+
+    .wmb-b1 { width: 120px; height: 120px; left: 10px; top: 20px; animation: wmb-f1 8s infinite ease-in-out; }
+    .wmb-b2 { width: 110px; height: 110px; left: 70px; top: 50px; animation: wmb-f2 7s infinite ease-in-out; }
+    .wmb-b3 { width: 95px; height: 95px; left: 40px; top: 90px; animation: wmb-f3 6s infinite ease-in-out; }
+
     .wmb-content { 
       position: absolute; 
       left: 42px; 
@@ -171,14 +176,12 @@
       line-height: 1.05; 
       margin-bottom: 22px; 
       font-weight: 500; 
-      letter-spacing: -0.02em;
     }
     .wmb-content p { 
       font-size: 18px; 
       line-height: 1.55; 
       color: #d7deea; 
       margin: 0; 
-      font-weight: 300;
     }
     .wmb-line { 
       margin-top: 28px; 
@@ -188,18 +191,41 @@
       color: #c2c9d5; 
     }
 
-    /* ---- desktop only layout override (Matches Original Section exactly) ---- */
+    @keyframes wmb-f1 { 50% { transform: translate(25px, -12px); } }
+    @keyframes wmb-f2 { 50% { transform: translate(-20px, 20px); } }
+    @keyframes wmb-f3 { 50% { transform: translate(18px, 12px); } }
+
+    .wmb-dots {
+      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 10px; z-index: 20;
+      opacity: 1; pointer-events: none; transition: opacity 0.3s ease;
+    }
+    .wmb-dots.is-visible { opacity: 1; pointer-events: auto; }
+    .wmb-dot { width: 10px; height: 10px; border-radius: 50%; background: #444; }
+    .wmb-dot.active { background: #6e3bff; }
+    .wmb-swipe-hint {
+      position: absolute;
+      top: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(255, 255, 255, 0.45);
+      white-space: nowrap;
+      transition: opacity 0.4s ease;
+      animation: wmbPulse 2s infinite ease-in-out;
+      pointer-events: none;
+    }
+    @keyframes wmbPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.8; }
+    }
+
+    /* ---- desktop only: >=900px ---- */
     @media (min-width: 900px) {
-      .wmb-sticky { 
-        position: relative; 
-        top: auto; 
-        height: 100vh; 
-        display: flex; 
-        align-items: center; 
-        overflow: hidden; 
-        width: 100%; 
-        background: #000000; 
-      }
+      .wmb-wrap { position: relative; }
+      .wmb-sticky { position: relative; top: auto; height: 100vh; display: flex; align-items: center; overflow: hidden; width: 100%; background: #000000; }
       .wmb-track {
         display: flex !important;
         flex-wrap: nowrap !important;
@@ -211,7 +237,7 @@
         position: relative !important;
         flex-shrink: 0 !important;
       }
-      .wmb-card-redesign {
+      .wmb-card {
         width: 620px !important;
         min-width: 620px !important;
         height: min(640px, 70vh) !important;
@@ -220,10 +246,11 @@
       .wmb-content h3 { font-size: 42px; }
       .wmb-content p { font-size: 24px; }
       .wmb-dots { display: flex; opacity: 0; }
-      
-      /* Responsive layout scales for shorter viewports to prevent layout shifts */
+      .wmb-swipe-hint { display: none; }
+
+      /* Scale down card contents on shorter viewport heights to prevent vertical cropping */
       @media (max-height: 850px) {
-        .wmb-card-redesign {
+        .wmb-card {
           height: min(560px, 72vh) !important;
         }
         .wmb-orb {
@@ -252,7 +279,7 @@
       }
 
       @media (max-height: 700px) {
-        .wmb-card-redesign {
+        .wmb-card {
           height: min(460px, 72vh) !important;
         }
         .wmb-orb {
@@ -282,44 +309,7 @@
       }
     }
 
-    /* ──── SVG Biological Visualizations CSS animations (1:1 Aspect Ratio) ──── */
-    
-    /* 1. Cardiovascular ECG Line Animation */
-    .ecg-pulse-anim {
-      stroke-dasharray: 80 220;
-      animation: ecg-flow 2.2s linear infinite;
-    }
-    @keyframes ecg-flow {
-      from { stroke-dashoffset: 300; }
-      to { stroke-dashoffset: 0; }
-    }
-
-    /* 2. Metabolism DNA strands animation */
-    .node-a {
-      animation: helix-vertical-a 3.2s ease-in-out infinite alternate;
-    }
-    .node-b {
-      animation: helix-vertical-b 3.2s ease-in-out infinite alternate;
-    }
-    .dna-bar {
-      animation: helix-scale-bar 3.2s ease-in-out infinite alternate;
-      transform-origin: 0px 0px; /* Center of horizontal line */
-    }
-    @keyframes helix-vertical-a {
-      0% { transform: translateX(0px) scale(0.7); opacity: 0.3; }
-      100% { transform: translateX(60px) scale(1.3); opacity: 1; filter: drop-shadow(0 0 6px rgba(192, 132, 252, 0.8)); }
-    }
-    @keyframes helix-vertical-b {
-      0% { transform: translateX(0px) scale(1.3); opacity: 1; filter: drop-shadow(0 0 6px rgba(124, 58, 237, 0.8)); }
-      100% { transform: translateX(-60px) scale(0.7); opacity: 0.3; }
-    }
-    @keyframes helix-scale-bar {
-      0% { transform: scaleX(-1); opacity: 0.15; }
-      50% { transform: scaleX(0); opacity: 0.05; }
-      100% { transform: scaleX(1); opacity: 0.15; }
-    }
-
-    /* 3. Bone Hexagonal Grid Animation */
+    /* ──── SVG animations for Card 3 & Card 4 (Fits wmb-orb perfectly without borders/boxes) ──── */
     .bone-scan-rect {
       animation: bone-scan 3.5s ease-in-out infinite alternate;
     }
@@ -328,38 +318,13 @@
       100% { y: 180px; }
     }
 
-    /* 4. Cognitive Synapses node pulses */
     .neuron-pulse {
       animation: cog-pulse 2.4s ease-in-out infinite alternate;
-    }
-    .synapse-line {
-      stroke-dasharray: 8 20;
-      animation: signal-travel 3.5s linear infinite;
     }
     @keyframes cog-pulse {
       0% { r: 4px; opacity: 0.5; fill: #3B82F6; }
       100% { r: 7.5px; opacity: 1; fill: #60A5FA; filter: drop-shadow(0 0 5px #60A5FA); }
     }
-    @keyframes signal-travel {
-      from { stroke-dashoffset: 48; }
-      to { stroke-dashoffset: 0; }
-    }
-
-    /* Mobile scroll snap utility */
-    .scroll-snap-x {
-      scroll-snap-type: x mandatory;
-    }
-    .scroll-snap-align-center {
-      scroll-snap-align: center;
-    }
-
-    .wmb-dots {
-      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 10px; z-index: 20;
-      opacity: 1; pointer-events: none; transition: opacity 0.3s ease;
-    }
-    .wmb-dot { width: 10px; height: 10px; border-radius: 50%; background: #444; }
-    .wmb-dot.active { background: #6e3bff; }
   </style>
 </head>
 <body>
@@ -378,59 +343,44 @@
     </div>
   </section>
 
-  <!-- ──── REDESIGNED HORIZONTAL SECTION ──── -->
+  <!-- ──── ORIGINAL LAYOUT CONTAINER ──── -->
   <section id="about" class="wmb-section">
-    
-    <!-- Outer wrap that GSAP uses to pin -->
-    <div id="wmb-wrap" class="wmb-wrap">
-      
-      <!-- Inner sticky container -->
-      <div id="wmb-sticky" class="wmb-sticky">
-        
-        <!-- Header Text (Apple-Style Fade Reveal) -->
-        <div class="wmb-header">
-          <h2 class="wmb-reveal-title">
-            <span class="reveal-line block opacity-15">Why muscle -</span>
-            <span class="reveal-line block opacity-0 mt-1">and why blood</span>
-          </h2>
-          <p class="wmb-reveal-sub opacity-30">
-            Muscle doesn't fail in isolation. It takes four systems with it.
-          </p>
-        </div>
+    <!-- SVG Gooey Filter for original Card 1 & Card 2 blobs -->
+    <svg width="0" height="0" style="position: absolute">
+      <filter id="wmb-goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -10" />
+      </filter>
+    </svg>
 
-        <!-- Cards horizontal track -->
-        <!-- Desktop: moves horizontally via GSAP | Mobile: normal swipe-snapping container -->
+    <!-- Header Text (Exact Original Copy & Placement) -->
+    <div class="wmb-header flex flex-col items-center">
+      <h2 class="wmb-reveal-title flex flex-col items-center">
+        <span class="reveal-line block opacity-15">Why muscle -</span>
+        <span class="reveal-line block opacity-0 mt-1">and why blood</span>
+      </h2>
+      <p class="wmb-reveal-sub opacity-30">
+        Muscle doesn't fail in isolation. It takes four systems with it.
+      </p>
+    </div>
+
+    <!-- Cards horizontal track -->
+    <!-- Desktop: moves horizontally via GSAP | Mobile: normal swipe-snapping container -->
+    <div id="wmb-wrap" class="wmb-wrap">
+      <div id="wmb-sticky" class="wmb-sticky">
         <div id="wmb-track" class="wmb-track">
           
-          <!-- CARD 01: CARDIOVASCULAR -->
-          <div class="wmb-card-redesign scroll-snap-align-center"
-               style="--glow-color: rgba(255, 45, 85, 0.08); --hover-border: rgba(255, 45, 85, 0.35); --hover-glow: rgba(255, 45, 85, 0.2);"
-               onmousemove="handleCardMove(event, this)"
-               onmouseleave="handleCardLeave(this)">
-            
-            <!-- Exact Original Placement Bounds for Visualizer -->
-            <div class="wmb-orb border border-white/[0.04] rounded-2xl bg-white/[0.01] p-3">
-              <svg viewBox="0 0 160 160" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Circular scanning layout -->
-                <circle cx="80" cy="80" r="70" stroke="rgba(255, 45, 85, 0.12)" stroke-width="1" stroke-dasharray="3 3"></circle>
-                <circle cx="80" cy="80" r="74" stroke="rgba(255, 45, 85, 0.04)" stroke-width="1"></circle>
-                <!-- Background Grid -->
-                <path d="M 20 80 H 140 M 80 20 V 140 M 50 50 L 110 110 M 110 50 L 50 110" stroke="rgba(255, 45, 85, 0.02)" stroke-width="0.8"></path>
-                <!-- Static background EKG path -->
-                <path d="M 20 80 H 55 L 62 65 L 69 95 L 76 35 L 83 125 L 90 70 L 97 85 L 104 80 H 140" stroke="rgba(255, 45, 85, 0.06)" stroke-width="1.5"></path>
-                <!-- Active EKG pulse -->
-                <path d="M 20 80 H 55 L 62 65 L 69 95 L 76 35 L 83 125 L 90 70 L 97 85 L 104 80 H 140" stroke="#FF2D55" stroke-width="2.5" class="ecg-pulse-anim" filter="url(#glow-cardio)"></path>
-                
-                <defs>
-                  <filter id="glow-cardio" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur stdDeviation="3.5" result="blur"></feGaussianBlur>
-                    <feComposite in="SourceGraphic" in2="blur" operator="over"></feComposite>
-                  </filter>
-                </defs>
-              </svg>
+          <!-- CARD 01: CARDIOVASCULAR (Original gooey blobs) -->
+          <div class="wmb-card wmb-c1"
+               onpointermove="handleCardPointerMove(event, this)"
+               onpointerleave="handleCardPointerLeave(this)">
+            <div class="wmb-orb">
+              <div class="wmb-gooey">
+                <div class="wmb-blob wmb-b1"></div>
+                <div class="wmb-blob wmb-b2"></div>
+                <div class="wmb-blob wmb-b3"></div>
+              </div>
             </div>
-
-            <!-- Exact Original Placement Bounds for Content -->
             <div class="wmb-content">
               <div class="wmb-num">01</div>
               <h3>Cardiovascular</h3>
@@ -439,54 +389,17 @@
             </div>
           </div>
 
-          <!-- CARD 02: METABOLISM & INSULIN RESISTANCE -->
-          <div class="wmb-card-redesign scroll-snap-align-center"
-               style="--glow-color: rgba(124, 58, 237, 0.08); --hover-border: rgba(124, 58, 237, 0.35); --hover-glow: rgba(124, 58, 237, 0.2);"
-               onmousemove="handleCardMove(event, this)"
-               onmouseleave="handleCardLeave(this)">
-            
-            <!-- Exact Original Placement Bounds for Visualizer -->
-            <div class="wmb-orb border border-white/[0.04] rounded-2xl bg-white/[0.01] p-3">
-              <svg viewBox="0 0 160 160" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Circular scanning boundary -->
-                <circle cx="80" cy="80" r="70" stroke="rgba(124, 90, 248, 0.1)" stroke-width="1" stroke-dasharray="3 3"></circle>
-                <!-- DNA helix nodes generated vertically -->
-                <g transform="translate(80, 20)">
-                  <g>
-                    <line x1="-30" y1="0" x2="30" y2="0" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: 0s;"></line>
-                    <circle cx="-30" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: 0s;"></circle>
-                    <circle cx="30" cy="0" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: 0s;"></circle>
-                  </g>
-                  <g transform="translate(0, 24)">
-                    <line x1="-30" y1="0" x2="30" y2="0" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -0.5s;"></line>
-                    <circle cx="-30" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -0.5s;"></circle>
-                    <circle cx="30" cy="0" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -0.5s;"></circle>
-                  </g>
-                  <g transform="translate(0, 48)">
-                    <line x1="-30" y1="0" x2="30" y2="0" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -1.0s;"></line>
-                    <circle cx="-30" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -1.0s;"></circle>
-                    <circle cx="30" cy="0" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -1.0s;"></circle>
-                  </g>
-                  <g transform="translate(0, 72)">
-                    <line x1="-30" y1="0" x2="30" y2="0" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -1.5s;"></line>
-                    <circle cx="-30" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -1.5s;"></circle>
-                    <circle cx="30" cy="0" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -1.5s;"></circle>
-                  </g>
-                  <g transform="translate(0, 96)">
-                    <line x1="-30" y1="0" x2="30" y2="0" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -2.0s;"></line>
-                    <circle cx="-30" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -2.0s;"></circle>
-                    <circle cx="30" cy="0" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -2.0s;"></circle>
-                  </g>
-                  <g transform="translate(0, 120)">
-                    <line x1="-30" y1="0" x2="30" y2="0" stroke="rgba(124, 90, 248, 0.15)" stroke-width="1.5" class="dna-bar" style="animation-delay: -2.5s;"></line>
-                    <circle cx="-30" cy="0" r="4.5" fill="#c084fc" class="node-a" style="animation-delay: -2.5s;"></circle>
-                    <circle cx="30" cy="0" r="4.5" fill="#7c3aed" class="node-b" style="animation-delay: -2.5s;"></circle>
-                  </g>
-                </g>
-              </svg>
+          <!-- CARD 02: METABOLISM & INSULIN RESISTANCE (Original gooey blobs) -->
+          <div class="wmb-card wmb-c2"
+               onpointermove="handleCardPointerMove(event, this)"
+               onpointerleave="handleCardPointerLeave(this)">
+            <div class="wmb-orb">
+              <div class="wmb-gooey">
+                <div class="wmb-blob wmb-b1"></div>
+                <div class="wmb-blob wmb-b2"></div>
+                <div class="wmb-blob wmb-b3"></div>
+              </div>
             </div>
-
-            <!-- Exact Original Placement Bounds for Content -->
             <div class="wmb-content">
               <div class="wmb-num">02</div>
               <h3>Metabolism & Insulin Resistance</h3>
@@ -495,17 +408,15 @@
             </div>
           </div>
 
-          <!-- CARD 03: BONE & JOINT DENSITY -->
-          <div class="wmb-card-redesign scroll-snap-align-center"
-               style="--glow-color: rgba(245, 158, 11, 0.08); --hover-border: rgba(245, 158, 11, 0.35); --hover-glow: rgba(245, 158, 11, 0.2);"
-               onmousemove="handleCardMove(event, this)"
-               onmouseleave="handleCardLeave(this)">
+          <!-- CARD 03: BONE & JOINT DENSITY (Redesigned Animation) -->
+          <div class="wmb-card wmb-c3"
+               onpointermove="handleCardPointerMove(event, this)"
+               onpointerleave="handleCardPointerLeave(this)">
             
-            <!-- Exact Original Placement Bounds for Visualizer -->
-            <div class="wmb-orb border border-white/[0.04] rounded-2xl bg-white/[0.01] p-3">
+            <!-- Redesigned Symmetrical Scan visual fits wmb-orb seamlessly -->
+            <div class="wmb-orb">
               <svg viewBox="0 0 160 160" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                  <!-- Scanning gradient mask -->
                   <linearGradient id="bone-scan-grad" x1="0%" y1="0%" x2="0%" y2="100%">
                     <stop offset="0%" stop-color="#ff8a00" stop-opacity="0.15"></stop>
                     <stop offset="50%" stop-color="#ff8a00" stop-opacity="0.95"></stop>
@@ -519,7 +430,7 @@
                 <!-- Circular scanning boundary grid -->
                 <circle cx="80" cy="80" r="70" stroke="rgba(245, 158, 11, 0.1)" stroke-width="1" stroke-dasharray="3 3"></circle>
                 
-                <!-- Background symmetric hexagon cluster (Fits 160x160 perfectly) -->
+                <!-- Background symmetric hexagon cluster -->
                 <g stroke="rgba(245, 158, 11, 0.15)" stroke-width="1.2">
                   <polygon points="80,60 97.3,70 97.3,90 80,100 62.7,90 62.7,70"></polygon>
                   <polygon points="80,25.4 97.3,35.4 97.3,55.4 80,65.4 62.7,55.4 62.7,35.4"></polygon>
@@ -548,8 +459,6 @@
                 </defs>
               </svg>
             </div>
-
-            <!-- Exact Original Placement Bounds for Content -->
             <div class="wmb-content">
               <div class="wmb-num">03</div>
               <h3>Bone & Joint Density</h3>
@@ -558,19 +467,18 @@
             </div>
           </div>
 
-          <!-- CARD 04: COGNITIVE HEALTH -->
-          <div class="wmb-card-redesign scroll-snap-align-center"
-               style="--glow-color: rgba(59, 130, 246, 0.08); --hover-border: rgba(59, 130, 246, 0.35); --hover-glow: rgba(59, 130, 246, 0.2);"
-               onmousemove="handleCardMove(event, this)"
-               onmouseleave="handleCardLeave(this)">
+          <!-- CARD 04: COGNITIVE HEALTH (Redesigned Animation) -->
+          <div class="wmb-card wmb-c4"
+               onpointermove="handleCardPointerMove(event, this)"
+               onpointerleave="handleCardPointerLeave(this)">
             
-            <!-- Exact Original Placement Bounds for Visualizer -->
-            <div class="wmb-orb border border-white/[0.04] rounded-2xl bg-white/[0.01] p-3">
+            <!-- Redesigned Neural Synapse visual fits wmb-orb seamlessly -->
+            <div class="wmb-orb">
               <svg viewBox="0 0 160 160" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Circular scanning boundary grid -->
+                <!-- Circular boundary grid -->
                 <circle cx="80" cy="80" r="70" stroke="rgba(59, 130, 246, 0.1)" stroke-width="1" stroke-dasharray="3 3"></circle>
                 
-                <!-- Symmetrical Neural Network pathways (Centered 160x160 perfectly) -->
+                <!-- Symmetrical Neural Network pathways -->
                 <g stroke="rgba(59, 130, 246, 0.15)" stroke-width="1.2">
                   <line x1="80" y1="80" x2="80" y2="30"></line>
                   <line x1="80" y1="80" x2="125" y2="55"></line>
@@ -616,8 +524,6 @@
                 </defs>
               </svg>
             </div>
-
-            <!-- Exact Original Placement Bounds for Content -->
             <div class="wmb-content">
               <div class="wmb-num">04</div>
               <h3>Cognitive Health</h3>
@@ -628,8 +534,9 @@
 
         </div>
 
-        <!-- Scroll Dots & Indicator (Desktop: GSAP driven | Mobile: CSS scroll driven) -->
+        <!-- Scroll Dots & Indicator (Exact Original layout) -->
         <div class="wmb-dots">
+          <span class="wmb-swipe-hint">Swipe to explore ↔</span>
           <span class="wmb-dot active"></span>
           <span class="wmb-dot"></span>
           <span class="wmb-dot"></span>
@@ -673,38 +580,23 @@
     // Sync GSAP with Lenis scroll updates
     lenis.on('scroll', ScrollTrigger.update);
 
-    // 2. Premium 3D Tilt Card Hover Effect (Matches React client moving boundary)
+    // 2. Exact Original 3D Tilt Card Hover Effect
     const DESKTOP_QUERY = '(min-width: 900px)'; // Match original section break-point
     const mq = window.matchMedia(DESKTOP_QUERY);
 
-    function handleCardMove(e, card) {
+    function handleCardPointerMove(e, card) {
       if (!mq.matches) return;
-      const rect = card.getBoundingClientRect();
-      const w = rect.width;
-      const h = rect.height;
-      const x = e.clientX - rect.left - w / 2;
-      const y = e.clientY - rect.top - h / 2;
-
-      // Spotlight coordinates
-      const spotX = ((e.clientX - rect.left) / w) * 100;
-      const spotY = ((e.clientY - rect.top) / h) * 100;
-      card.style.setProperty('--mouse-x', `${spotX}%`);
-      card.style.setProperty('--mouse-y', `${spotY}%`);
-
-      // 3D Tilt matrix calculation
-      const rotateY = x * 0.024;
-      const rotateX = -y * 0.024;
-      const translateValX = x * 0.015;
-      const translateValY = y * 0.015;
-
-      card.style.transform = `translate3d(${translateValX}px, ${translateValY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      const r = card.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width / 2;
+      const y = e.clientY - r.top - r.height / 2;
+      card.style.transform = `translate(${x * 0.02}px,${y * 0.02}px) rotateY(${x * 0.02}deg) rotateX(${-y * 0.02}deg)`;
     }
 
-    function handleCardLeave(card) {
+    function handleCardPointerLeave(card) {
       card.style.transform = '';
     }
 
-    // 3. GSAP ScrollTrigger Horizontal Pinning & Apple Reveal Text Setup
+    // 3. GSAP ScrollTrigger Horizontal Pinning & Apple Reveal Text Setup (Exact Original Logic)
     gsap.registerPlugin(ScrollTrigger);
 
     const wrap = document.getElementById('wmb-wrap');
@@ -716,114 +608,127 @@
     const dots = dotsEl.querySelectorAll('.wmb-dot');
 
     let scrollTriggerInstance = null;
+    let tween = null;
+    let st = null;
 
-    function buildScrollAnimation() {
-      if (scrollTriggerInstance) {
-        scrollTriggerInstance.kill();
+    // Apple-style line-by-line reveal animation
+    const titleLines = gsap.utils.toArray(".wmb-reveal-title .reveal-line");
+    const titleTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".wmb-header",
+        start: "top 85%",
+        end: "bottom 55%",
+        scrub: true,
       }
-
-      if (mq.matches) {
-        // Desktop Pin-Scroll Track offset calculation (exact same logic as original section)
-        const maxScroll = () => {
-          const cards = track.querySelectorAll('.wmb-card-redesign');
-          const lastCard = cards[cards.length - 1];
-          const paddingRight = 0.08 * window.innerWidth;
-          const totalWidth = lastCard.offsetLeft + lastCard.offsetWidth + paddingRight;
-          return Math.max(0, totalWidth - window.innerWidth);
-        };
-
-        // Re-align layout variables
-        gsap.set(track, { x: 0 });
-
-        // Scroll Timeline
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: wrap,
-            pin: sticky,
-            pinSpacing: true,
-            start: "top top",
-            end: () => `+=${maxScroll() + window.innerHeight * 0.5}`, // 50% hold height at the end
-            scrub: true,
-            invalidateOnRefresh: true,
-            onEnter: () => dotsEl.style.opacity = '1',
-            onEnterBack: () => dotsEl.style.opacity = '1',
-            onLeave: () => dotsEl.style.opacity = '0',
-            onLeaveBack: () => dotsEl.style.opacity = '0',
-            onUpdate: (self) => {
-              scrollTriggerInstance = self;
-              const cardsCount = track.querySelectorAll('.wmb-card-redesign').length;
-              const idx = Math.min(cardsCount - 1, Math.floor(self.progress * cardsCount));
-              dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-            }
-          }
-        });
-
-        // 1. Horizontal translate for track
-        tl.to(track, {
-          x: () => -maxScroll(),
-          ease: "none",
-          duration: 1
-        }, 0);
-
-        // 2. Keep cards fully translated at the end of the scroll (Hold frame)
-        tl.to({}, { duration: 0.4 });
-      }
-
-      // 4. Apple-style line-by-line reveal animation (triggers as soon as header enters viewport)
-      const lines = revealTitle.querySelectorAll('.reveal-line');
-      
-      // Clear previous ScrollTriggers for reveal text if any
-      ScrollTrigger.getAll().forEach(st => {
-        if (st.trigger === revealTitle) st.kill();
-      });
-
-      const revealTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: revealTitle,
-          start: "top 85%",
-          end: "bottom 55%",
-          scrub: true,
-        }
-      });
-
-      if (lines.length >= 2) {
-        // Initially set opacity for reveal text to match original code
-        gsap.set(lines[0], { opacity: 0.15 });
-        gsap.set(lines[1], { opacity: 0.15 });
-        gsap.set(revealSub, { opacity: 0.15 });
-
-        revealTimeline.to(lines[0], { opacity: 1, duration: 1, ease: "none" })
-                      .to(lines[1], { opacity: 1, duration: 1, ease: "none" }, 0.5)
-                      .to(revealSub, { opacity: 1, duration: 1, ease: "none" }, 1.0);
-      }
+    });
+    if (titleLines.length >= 2) {
+      titleTimeline.fromTo(titleLines[0], { opacity: 0.15 }, { opacity: 1, duration: 1, ease: "none" })
+                   .fromTo(titleLines[1], { opacity: 0 }, { opacity: 1, duration: 1, ease: "none" });
     }
 
-    // Run build initially
-    buildScrollAnimation();
+    const subReveal = gsap.to(".wmb-reveal-sub", {
+      opacity: 1,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".wmb-header",
+        start: "top 70%",
+        end: "bottom 50%",
+        scrub: true,
+      }
+    });
+
+    function maxScroll() {
+      const cards = track.querySelectorAll('.wmb-card');
+      if (cards.length === 0) return 0;
+      const lastCard = cards[cards.length - 1];
+      const lastCardOffsetLeft = lastCard.offsetLeft;
+      const lastCardWidth = lastCard.offsetWidth;
+      const paddingRight = 0.08 * window.innerWidth;
+      const totalWidth = lastCardOffsetLeft + lastCardWidth + paddingRight;
+      const measured = totalWidth - window.innerWidth;
+      const calculated = 2576 - 0.84 * window.innerWidth;
+      return Math.max(0, Math.max(measured, calculated));
+    }
+
+    function buildDesktopScroll() {
+      gsap.set(track, { x: 0 });
+      tween = gsap.to(track, {
+        x: () => -maxScroll(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: wrap,
+          pin: sticky,
+          pinSpacing: true,
+          start: 'top top',
+          end: () => `+=${maxScroll()}`,
+          scrub: true,
+          invalidateOnRefresh: true,
+          refreshPriority: 55,
+          onEnter: () => dotsEl.classList.add('is-visible'),
+          onEnterBack: () => dotsEl.classList.add('is-visible'),
+          onLeave: () => dotsEl.classList.remove('is-visible'),
+          onLeaveBack: () => dotsEl.classList.remove('is-visible'),
+          onUpdate(self) {
+            const idx = Math.min(dots.length - 1, Math.floor(self.progress * dots.length));
+            dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+          },
+        },
+      });
+      st = tween.scrollTrigger;
+    }
+
+    function destroyDesktopScroll() {
+      if (st) {
+        st.kill();
+        st = null;
+      }
+      if (tween) {
+        tween.kill();
+        tween = null;
+      }
+      gsap.set(track, { x: 0 });
+      dotsEl.classList.remove('is-visible');
+    }
+
+    function init() {
+      destroyDesktopScroll();
+      if (mq.matches) buildDesktopScroll();
+    }
+
+    init();
+
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 300);
 
     // Rebuild on crossing desktop/mobile boundary
-    mq.addEventListener('change', () => {
-      buildScrollAnimation();
-      ScrollTrigger.refresh();
-    });
+    mq.addEventListener('change', init);
 
     // Re-verify layouts on window resize
     window.addEventListener('resize', () => {
-      buildScrollAnimation();
       ScrollTrigger.refresh();
     });
 
-    // 5. Mobile Dot indicators scroll-link
+    // Mobile Swipe active dot tracking
     if (!mq.matches) {
-      track.addEventListener('scroll', () => {
-        const cardWidth = track.querySelector('.wmb-card-redesign').offsetWidth + 32;
+      const handleMobileScroll = () => {
+        const cardEl = track.querySelector('.wmb-card');
+        if (!cardEl) return;
+        const cardWidth = cardEl.offsetWidth + 32;
         const scrollLeft = track.scrollLeft;
         const activeIndex = Math.min(dots.length - 1, Math.round(scrollLeft / cardWidth));
         
         dots.forEach((dot, idx) => {
           dot.classList.toggle('active', idx === activeIndex);
         });
-      }, { passive: true });
+
+        const hint = dotsEl.querySelector('.wmb-swipe-hint');
+        if (hint) {
+          hint.style.opacity = '0';
+          setTimeout(() => hint.remove(), 400);
+        }
+      };
+      track.addEventListener('scroll', handleMobileScroll, { passive: true });
     }
   </script>
 </body>
